@@ -14,7 +14,7 @@ const { addDecoratorsLegacy } = require("customize-cra");
 
 ### addBabelPlugin(plugin, config, env)
 
-Adds a babel plugin.
+Adds a babel plugin. Not sure what else to say here.
 
 ### addDecoratorsLegacy(config, env)
 
