@@ -14,15 +14,15 @@ const { addDecoratorsLegacy } = require("customize-cra");
 
 ### addBabelPlugin(plugin, config, env)
 
-Add whatever plugin specified babel's plugins
+Adds a babel plugin.
 
 ### addDecoratorsLegacy(config, env)
 
-Add decorators in legacy mode.
+Add decorators in legacy mode. Be sure to have `@babel/plugin-proposal-decorators` installed.
 
 ### disableEsLint(config, env)
 
-Does what it says. You may need this along with `addDecoratorsLegacy` in order to get decorators and exports to parse together. Be sure to have `@babel/plugin-proposal-decorators` installed.
+Does what it says. You may need this along with `addDecoratorsLegacy` in order to get decorators and exports to parse together.
 
 ### addBundleVisualizer(config)
 
