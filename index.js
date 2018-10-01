@@ -38,9 +38,20 @@ function disableEsLint(config, env) {
   });
 }
 
+function addWebpackAlias(alias, config) {
+  if (!config.resolve) {
+    config.resolve = {};
+  }
+  if (!config.resolve.alias) {
+    config.resolve.alias = {};
+  }
+  Object.assign(config.resolve.alias, alias);
+}
+
 module.exports = {
   addBundleVisualizer,
   addBabelPlugin,
   addDecoratorsLegacy,
-  disableEsLint
+  disableEsLint,
+  addWebpackAlias
 };

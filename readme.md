@@ -10,19 +10,30 @@ The functions documented below can be imported by name, and used in your config-
 const { addDecoratorsLegacy } = require("customize-cra");
 ```
 
+## Warning
+
+> "Stuff can break"
+> \- Dan Abramov
+
+Using this library will override default behavior and configuration of create-react-app, and therefore invalidate the guarentees that come with it. Use with discretion!
+
 ## Docs
 
-### addBabelPlugin(plugin, config, env)
+### addBabelPlugin(plugin, config)
 
 Adds a babel plugin. Not sure what else to say here.
 
-### addDecoratorsLegacy(config, env)
+### addDecoratorsLegacy(config)
 
 Add decorators in legacy mode. Be sure to have `@babel/plugin-proposal-decorators` installed.
 
-### disableEsLint(config, env)
+### disableEsLint(config)
 
 Does what it says. You may need this along with `addDecoratorsLegacy` in order to get decorators and exports to parse together.
+
+### addWebpackAlias(alias, config)
+
+Adds the provided alias info into webpack's alias section. Pass an object literal with as many entries as you'd like, and the whole object will be merged in.
 
 ### addBundleVisualizer(config)
 
@@ -35,9 +46,9 @@ If you want CRA 2 to work with MobX, this should get you going.
 ```js
 const { addDecoratorsLegacy, disableEsLint } = require("customize-cra");
 
-module.exports = function override(config, env) {
-  addDecoratorsLegacy(config, env);
-  disableEsLint(config, env);
+module.exports = function override(config) {
+  addDecoratorsLegacy(config);
+  disableEsLint(config);
 
   return config;
 };
