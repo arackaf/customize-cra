@@ -1,6 +1,6 @@
 # customize-cra
 
-This project piggybacks on `react-app-rewired` to customize create-react-app for version 2.0 and higher.
+This project piggybacks on [`react-app-rewired`](https://github.com/timarney/react-app-rewired/) to customize create-react-app for version 2.0 and higher.
 
 To start, this project will export methods I need for what I'm using CRA for, but PRs will of course be welcome.
 
