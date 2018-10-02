@@ -7,6 +7,7 @@ function addBundleVisualizer(config) {
       reportFilename: "report.html"
     })
   );
+  return config;
 }
 
 function addBabelPlugin(plugin, config, env) {
@@ -25,10 +26,12 @@ function addBabelPlugin(plugin, config, env) {
       }
     }
   }
+  return config;
 }
 
 function addDecoratorsLegacy(config, env) {
   addBabelPlugin(["@babel/plugin-proposal-decorators", { legacy: true }], config, env);
+  return config;
 }
 
 function disableEsLint(config, env) {
@@ -36,6 +39,7 @@ function disableEsLint(config, env) {
   eslintRules.forEach(rule => {
     config.module.rules = config.module.rules.filter(r => r !== rule);
   });
+  return config;
 }
 
 function addWebpackAlias(alias, config) {
@@ -46,6 +50,7 @@ function addWebpackAlias(alias, config) {
     config.resolve.alias = {};
   }
   Object.assign(config.resolve.alias, alias);
+  return config;
 }
 
 module.exports = {
