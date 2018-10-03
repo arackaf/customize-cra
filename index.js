@@ -13,24 +13,22 @@ const addBundleVisualizer = () => config => {
   return config;
 };
 
-const addBabelPlugin = plugin => config => {
-  let rulesWithBabel = config.module.rules.filter(
-    r => r.oneOf && r.oneOf.some(r => Array.isArray(r.use) && r.use.some(u => u.options && u.options.babelrc != void 0))
-  );
+function addBabelPlugin(plugin) {
+  return function(config) {
+    const babelLoader = config.module.rules
+      .find(rule => Object.keys(rule).includes('oneOf'))
+      .oneOf.find(
+        rule =>
+          rule.loader &&
+          rule.loader.includes('babel-loader') &&
+          rule.options.customize
+      )
 
-  for (let rb of rulesWithBabel) {
-    for (let r of rb.oneOf) {
-      if (r.use) {
-        for (let u of r.use) {
-          if (u.options && u.options.babelrc != void 0) {
-            u.options.plugins = (u.options.plugins || []).concat([plugin]);
-          }
-        }
-      }
-    }
+    babelLoader.options.plugins.push(plugin)
+
+    return config
   }
-  return config;
-};
+}
 
 const addDecoratorsLegacy = () => config => addBabelPlugin(["@babel/plugin-proposal-decorators", { legacy: true }])(config);
 
@@ -53,13 +51,13 @@ const addWebpackAlias = alias => config => {
   return config;
 };
 
-const override = (...pipeline) => (config, env) =>
-  flow(
-    ...pipeline.map(f => {
-      const curried = curry(f, 2);
-      return curried(curry.placeholder, env);
-    })
-  )(config);
+const override = (...pipeline) => (config, env) => flow(
+  ...pipeline.map(f => {
+
+    const curried = curry(f, 2);
+    return curried(curry.placeholder, env);
+  })
+)(config);
 
 module.exports = {
   override,
