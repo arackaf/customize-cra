@@ -1,4 +1,7 @@
-function addBundleVisualizer(config) {
+const curry = require("lodash.curry");
+const flow = require("lodash.flow");
+
+const addBundleVisualizer = () => config => {
   const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
   config.plugins.push(
@@ -8,9 +11,9 @@ function addBundleVisualizer(config) {
     })
   );
   return config;
-}
+};
 
-function addBabelPlugin(plugin, config, env) {
+const addBabelPlugin = plugin => config => {
   let rulesWithBabel = config.module.rules.filter(
     r => r.oneOf && r.oneOf.some(r => Array.isArray(r.use) && r.use.some(u => u.options && u.options.babelrc != void 0))
   );
@@ -27,22 +30,19 @@ function addBabelPlugin(plugin, config, env) {
     }
   }
   return config;
-}
+};
 
-function addDecoratorsLegacy(config, env) {
-  addBabelPlugin(["@babel/plugin-proposal-decorators", { legacy: true }], config, env);
-  return config;
-}
+const addDecoratorsLegacy = () => config => addBabelPlugin(["@babel/plugin-proposal-decorators", { legacy: true }])(config);
 
-function disableEsLint(config, env) {
+const disableEsLint = () => config => {
   let eslintRules = config.module.rules.filter(r => r.use && r.use.some(u => u.options && u.options.useEslintrc != void 0));
   eslintRules.forEach(rule => {
     config.module.rules = config.module.rules.filter(r => r !== rule);
   });
   return config;
-}
+};
 
-function addWebpackAlias(alias, config) {
+const addWebpackAlias = alias => config => {
   if (!config.resolve) {
     config.resolve = {};
   }
@@ -51,9 +51,18 @@ function addWebpackAlias(alias, config) {
   }
   Object.assign(config.resolve.alias, alias);
   return config;
-}
+};
+
+const override = (...pipeline) => (config, env) =>
+  flow(
+    ...pipeline.map(f => {
+      const curried = curry(f, 2);
+      return curried(curry.placeholder, env);
+    })
+  )(config);
 
 module.exports = {
+  override,
   addBundleVisualizer,
   addBabelPlugin,
   addDecoratorsLegacy,

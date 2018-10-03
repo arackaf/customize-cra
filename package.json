@@ -1,11 +1,15 @@
 {
   "name": "customize-cra",
-  "version": "0.0.6",
+  "version": "0.1.0-beta3",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "Adam Rackis",
+  "license": "MIT",
+  "dependencies": {
+    "lodash.curry": "^4.1.1",
+    "lodash.flow": "^3.5.0"
+  }
 }
