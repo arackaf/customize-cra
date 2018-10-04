@@ -1,14 +1,16 @@
 const curry = require("lodash.curry");
 const flow = require("lodash.flow");
 
-const addBundleVisualizer = () => config => {
+const addBundleVisualizer = options => config => {
   const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
   config.plugins.push(
-    new BundleAnalyzerPlugin({
-      analyzerMode: "static",
-      reportFilename: "report.html"
-    })
+      new BundleAnalyzerPlugin(
+        Object.assign({
+          analyzerMode: "static",
+          reportFilename: "report.html"
+        }, options)
+      )
   );
   return config;
 };
