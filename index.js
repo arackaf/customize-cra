@@ -1,16 +1,19 @@
 const curry = require("lodash.curry");
 const flow = require("lodash.flow");
 
-const addBundleVisualizer = options => config => {
+const addBundleVisualizer = (options = {}) => config => {
   const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
   config.plugins.push(
-      new BundleAnalyzerPlugin(
-        Object.assign({
+    new BundleAnalyzerPlugin(
+      Object.assign(
+        {
           analyzerMode: "static",
           reportFilename: "report.html"
-        }, options)
+        },
+        options
       )
+    )
   );
   return config;
 };
@@ -57,13 +60,7 @@ const addWebpackAlias = alias => config => {
   return config;
 };
 
-const override = (...pipeline) => (config, env) =>
-  flow(
-    ...pipeline.map(f => {
-      const curried = curry(f, 2);
-      return curried(curry.placeholder, env);
-    })
-  )(config);
+const override = (...plugins) => config => flow(...plugins.map(f => f || (a => a)))(config);
 
 module.exports = {
   override,

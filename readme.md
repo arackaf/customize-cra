@@ -2,6 +2,12 @@
 
 This project piggybacks on [`react-app-rewired`](https://github.com/timarney/react-app-rewired/) to customize create-react-app for version 2.0 and higher.
 
+---
+
+To be clear, you need to use this project with `react-app-rewired`; be sure to read their docs if you never have. The code in this project, documented below, is designed to work inside of `react-app-rewired`'s `config-overrides.js` file.
+
+---
+
 To start, this project will export methods I need for what I'm using CRA for, but PRs will of course be welcome.
 
 The functions documented below can be imported by name, and used in your `config-overrides.js` file, as explained below.
@@ -35,9 +41,18 @@ Does what it says. You may need this along with `addDecoratorsLegacy` in order t
 
 Adds the provided alias info into webpack's alias section. Pass an object literal with as many entries as you'd like, and the whole object will be merged in.
 
-### addBundleVisualizer()
+### addBundleVisualizer(options)
 
-Adds the bundle visualizer plugin to your webpack config. Be sure to have `webpack-bundle-analyzer` installed.
+Adds the bundle visualizer plugin to your webpack config. Be sure to have `webpack-bundle-analyzer` installed. By default, the options passed to the plugin will be
+
+```js
+{
+  analyzerMode: "static",
+  reportFilename: "report.html"
+}
+```
+
+which can be overridden with the (optional) options argument.
 
 ## Using the plugins
 
