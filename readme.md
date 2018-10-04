@@ -56,7 +56,7 @@ which can be overridden with the (optional) options argument.
 
 ## Using the plugins
 
-To use these plugins, import the `override` function, and call it with whatever plugins you need. Each of these plugin invocations will return a new function, that `override` will call with the newly modified config object. This means that if you need to conditionally apply any of these plugins, just provide a lambda that receives the config object, and conditionally invoke a plugin as needed, being sure to call it twice.
+To use these plugins, import the `override` function, and call it with whatever plugins you need. Each of these plugin invocations will return a new function, that `override` will call with the newly modified config object. Falsy values will be ignored though, so if you need to conditionally apply any of these plugins, you can do so like below.
 
 For example
 
@@ -67,7 +67,7 @@ const path = require("path");
 module.exports = override(
   addDecoratorsLegacy(),
   disableEsLint(),
-  config => (process.env.BUNDLE_VISUALIZE == 1 ? addBundleVisualizer()(config) : config),
+  process.env.BUNDLE_VISUALIZE == 1 && addBundleVisualizer(),
   addWebpackAlias({ ["ag-grid-react$"]: path.resolve(__dirname, "src/shared/agGridWrapper.js") })
 );
 ```
