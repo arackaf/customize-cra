@@ -60,7 +60,7 @@ const addWebpackAlias = alias => config => {
   return config;
 };
 
-const override = (...plugins) => config => flow(...plugins.map(f => f || (a => a)))(config);
+const override = (...plugins) => flow(...plugins.filter(f => f));
 
 module.exports = {
   override,
