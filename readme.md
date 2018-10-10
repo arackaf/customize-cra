@@ -25,7 +25,7 @@ Using this library will override default behavior and configuration of create-re
 
 ## How to install
 
-⚠️ make sure you have react-app-rewired installed
+⚠️ make sure you have [react-app-rewired](https://github.com/timarney/react-app-rewired/) installed
 
 ### npm
 
