@@ -23,6 +23,22 @@ const { addDecoratorsLegacy } = require("customize-cra");
 
 Using this library will override default behavior and configuration of create-react-app, and therefore invalidate the guarentees that come with it. Use with discretion!
 
+## How to install
+
+⚠️ make sure you have [react-app-rewired](https://github.com/timarney/react-app-rewired/) installed
+
+### npm
+
+```bash
+npm install customize-cra --save-dev
+```
+
+### yarn
+
+```bash
+yarn add customize-cra --dev
+```
+
 ## Available plugins
 
 ### addBabelPlugin(plugin)
@@ -61,14 +77,22 @@ To use these plugins, import the `override` function, and call it with whatever 
 For example
 
 ```js
-const { override, addDecoratorsLegacy, disableEsLint, addBundleVisualizer, addWebpackAlias } = require("customize-cra");
+const {
+  override,
+  addDecoratorsLegacy,
+  disableEsLint,
+  addBundleVisualizer,
+  addWebpackAlias
+} = require("customize-cra");
 const path = require("path");
 
 module.exports = override(
   addDecoratorsLegacy(),
   disableEsLint(),
   process.env.BUNDLE_VISUALIZE == 1 && addBundleVisualizer(),
-  addWebpackAlias({ ["ag-grid-react$"]: path.resolve(__dirname, "src/shared/agGridWrapper.js") })
+  addWebpackAlias({
+    ["ag-grid-react$"]: path.resolve(__dirname, "src/shared/agGridWrapper.js")
+  })
 );
 ```
 
