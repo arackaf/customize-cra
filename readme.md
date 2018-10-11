@@ -2,30 +2,9 @@
 
 This project piggybacks on [`react-app-rewired`](https://github.com/timarney/react-app-rewired/) to customize create-react-app for version 2.0 and higher.
 
----
-
-To be clear, you need to use this project with `react-app-rewired`; be sure to read their docs if you never have. The code in this project, documented below, is designed to work inside of `react-app-rewired`'s `config-overrides.js` file.
-
----
-
-To start, this project will export methods I need for what I'm using CRA for, but PRs will of course be welcome.
-
-The functions documented below can be imported by name, and used in your `config-overrides.js` file, as explained below.
-
-```js
-const { addDecoratorsLegacy } = require("customize-cra");
-```
-
-## Warning
-
-> "Stuff can break"
-> \- Dan Abramov
-
-Using this library will override default behavior and configuration of create-react-app, and therefore invalidate the guarentees that come with it. Use with discretion!
-
 ## How to install
 
-⚠️ make sure you have [react-app-rewired](https://github.com/timarney/react-app-rewired/) installed
+⚠️ make sure you have [react-app-rewired](https://github.com/timarney/react-app-rewired/) installed. You need to use this project with `react-app-rewired`; be sure to read their docs if you never have. The code in this project, documented below, is designed to work inside of `react-app-rewired`'s `config-overrides.js` file.
 
 ### npm
 
@@ -39,11 +18,24 @@ npm install customize-cra --save-dev
 yarn add customize-cra --dev
 ```
 
+## Warning
+
+> "Stuff can break"
+> \- Dan Abramov
+
+Using this library will override default behavior and configuration of create-react-app, and therefore invalidate the guarentees that come with it. Use with discretion!
+
+## Overview
+
+To start, this project will export methods I need for what I'm using CRA for, but PRs will of course be welcome.
+
+The functions documented below can be imported by name, and used in your `config-overrides.js` file, as explained below.
+
 ## Available plugins
 
 ### addBabelPlugin(plugin)
 
-Adds a babel plugin. Not sure what else to say here.
+Adds a babel plugin. Whatever you pass for `plugin` will be added to Babel's `plugins` array. Consult their docs for more info.
 
 ### addDecoratorsLegacy()
 
@@ -70,6 +62,10 @@ Adds the bundle visualizer plugin to your webpack config. Be sure to have `webpa
 
 which can be overridden with the (optional) options argument.
 
+### adjustWorkbox(fn)
+
+Adjusts Workbox configuration. Pass a function which will be called with the current Workbox configuration, in which you can mutate the config object as needed. See below for an example.
+
 ## Using the plugins
 
 To use these plugins, import the `override` function, and call it with whatever plugins you need. Each of these plugin invocations will return a new function, that `override` will call with the newly modified config object. Falsy values will be ignored though, so if you need to conditionally apply any of these plugins, you can do so like below.
@@ -77,22 +73,15 @@ To use these plugins, import the `override` function, and call it with whatever 
 For example
 
 ```js
-const {
-  override,
-  addDecoratorsLegacy,
-  disableEsLint,
-  addBundleVisualizer,
-  addWebpackAlias
-} = require("customize-cra");
+const { override, addDecoratorsLegacy, disableEsLint, addBundleVisualizer, addWebpackAlias, adjustWorkbox } = require("customize-cra");
 const path = require("path");
 
 module.exports = override(
   addDecoratorsLegacy(),
   disableEsLint(),
   process.env.BUNDLE_VISUALIZE == 1 && addBundleVisualizer(),
-  addWebpackAlias({
-    ["ag-grid-react$"]: path.resolve(__dirname, "src/shared/agGridWrapper.js")
-  })
+  addWebpackAlias({ ["ag-grid-react$"]: path.resolve(__dirname, "src/shared/agGridWrapper.js") }),
+  adjustWorkbox(wb => Object.assign(wb, { skipWaiting: true, exclude: (wb.exclude || []).concat("index.html") }))
 );
 ```
 

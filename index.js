@@ -60,6 +60,17 @@ const addWebpackAlias = alias => config => {
   return config;
 };
 
+const adjustWorkbox = adjust => config => {
+  const { GenerateSW } = require("workbox-webpack-plugin");
+
+  config.plugins.forEach(p => {
+    if (p instanceof GenerateSW) {
+      adjust(p.config);
+    }
+  });
+  return config;
+};
+
 const override = (...plugins) => flow(...plugins.filter(f => f));
 
 module.exports = {
@@ -68,5 +79,6 @@ module.exports = {
   addBabelPlugin,
   addDecoratorsLegacy,
   disableEsLint,
-  addWebpackAlias
+  addWebpackAlias,
+  adjustWorkbox
 };
