@@ -23,7 +23,7 @@ yarn add customize-cra --dev
 > "Stuff can break"
 > \- Dan Abramov
 
-Using this library will override default behavior and configuration of create-react-app, and therefore invalidate the guarentees that come with it. Use with discretion!
+Using this library will override default behavior and configuration of create-react-app, and therefore invalidate the guarantees that come with it. Use with discretion!
 
 ## Overview
 
