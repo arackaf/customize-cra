@@ -61,10 +61,8 @@ const addWebpackAlias = alias => config => {
 };
 
 const adjustWorkbox = adjust => config => {
-  const { GenerateSW } = require("workbox-webpack-plugin");
-
   config.plugins.forEach(p => {
-    if (p instanceof GenerateSW) {
+    if (p.constructor.name === "GenerateSW") {
       adjust(p.config);
     }
   });
