@@ -90,6 +90,21 @@ const useEslintRc = () => config => {
 
 const override = (...plugins) => flow(...plugins.filter(f => f));
 
+const addBabelPlugins = (...plugins) => plugins.map(p => addBabelPlugin(p));
+
+const fixBabelImports = (libraryName, options) =>
+  addBabelPlugin([
+    'import',
+    Object.assign(
+      {},
+      {
+        libraryName
+      },
+      options
+    ),
+    `fix-${libraryName}-imports`
+  ]);
+
 module.exports = {
   override,
   addBundleVisualizer,
@@ -98,5 +113,7 @@ module.exports = {
   disableEsLint,
   addWebpackAlias,
   adjustWorkbox,
-  useEslintRc
+  useEslintRc,
+  addBabelPlugins,
+  fixBabelImports
 };
