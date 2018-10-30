@@ -69,6 +69,25 @@ const adjustWorkbox = adjust => config => {
   return config;
 };
 
+const useEslintRc = () => config => {
+  const eslintRule = config.module.rules.filter(
+    r => r.use && r.use.some(u => u.options && u.options.useEslintrc !== void 0)
+  )[0];
+  
+  eslintRule.use[0].options.useEslintrc = true;
+  delete eslintRule.use[0].options.baseConfig;
+  
+  const rules = config.module.rules.map(
+    r =>
+      r.use && r.use.some(u => u.options && u.options.useEslintrc !== void 0)
+        ? eslintRule
+        : r
+  );
+  config.module.rules = rules;
+  
+  return config;
+};
+
 const override = (...plugins) => flow(...plugins.filter(f => f));
 
 const addBabelPlugins = (...plugins) => plugins.map(p => addBabelPlugin(p));
@@ -94,6 +113,7 @@ module.exports = {
   disableEsLint,
   addWebpackAlias,
   adjustWorkbox,
+  useEslintRc,
   addBabelPlugins,
   fixBabelImports
 };
