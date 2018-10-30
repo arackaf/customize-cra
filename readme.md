@@ -37,6 +37,29 @@ The functions documented below can be imported by name, and used in your `config
 
 Adds a babel plugin. Whatever you pass for `plugin` will be added to Babel's `plugins` array. Consult their docs for more info.
 
+### addBabelPlugins(plugins)
+
+A simple helper that calls `addBabelPlugin` for each plugin you pass in here. Make sure you use the spread operator when using this, for example
+
+```js
+module.exports = override(
+  disableEsLint(),
+  ...addBabelPlugins("polished", "emotion", "babel-plugin-transform-do-expressions"),
+  fixBabelImports("lodash", {
+    libraryDirectory: "",
+    camel2DashComponentName: false
+  }),
+  fixBabelImports("react-feather", {
+    libraryName: "react-feather",
+    libraryDirectory: "dist/icons"
+  })
+);
+```
+
+### fixBabelImports(libraryName, options)
+
+Adds the [babel-plugin-import plugin](https://www.npmjs.com/package/babel-plugin-import). See above for an example.
+
 ### addDecoratorsLegacy()
 
 Add decorators in legacy mode. Be sure to have `@babel/plugin-proposal-decorators` installed.
@@ -44,6 +67,10 @@ Add decorators in legacy mode. Be sure to have `@babel/plugin-proposal-decorator
 ### disableEsLint()
 
 Does what it says. You may need this along with `addDecoratorsLegacy` in order to get decorators and exports to parse together.
+
+### useEslintRc()
+
+Causes your .eslintrc file to be used, rather than the config cra ships with.
 
 ### addWebpackAlias(alias)
 
