@@ -93,6 +93,10 @@ which can be overridden with the (optional) options argument.
 
 Adjusts Workbox configuration. Pass a function which will be called with the current Workbox configuration, in which you can mutate the config object as needed. See below for an example.
 
+```js
+adjustWorkbox(wb => Object.assign(wb, { skipWaiting: true, exclude: (wb.exclude || []).concat("index.html") }));
+```
+
 ## Using the plugins
 
 To use these plugins, import the `override` function, and call it with whatever plugins you need. Each of these plugin invocations will return a new function, that `override` will call with the newly modified config object. Falsy values will be ignored though, so if you need to conditionally apply any of these plugins, you can do so like below.
