@@ -74,6 +74,19 @@ Add decorators in legacy mode. Be sure to have `@babel/plugin-proposal-decorator
 
 Does what it says. You may need this along with `addDecoratorsLegacy` in order to get decorators and exports to parse together.
 
+If you want use `@babel/plugin-proposal-decorators` with EsLint, you can enable `useEslintRc` with the follow configuration in your `.eslintrc` or `package.json`:
+
+```json
+{
+  "extends": "react-app",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "legacyDecotators": true
+    }
+  }
+}
+```
+
 ### useEslintRc()
 
 Causes your .eslintrc file to be used, rather than the config CRA ships with.
