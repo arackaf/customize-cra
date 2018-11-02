@@ -47,17 +47,17 @@ A simple helper that calls `addBabelPlugin` for each plugin you pass in here. Ma
 module.exports = override(
   disableEsLint(),
   ...addBabelPlugins(
-    'polished',
-    'emotion',
-    'babel-plugin-transform-do-expressions'
+    "polished",
+    "emotion",
+    "babel-plugin-transform-do-expressions"
   ),
-  fixBabelImports('lodash', {
-    libraryDirectory: '',
-    camel2DashComponentName: false,
+  fixBabelImports("lodash", {
+    libraryDirectory: "",
+    camel2DashComponentName: false
   }),
-  fixBabelImports('react-feather', {
-    libraryName: 'react-feather',
-    libraryDirectory: 'dist/icons',
+  fixBabelImports("react-feather", {
+    libraryName: "react-feather",
+    libraryDirectory: "dist/icons"
   })
 );
 ```
@@ -132,7 +132,12 @@ which can be overridden with the (optional) options argument.
 Adjusts Workbox configuration. Pass a function which will be called with the current Workbox configuration, in which you can mutate the config object as needed. See below for an example.
 
 ```js
-adjustWorkbox(wb => Object.assign(wb, { skipWaiting: true, exclude: (wb.exclude || []).concat("index.html") }));
+adjustWorkbox(wb =>
+  Object.assign(wb, {
+    skipWaiting: true,
+    exclude: (wb.exclude || []).concat("index.html")
+  })
+);
 ```
 
 ## Using the plugins
@@ -148,21 +153,21 @@ const {
   disableEsLint,
   addBundleVisualizer,
   addWebpackAlias,
-  adjustWorkbox,
-} = require('customize-cra');
-const path = require('path');
+  adjustWorkbox
+} = require("customize-cra");
+const path = require("path");
 
 module.exports = override(
   addDecoratorsLegacy(),
   disableEsLint(),
   process.env.BUNDLE_VISUALIZE == 1 && addBundleVisualizer(),
   addWebpackAlias({
-    ['ag-grid-react$']: path.resolve(__dirname, 'src/shared/agGridWrapper.js'),
+    ["ag-grid-react$"]: path.resolve(__dirname, "src/shared/agGridWrapper.js")
   }),
   adjustWorkbox(wb =>
     Object.assign(wb, {
       skipWaiting: true,
-      exclude: (wb.exclude || []).concat('index.html'),
+      exclude: (wb.exclude || []).concat("index.html")
     })
   )
 );

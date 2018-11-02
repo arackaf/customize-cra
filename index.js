@@ -2,7 +2,8 @@ const curry = require("lodash.curry");
 const flow = require("lodash.flow");
 
 const addBundleVisualizer = (options = {}) => config => {
-  const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+  const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+    .BundleAnalyzerPlugin;
 
   config.plugins.push(
     new BundleAnalyzerPlugin(
@@ -19,11 +20,16 @@ const addBundleVisualizer = (options = {}) => config => {
 };
 
 const addBabelPlugin = plugin => config => {
-  const babelLoaderFilter = rule => rule.loader && rule.loader.includes("babel") && rule.options && rule.options.plugins;
+  const babelLoaderFilter = rule =>
+    rule.loader &&
+    rule.loader.includes("babel") &&
+    rule.options &&
+    rule.options.plugins;
 
   // First, try to find the babel loader inside the oneOf array.
   // This is where we can find it when working with react-scripts@2.0.3.
-  let loaders = config.module.rules.find(rule => Array.isArray(rule.oneOf)).oneOf;
+  let loaders = config.module.rules.find(rule => Array.isArray(rule.oneOf))
+    .oneOf;
 
   let babelLoader = loaders.find(babelLoaderFilter);
 
@@ -39,10 +45,15 @@ const addBabelPlugin = plugin => config => {
   return config;
 };
 
-const addDecoratorsLegacy = () => config => addBabelPlugin(["@babel/plugin-proposal-decorators", { legacy: true }])(config);
+const addDecoratorsLegacy = () => config =>
+  addBabelPlugin(["@babel/plugin-proposal-decorators", { legacy: true }])(
+    config
+  );
 
 const disableEsLint = () => config => {
-  let eslintRules = config.module.rules.filter(r => r.use && r.use.some(u => u.options && u.options.useEslintrc != void 0));
+  let eslintRules = config.module.rules.filter(
+    r => r.use && r.use.some(u => u.options && u.options.useEslintrc != void 0)
+  );
   eslintRules.forEach(rule => {
     config.module.rules = config.module.rules.filter(r => r !== rule);
   });
@@ -73,10 +84,10 @@ const useEslintRc = () => config => {
   const eslintRule = config.module.rules.filter(
     r => r.use && r.use.some(u => u.options && u.options.useEslintrc !== void 0)
   )[0];
-  
+
   eslintRule.use[0].options.useEslintrc = true;
   delete eslintRule.use[0].options.baseConfig;
-  
+
   const rules = config.module.rules.map(
     r =>
       r.use && r.use.some(u => u.options && u.options.useEslintrc !== void 0)
@@ -84,15 +95,14 @@ const useEslintRc = () => config => {
         : r
   );
   config.module.rules = rules;
-  
+
   return config;
 };
 
-
-const useBabelRc = plugin => config => {
+const useBabelRc = () => config => {
   const babelLoaderFilter = rule =>
     rule.loader &&
-    rule.loader.includes('babel') &&
+    rule.loader.includes("babel") &&
     rule.options &&
     rule.options.plugins;
 
@@ -121,7 +131,7 @@ const addBabelPlugins = (...plugins) => plugins.map(p => addBabelPlugin(p));
 
 const fixBabelImports = (libraryName, options) =>
   addBabelPlugin([
-    'import',
+    "import",
     Object.assign(
       {},
       {
