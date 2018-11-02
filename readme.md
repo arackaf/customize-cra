@@ -44,16 +44,16 @@ A simple helper that calls `addBabelPlugin` for each plugin you pass in here. Ma
 ```js
 module.exports = override(
   disableEsLint(),
-  ...addBabelPlugins("polished", "emotion", "babel-plugin-transform-do-expressions"),
-  fixBabelImports("lodash", {
-    libraryDirectory: "",
-    camel2DashComponentName: false
+  ...addBabelPlugins('polished', 'emotion', 'babel-plugin-transform-do-expressions'),
+  fixBabelImports('lodash', {
+    libraryDirectory: '',
+    camel2DashComponentName: false,
   }),
-  fixBabelImports("react-feather", {
-    libraryName: "react-feather",
-    libraryDirectory: "dist/icons"
+  fixBabelImports('react-feather', {
+    libraryName: 'react-feather',
+    libraryDirectory: 'dist/icons',
   })
-);
+)
 ```
 
 ### fixBabelImports(libraryName, options)
@@ -67,6 +67,19 @@ Add decorators in legacy mode. Be sure to have `@babel/plugin-proposal-decorator
 ### disableEsLint()
 
 Does what it says. You may need this along with `addDecoratorsLegacy` in order to get decorators and exports to parse together.
+
+If you want use `@babel/plugin-proposal-decorators` with EsLint, you can enable `useEslintRc` with the follow configuration in your `.eslintrc` or `package.json`:
+
+```json
+{
+  "extends": "react-app",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "legacyDecotators": true
+    }
+  }
+}
+```
 
 ### useEslintRc()
 
@@ -94,7 +107,9 @@ which can be overridden with the (optional) options argument.
 Adjusts Workbox configuration. Pass a function which will be called with the current Workbox configuration, in which you can mutate the config object as needed. See below for an example.
 
 ```js
-adjustWorkbox(wb => Object.assign(wb, { skipWaiting: true, exclude: (wb.exclude || []).concat("index.html") }));
+adjustWorkbox(wb =>
+  Object.assign(wb, { skipWaiting: true, exclude: (wb.exclude || []).concat('index.html') })
+)
 ```
 
 ## Using the plugins
@@ -104,16 +119,25 @@ To use these plugins, import the `override` function, and call it with whatever 
 For example
 
 ```js
-const { override, addDecoratorsLegacy, disableEsLint, addBundleVisualizer, addWebpackAlias, adjustWorkbox } = require("customize-cra");
-const path = require("path");
+const {
+  override,
+  addDecoratorsLegacy,
+  disableEsLint,
+  addBundleVisualizer,
+  addWebpackAlias,
+  adjustWorkbox,
+} = require('customize-cra')
+const path = require('path')
 
 module.exports = override(
   addDecoratorsLegacy(),
   disableEsLint(),
   process.env.BUNDLE_VISUALIZE == 1 && addBundleVisualizer(),
-  addWebpackAlias({ ["ag-grid-react$"]: path.resolve(__dirname, "src/shared/agGridWrapper.js") }),
-  adjustWorkbox(wb => Object.assign(wb, { skipWaiting: true, exclude: (wb.exclude || []).concat("index.html") }))
-);
+  addWebpackAlias({ ['ag-grid-react$']: path.resolve(__dirname, 'src/shared/agGridWrapper.js') }),
+  adjustWorkbox(wb =>
+    Object.assign(wb, { skipWaiting: true, exclude: (wb.exclude || []).concat('index.html') })
+  )
+)
 ```
 
 ## MobX Users
