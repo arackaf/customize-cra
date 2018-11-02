@@ -1,6 +1,7 @@
 # customize-cra
 
-This project piggybacks on [`react-app-rewired`](https://github.com/timarney/react-app-rewired/) to customize create-react-app for version 2.0 and higher.
+This project provides a set of utilities to customize the Create React App v2
+configurations leveraging [`react-app-rewired`](https://github.com/timarney/react-app-rewired/) core functionalities.
 
 ## How to install
 
@@ -35,7 +36,8 @@ The functions documented below can be imported by name, and used in your `config
 
 ### addBabelPlugin(plugin)
 
-Adds a babel plugin. Whatever you pass for `plugin` will be added to Babel's `plugins` array. Consult their docs for more info.
+Adds a babel plugin. Whatever you pass for `plugin` will be added to Babel's `plugins` array. Consult their docs for more info.  
+Note that this rewirer will not add the plugin to the `yarn test`'s Babel configuration. See `useBabelRc()` to learn more.
 
 ### addBabelPlugins(plugins)
 
@@ -44,14 +46,18 @@ A simple helper that calls `addBabelPlugin` for each plugin you pass in here. Ma
 ```js
 module.exports = override(
   disableEsLint(),
-  ...addBabelPlugins("polished", "emotion", "babel-plugin-transform-do-expressions"),
-  fixBabelImports("lodash", {
-    libraryDirectory: "",
-    camel2DashComponentName: false
+  ...addBabelPlugins(
+    'polished',
+    'emotion',
+    'babel-plugin-transform-do-expressions'
+  ),
+  fixBabelImports('lodash', {
+    libraryDirectory: '',
+    camel2DashComponentName: false,
   }),
-  fixBabelImports("react-feather", {
-    libraryName: "react-feather",
-    libraryDirectory: "dist/icons"
+  fixBabelImports('react-feather', {
+    libraryName: 'react-feather',
+    libraryDirectory: 'dist/icons',
   })
 );
 ```
@@ -70,7 +76,7 @@ Does what it says. You may need this along with `addDecoratorsLegacy` in order t
 
 ### useEslintRc()
 
-Causes your .eslintrc file to be used, rather than the config cra ships with.
+Causes your .eslintrc file to be used, rather than the config CRA ships with.
 
 ### addWebpackAlias(alias)
 
@@ -79,6 +85,25 @@ Adds the provided alias info into webpack's alias section. Pass an object litera
 ### addBundleVisualizer(options)
 
 Adds the bundle visualizer plugin to your webpack config. Be sure to have `webpack-bundle-analyzer` installed. By default, the options passed to the plugin will be
+
+### useBabelRc()
+
+Causes your .babelrc (or .babelrc.js) file to be used, this is especially useful
+if you'd rather override the CRA babel configuration and make sure it is consumed
+both by `yarn start` and `yarn test` (along with `yarn build`).
+
+```js
+// config-overrides.js
+module.exports = override(
+  useBabelRc()
+);
+
+// .babelrc
+{
+  "presets": ["babel-preset-react-app"],
+  "plugins": ["emotion"]
+}
+```
 
 ```js
 {
@@ -104,15 +129,29 @@ To use these plugins, import the `override` function, and call it with whatever 
 For example
 
 ```js
-const { override, addDecoratorsLegacy, disableEsLint, addBundleVisualizer, addWebpackAlias, adjustWorkbox } = require("customize-cra");
-const path = require("path");
+const {
+  override,
+  addDecoratorsLegacy,
+  disableEsLint,
+  addBundleVisualizer,
+  addWebpackAlias,
+  adjustWorkbox,
+} = require('customize-cra');
+const path = require('path');
 
 module.exports = override(
   addDecoratorsLegacy(),
   disableEsLint(),
   process.env.BUNDLE_VISUALIZE == 1 && addBundleVisualizer(),
-  addWebpackAlias({ ["ag-grid-react$"]: path.resolve(__dirname, "src/shared/agGridWrapper.js") }),
-  adjustWorkbox(wb => Object.assign(wb, { skipWaiting: true, exclude: (wb.exclude || []).concat("index.html") }))
+  addWebpackAlias({
+    ['ag-grid-react$']: path.resolve(__dirname, 'src/shared/agGridWrapper.js'),
+  }),
+  adjustWorkbox(wb =>
+    Object.assign(wb, {
+      skipWaiting: true,
+      exclude: (wb.exclude || []).concat('index.html'),
+    })
+  )
 );
 ```
 
