@@ -70,11 +70,15 @@ Adds the [babel-plugin-import plugin](https://www.npmjs.com/package/babel-plugin
 
 Add decorators in legacy mode. Be sure to have `@babel/plugin-proposal-decorators` installed.
 
+### useBabelRc()
+
+Use a .babelrc file for Babel configuration.
+
 ### disableEsLint()
 
 Does what it says. You may need this along with `addDecoratorsLegacy` in order to get decorators and exports to parse together.
 
-If you want use `@babel/plugin-proposal-decorators` with EsLint, you can enable `useEslintRc` with the follow configuration in your `.eslintrc` or `package.json`:
+If you want use `@babel/plugin-proposal-decorators` with EsLint, you can enable `useEslintRc`, described below, with the follow configuration in your `.eslintrc` or `package.json`:
 
 ```json
 {
