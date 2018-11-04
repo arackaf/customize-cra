@@ -99,9 +99,23 @@ Causes your .eslintrc file to be used, rather than the config CRA ships with.
 
 Adds the provided alias info into webpack's alias section. Pass an object literal with as many entries as you'd like, and the whole object will be merged in.
 
-### addBundleVisualizer(options)
+### addBundleVisualizer(options, behindFlag = false)
 
-Adds the bundle visualizer plugin to your webpack config. Be sure to have `webpack-bundle-analyzer` installed. By default, the options passed to the plugin will be
+Adds the bundle visualizer plugin to your webpack config. Be sure to have `webpack-bundle-analyzer` installed. By default, the options passed to the plugin will be:
+
+```json
+{
+  "analyzerMode": "static",
+  "reportFilename": "report.html"
+}
+```
+
+You can hide this plugin behind a command line flag (`--analyze`) by passing `true` as second argument.
+
+```js
+addBundleVisualizer({}, true)
+```
+
 
 ### useBabelRc()
 
