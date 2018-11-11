@@ -95,6 +95,10 @@ If you want use `@babel/plugin-proposal-decorators` with EsLint, you can enable 
 
 Causes your .eslintrc file to be used, rather than the config CRA ships with.
 
+### enableEslintTypescript()
+
+Updates Webpack eslint-loader to lint both .js(x) and .ts(x) files and show linting errors/warnings in console.
+
 ### addWebpackAlias(alias)
 
 Adds the provided alias info into webpack's alias section. Pass an object literal with as many entries as you'd like, and the whole object will be merged in.
