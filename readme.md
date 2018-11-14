@@ -117,9 +117,8 @@ Adds the bundle visualizer plugin to your webpack config. Be sure to have `webpa
 You can hide this plugin behind a command line flag (`--analyze`) by passing `true` as second argument.
 
 ```js
-addBundleVisualizer({}, true)
+addBundleVisualizer({}, true);
 ```
-
 
 ### useBabelRc()
 
@@ -198,3 +197,36 @@ module.exports = override(
 ## MobX Users
 
 If you want CRA 2 to work with MobX, use the `addDecoratorsLegacy` and `disableEsLint`.
+
+## Override dev server configuration
+
+To override the webpack dev server configuration, you can use the `overrideDevServer` utility:
+
+```js
+const {
+  override,
+  disableEsLint,
+  overrideDevServer,
+  watchAll
+} = require("customize-cra");
+
+module.exports = {
+  webpack: override(
+    // usual webpack plugin
+    disableEsLint()
+  ),
+  devServer: overrideDevServer(
+    // dev server plugin
+    watchAll()
+  )
+};
+```
+
+### watchAll()
+
+When applied, CRA will watch all the project's files, included `node_modules`.  
+To use it, just apply it and run the dev server with `yarn start --watch-all`.
+
+```js
+watchAll()
+```
