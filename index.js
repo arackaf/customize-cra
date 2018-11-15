@@ -219,7 +219,8 @@ const addLessLoader = (loaderOptions = {}) => config => {
   // Insert less-loader as the penultimate item of loaders (before file-loader)
   loaders.splice(loaders.length - 2, 0, {
     test: /\.less$/,
-    use: lessLoader
+    use: lessLoader,
+    sideEffects: mode === 'prod'
   });
 
   return config;
