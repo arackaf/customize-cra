@@ -203,7 +203,7 @@ module.exports = override(
 
 Check [Less document](http://lesscss.org/usage/#command-line-usage-options) for all available specific options you can use.
 
-Once `less-loader` is enabled, you can import `.less` file whether you like.
+Once `less-loader` is enabled, you can import `.less` file in your project.
 
 ## Using the plugins
 
