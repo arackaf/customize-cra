@@ -36,7 +36,7 @@ The functions documented below can be imported by name, and used in your `config
 
 ### addBabelPlugin(plugin)
 
-Adds a babel plugin. Whatever you pass for `plugin` will be added to Babel's `plugins` array. Consult their docs for more info.
+Adds a babel plugin. Whatever you pass for `plugin` will be added to Babel's `plugins` array. Consult their docs for more info.  
 Note that this rewirer will not add the plugin to the `yarn test`'s Babel configuration. See `useBabelRc()` to learn more.
 
 ### addBabelPlugins(plugins)
