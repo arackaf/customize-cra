@@ -161,6 +161,49 @@ adjustWorkbox(wb =>
 );
 ```
 
+### addLessLoader(loaderOptions)
+
+First, install `less` and `less-loader` packages:
+
+```bash
+yarn add less
+yarn add --dev less-loader
+```
+
+or:
+
+```bash
+npm i less
+npm i -D less-loader
+```
+
+After it's done, call `addLessLoader` in `override` like below:
+
+```js
+const { addLessLoader } = require('customize-cra');
+
+module.exports = override(
+  addLessLoader(loaderOptions)
+);
+```
+
+`loaderOptions` is optional. If you have Less specific options, you can pass to it. For example:
+
+```js
+const { addLessLoader } = require('customize-cra');
+
+module.exports = override(
+  addLessLoader({
+    strictMath: true,
+    noIeCompat: true
+  })
+);
+```
+
+Check [Less document](http://lesscss.org/usage/#command-line-usage-options) for all available specific options you can use.
+
+Once `less-loader` is enabled, you can import `.less` file in your project.
+
 ## Using the plugins
 
 To use these plugins, import the `override` function, and call it with whatever plugins you need. Each of these plugin invocations will return a new function, that `override` will call with the newly modified config object. Falsy values will be ignored though, so if you need to conditionally apply any of these plugins, you can do so like below.
