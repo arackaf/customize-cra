@@ -7,7 +7,7 @@ const addBundleVisualizer = (options = {}, behindFlag = false) => config => {
 
   // if behindFlag is set to true, the report will be created only if
   // the `--analyze` flag is added to the `yarn build` command
-  if (behindFlag ? process.argv.includes('--analyze') : true) {
+  if (behindFlag ? process.argv.includes("--analyze") : true) {
     config.plugins.push(
       new BundleAnalyzerPlugin(
         Object.assign(
@@ -92,11 +92,10 @@ const useEslintRc = () => config => {
   eslintRule.use[0].options.useEslintrc = true;
   delete eslintRule.use[0].options.baseConfig;
 
-  const rules = config.module.rules.map(
-    r =>
-      r.use && r.use.some(u => u.options && u.options.useEslintrc !== void 0)
-        ? eslintRule
-        : r
+  const rules = config.module.rules.map(r =>
+    r.use && r.use.some(u => u.options && u.options.useEslintrc !== void 0)
+      ? eslintRule
+      : r
   );
   config.module.rules = rules;
 
@@ -110,16 +109,15 @@ const enableEslintTypescript = () => config => {
 
   eslintRule.test = /\.([j,t]sx?|mjs)$/;
 
-  const rules = config.module.rules.map(
-    r =>
-      r.use && r.use.some(u => u.options && u.options.useEslintrc !== void 0)
-        ? eslintRule
-        : r
+  const rules = config.module.rules.map(r =>
+    r.use && r.use.some(u => u.options && u.options.useEslintrc !== void 0)
+      ? eslintRule
+      : r
   );
   config.module.rules = rules;
 
   return config;
-}
+};
 
 const useBabelRc = () => config => {
   const babelLoaderFilter = rule =>
@@ -164,6 +162,27 @@ const fixBabelImports = (libraryName, options) =>
     `fix-${libraryName}-imports`
   ]);
 
+// Use this helper to override the webpack dev server settings
+//  it works just like the `override` utility
+const overrideDevServer = (...plugins) => configFunction => (
+  proxy,
+  allowedHost
+) => {
+  const config = configFunction(proxy, allowedHost);
+  const updatedConfig = override(...plugins)(config);
+  return updatedConfig;
+};
+
+// to be used inside `overrideDevServer`, makes CRA watch all the folders
+// included `node_modules`, useful when you are working with linked packages
+// usage: `yarn start --watch-all`
+const watchAll = () => config => {
+  if (process.argv.includes("--watch-all")) {
+    delete config.watchOptions;
+  }
+  return config;
+};
+
 module.exports = {
   override,
   addBundleVisualizer,
@@ -176,5 +195,7 @@ module.exports = {
   enableEslintTypescript,
   addBabelPlugins,
   fixBabelImports,
-  useBabelRc
+  useBabelRc,
+  overrideDevServer,
+  watchAll,
 };
