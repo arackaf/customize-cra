@@ -2,6 +2,7 @@
   "name": "customize-cra",
   "version": "0.2.5",
   "description": "",
+  "repository": "arackaf/customize-cra",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
