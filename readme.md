@@ -85,7 +85,7 @@ If you want use `@babel/plugin-proposal-decorators` with EsLint, you can enable 
   "extends": "react-app",
   "parserOptions": {
     "ecmaFeatures": {
-      "legacyDecotators": true
+      "legacyDecorators": true
     }
   }
 }
@@ -180,17 +180,15 @@ npm i -D less-loader
 After it's done, call `addLessLoader` in `override` like below:
 
 ```js
-const { addLessLoader } = require('customize-cra');
+const { addLessLoader } = require("customize-cra");
 
-module.exports = override(
-  addLessLoader(loaderOptions)
-);
+module.exports = override(addLessLoader(loaderOptions));
 ```
 
 `loaderOptions` is optional. If you have Less specific options, you can pass to it. For example:
 
 ```js
-const { addLessLoader } = require('customize-cra');
+const { addLessLoader } = require("customize-cra");
 
 module.exports = override(
   addLessLoader({
@@ -271,5 +269,5 @@ When applied, CRA will watch all the project's files, included `node_modules`.
 To use it, just apply it and run the dev server with `yarn start --watch-all`.
 
 ```js
-watchAll()
+watchAll();
 ```
