@@ -51,6 +51,11 @@ const addBabelPlugin = plugin => config => {
   return config;
 };
 
+const addBabelPreset = preset => config => {
+  getBabelLoader(config).options.presets.push(preset);
+  return config;
+};
+
 const addDecoratorsLegacy = () => config =>
   addBabelPlugin(["@babel/plugin-proposal-decorators", { legacy: true }])(
     config
@@ -134,6 +139,8 @@ const babelInclude = include => config => {
 const override = (...plugins) => flow(...plugins.filter(f => f));
 
 const addBabelPlugins = (...plugins) => plugins.map(p => addBabelPlugin(p));
+
+const addBabelPresets = (...plugins) => plugins.map(p => addBabelPreset(p));
 
 const fixBabelImports = (libraryName, options) =>
   addBabelPlugin([
@@ -245,5 +252,7 @@ module.exports = {
   addLessLoader,
   overrideDevServer,
   watchAll,
-  babelInclude
+  babelInclude,
+  addBabelPreset,
+  addBabelPresets
 };
