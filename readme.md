@@ -36,7 +36,7 @@ The functions documented below can be imported by name, and used in your `config
 
 ### addBabelPlugin(plugin)
 
-Adds a babel plugin. Whatever you pass for `plugin` will be added to Babel's `plugins` array. Consult their docs for more info.  
+Adds a babel plugin. Whatever you pass for `plugin` will be added to Babel's `plugins` array. Consult their docs for more info.
 Note that this rewirer will not add the plugin to the `yarn test`'s Babel configuration. See `useBabelRc()` to learn more.
 
 ### addBabelPlugins(plugins)
@@ -59,6 +59,48 @@ module.exports = override(
     libraryName: "react-feather",
     libraryDirectory: "dist/icons"
   })
+);
+```
+
+### addBabelPresets(preset)
+
+Adds a babel plugin. Whatever you pass for `preset` will be added to Babel's `preset` array. Consult their docs for more info.
+Note that this rewirer will not add the preset to the `yarn test`'s Babel configuration. See `useBabelRc()` to learn more.
+
+### addBabelPresets(presets)
+
+A simple helper that calls `addBabelPreset` for each preset you pass in here. Make sure you use the spread operator when using this, for example
+
+```js
+module.exports = override(
+  ...addBabelPresets([
+    [
+      "@babel/env",
+      {
+        targets: {
+          browsers: ["> 1%", "last 2 versions"]
+        },
+        modules: "commonjs"
+      }
+    ],
+    "@babel/preset-flow",
+    "@babel/preset-react"
+  ])
+);
+```
+
+### babelInclude
+
+Overwites the `include` option for babel loader, for when you need to transpile a module in your `node_modules` folder.
+
+```js
+module.exports = override(
+  babelInclude([
+    path.resolve('src'), // make sure you link your own source
+    path.resolve('node_modules/native-base-shoutem-theme'),
+    path.resolve('node_modules/react-navigation'),
+    path.resolve('node_modules/react-native-easy-grid')
+  ])
 );
 ```
 
@@ -265,7 +307,7 @@ module.exports = {
 
 ### watchAll()
 
-When applied, CRA will watch all the project's files, included `node_modules`.  
+When applied, CRA will watch all the project's files, included `node_modules`.
 To use it, just apply it and run the dev server with `yarn start --watch-all`.
 
 ```js
