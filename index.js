@@ -1,4 +1,3 @@
-const curry = require("lodash.curry");
 const flow = require("lodash.flow");
 
 const addBundleVisualizer = (options = {}, behindFlag = false) => config => {
@@ -25,10 +24,10 @@ const addBundleVisualizer = (options = {}, behindFlag = false) => config => {
 
 const getBabelLoader = config => {
   const babelLoaderFilter = rule =>
-  rule.loader &&
-  rule.loader.includes("babel") &&
-  rule.options &&
-  rule.options.plugins;
+    rule.loader &&
+    rule.loader.includes("babel") &&
+    rule.options &&
+    rule.options.plugins;
 
   // First, try to find the babel loader inside the oneOf array.
   // This is where we can find it when working with react-scripts@2.0.3.
