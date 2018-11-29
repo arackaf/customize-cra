@@ -10,7 +10,6 @@
   "author": "Adam Rackis",
   "license": "MIT",
   "dependencies": {
-    "lodash.curry": "^4.1.1",
     "lodash.flow": "^3.5.0"
   }
 }
