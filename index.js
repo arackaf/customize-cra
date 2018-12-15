@@ -267,5 +267,6 @@ module.exports = {
   watchAll,
   babelInclude,
   addBabelPreset,
-  addBabelPresets
+  addBabelPresets,
+  disableChunk
 };
