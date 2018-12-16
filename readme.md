@@ -96,10 +96,10 @@ Overwites the `include` option for babel loader, for when you need to transpile 
 ```js
 module.exports = override(
   babelInclude([
-    path.resolve('src'), // make sure you link your own source
-    path.resolve('node_modules/native-base-shoutem-theme'),
-    path.resolve('node_modules/react-navigation'),
-    path.resolve('node_modules/react-native-easy-grid')
+    path.resolve("src"), // make sure you link your own source
+    path.resolve("node_modules/native-base-shoutem-theme"),
+    path.resolve("node_modules/react-navigation"),
+    path.resolve("node_modules/react-native-easy-grid")
   ])
 );
 ```
@@ -243,6 +243,10 @@ module.exports = override(
 Check [Less document](http://lesscss.org/usage/#command-line-usage-options) for all available specific options you can use.
 
 Once `less-loader` is enabled, you can import `.less` file in your project.
+
+### disableChunk
+
+Prevents the default static chunking, and forces the entire build into one file. See [this thread](https://github.com/facebook/create-react-app/issues/5306) for more info.
 
 ## Using the plugins
 
