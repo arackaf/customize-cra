@@ -317,3 +317,21 @@ To use it, just apply it and run the dev server with `yarn start --watch-all`.
 ```js
 watchAll();
 ```
+
+### add post-css plugins
+
+To add post-css plugins, you can use `addPostcssPlugins`.
+
+```js
+const {
+  override,
+  addPostcssPlugins
+} = require("customize-cra");
+
+module.exports = override(
+  addPostcssPlugins([
+    require('postcss-px2rem')({ remUnit: 37.5 })
+  ]),
+);
+
+```
