@@ -96,6 +96,7 @@ const useEslintRc = () => config => {
   )[0];
 
   eslintRule.use[0].options.useEslintrc = true;
+  eslintRule.use[0].options.ignore = true;
   delete eslintRule.use[0].options.baseConfig;
 
   const rules = config.module.rules.map(r =>
