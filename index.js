@@ -287,5 +287,6 @@ module.exports = {
   addBabelPreset,
   addBabelPresets,
   disableChunk,
-  addPostcssPlugins
+  addPostcssPlugins,
+  getBabelLoader
 };
