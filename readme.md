@@ -133,9 +133,10 @@ If you want use `@babel/plugin-proposal-decorators` with EsLint, you can enable 
 }
 ```
 
-### useEslintRc()
+### useEslintRc(configFile)
 
 Causes your .eslintrc file to be used, rather than the config CRA ships with.
+`configFile` is an optional parameter that allows to specify the exact path to the ESLint configuration file.
 
 ### enableEslintTypescript()
 
