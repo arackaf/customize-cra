@@ -345,3 +345,18 @@ module.exports = override(
 );
 
 ```
+
+### addTslintLoader(loaderOptions)
+
+Need to install `ts-loader`.
+
+```js
+const {
+  addTslintLoader
+} = require("customize-cra");
+
+module.exports = override(
+  addTslintLoader(),
+);
+
+```

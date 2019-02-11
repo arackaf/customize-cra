@@ -293,10 +293,11 @@ const removeModuleScopePlugin = () => config => {
   return config;
 };
 
-const addTslintLoader = () => config => {
+const addTslintLoader = (options) => config => {
   config.module.rules.unshift({
     test: /\.(ts|tsx)$/,
     loader: require.resolve("tslint-loader"),
+    options,
     enforce: "pre",
   });
   return config;
