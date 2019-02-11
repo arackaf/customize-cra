@@ -293,6 +293,15 @@ const removeModuleScopePlugin = () => config => {
   return config;
 };
 
+const addTslintLoader = () => config => {
+  config.module.rules.unshift({
+    test: /\.(ts|tsx)$/,
+    loader: require.resolve("tslint-loader"),
+    enforce: "pre",
+  });
+  return config;
+};
+
 module.exports = {
   override,
   addBundleVisualizer,
@@ -315,5 +324,6 @@ module.exports = {
   disableChunk,
   addPostcssPlugins,
   getBabelLoader,
-  removeModuleScopePlugin
+  removeModuleScopePlugin,
+  addTslintLoader,
 };
