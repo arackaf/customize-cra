@@ -282,6 +282,15 @@ module.exports = override(
 );
 ```
 
+## removeModuleScopePlugin()
+
+This will remove the CRA plugin that prevents to import modules from
+outside the `src` directory, useful if you use a different directory.
+
+A common use case is if you are using CRA in a monorepo setup, where your packages
+are under `packages/` rather than `src/`.
+
+
 ## MobX Users
 
 If you want CRA 2 to work with MobX, use the `addDecoratorsLegacy` and `disableEsLint`.
