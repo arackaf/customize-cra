@@ -236,7 +236,8 @@ const { addLessLoader } = require("customize-cra");
 module.exports = override(
   addLessLoader({
     strictMath: true,
-    noIeCompat: true
+    noIeCompat: true,
+    localIdentName: '[local]--[hash:base64:5]' // if you use CSS Modules, and custom `localIdentName`, default is '[local]--[hash:base64:5]'.
   })
 );
 ```
@@ -244,6 +245,8 @@ module.exports = override(
 Check [Less document](http://lesscss.org/usage/#command-line-usage-options) for all available specific options you can use.
 
 Once `less-loader` is enabled, you can import `.less` file in your project.
+
+`.module.less` will use CSS Modules.
 
 ### disableChunk
 
