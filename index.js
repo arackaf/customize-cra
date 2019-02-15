@@ -81,6 +81,14 @@ const addWebpackAlias = alias => config => {
   return config;
 };
 
+const addWebpackResolve = resolve => config => {
+  if (!config.resolve) {
+    config.resolve = {};
+  }
+  Object.assign(config.resolve, resolve);
+  return config;
+}
+
 const adjustWorkbox = adjust => config => {
   config.plugins.forEach(p => {
     if (p.constructor.name === "GenerateSW") {
@@ -300,6 +308,7 @@ module.exports = {
   addDecoratorsLegacy,
   disableEsLint,
   addWebpackAlias,
+  addWebpackResolve,
   adjustWorkbox,
   useEslintRc,
   enableEslintTypescript,

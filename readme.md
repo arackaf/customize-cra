@@ -146,6 +146,10 @@ Updates Webpack eslint-loader to lint both .js(x) and .ts(x) files and show lint
 
 Adds the provided alias info into webpack's alias section. Pass an object literal with as many entries as you'd like, and the whole object will be merged in.
 
+### addWebpackResolve(resolve)
+
+Adds the provided resolve info into webpack's resolve section. Pass an object literal with as many entries as you'd like, and the whole object will be merged in.
+
 ### addBundleVisualizer(options, behindFlag = false)
 
 Adds the bundle visualizer plugin to your webpack config. Be sure to have `webpack-bundle-analyzer` installed. By default, the options passed to the plugin will be:
@@ -290,7 +294,6 @@ outside the `src` directory, useful if you use a different directory.
 A common use case is if you are using CRA in a monorepo setup, where your packages
 are under `packages/` rather than `src/`.
 
-
 ## MobX Users
 
 If you want CRA 2 to work with MobX, use the `addDecoratorsLegacy` and `disableEsLint`.
@@ -333,15 +336,9 @@ watchAll();
 To add post-css plugins, you can use `addPostcssPlugins`.
 
 ```js
-const {
-  override,
-  addPostcssPlugins
-} = require("customize-cra");
+const { override, addPostcssPlugins } = require("customize-cra");
 
 module.exports = override(
-  addPostcssPlugins([
-    require('postcss-px2rem')({ remUnit: 37.5 })
-  ]),
+  addPostcssPlugins([require("postcss-px2rem")({ remUnit: 37.5 })])
 );
-
 ```
