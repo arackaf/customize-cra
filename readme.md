@@ -91,7 +91,7 @@ module.exports = override(
 
 ### babelInclude
 
-Overwites the `include` option for babel loader, for when you need to transpile a module in your `node_modules` folder.
+Overwrites the `include` option for babel loader, for when you need to transpile a module in your `node_modules` folder.
 
 ```js
 module.exports = override(
