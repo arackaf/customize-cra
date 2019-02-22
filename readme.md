@@ -342,3 +342,18 @@ module.exports = override(
   addPostcssPlugins([require("postcss-px2rem")({ remUnit: 37.5 })])
 );
 ```
+
+### addTslintLoader(loaderOptions)
+
+Need to install `ts-loader`.
+
+```js
+const {
+  addTslintLoader
+} = require("customize-cra");
+
+module.exports = override(
+  addTslintLoader(),
+);
+
+```
