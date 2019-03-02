@@ -348,7 +348,7 @@ module.exports = override(
 
 ### addTslintLoader(loaderOptions)
 
-Need to install `ts-loader`.
+Need to install `tslint-loader`.
 
 ```js
 const {
