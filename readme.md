@@ -252,46 +252,6 @@ Once `less-loader` is enabled, you can import `.less` file in your project.
 
 `.module.less` will use CSS Modules.
 
-### addWorkerLoader(loaderOptions)
-
-First, install `worker-loader` package:
-
-```bash
-yarn add --dev worker-loader
-```
-
-or:
-
-```bash
-npm i -D worker-loader
-```
-
-After it's done, call `addWorkerLoader` in `override` like below:
-
-```js
-const { addWorkerLoader } = require("customize-cra");
-
-module.exports = override(addWorkerLoader(loaderOptions));
-```
-
-`loaderOptions` is optional. If you have some specific options, you can pass to it.
-
-Check [worker-loader document](https://github.com/webpack-contrib/worker-loader#options) for all available specific options you can use in `worker-loader`.
-
-Once `worker-loader` is enabled, you can write your `worker` in `*.worker.js` or `*.worker.ts` file.
-
-Check [MDN Worker](https://developer.mozilla.org/en-US/docs/Web/API/Worker) for `worker` guide.
-
-After your `worker` is done, you can import it like an ES6 module:
-
-```js
-import MyWorker from './path/to/MyWorker.worker.js';
-
-const myWorker = new MyWorker();
-```
-
-**Typescript Tip**: Check [Integrating With Typescript](https://github.com/webpack-contrib/worker-loader#integrating-with-typescript) for integrating with typescript.
-
 ### disableChunk
 
 Prevents the default static chunking, and forces the entire build into one file. See [this thread](https://github.com/facebook/create-react-app/issues/5306) for more info.
