@@ -240,6 +240,26 @@ const addLessLoader = (loaderOptions = {}) => config => {
   return config;
 };
 
+// Use this helper to add `worker-loader` into webpack loaders.
+const addWorkerLoader = (loaderOptions = {}) => config => {
+  const loaders = config.module.rules.find(rule => Array.isArray(rule.oneOf)).oneOf;
+
+  loaders.splice(loaders.length - 1, 0, {
+    test: /\.worker\.[t|j]s$/,
+    use: {
+      loader: 'worker-loader',
+      options: loaderOptions,
+    },
+  });
+
+  // Note: Here is a side effect.
+  // @see https://github.com/webpack/webpack/issues/6642#issuecomment-370222543
+  const { output } = config;
+  output.globalObject = 'this';
+
+  return config;
+};
+
 // Use this helper to override the webpack dev server settings
 //  it works just like the `override` utility
 const overrideDevServer = (...plugins) => configFunction => (
@@ -326,6 +346,7 @@ module.exports = {
   fixBabelImports,
   useBabelRc,
   addLessLoader,
+  addWorkerLoader,
   overrideDevServer,
   watchAll,
   babelInclude,
