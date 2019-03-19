@@ -81,6 +81,14 @@ const addWebpackAlias = alias => config => {
   return config;
 };
 
+const addWebpackResolve = resolve => config => {
+  if (!config.resolve) {
+    config.resolve = {};
+  }
+  Object.assign(config.resolve, resolve);
+  return config;
+}
+
 const adjustWorkbox = adjust => config => {
   config.plugins.forEach(p => {
     if (p.constructor.name === "GenerateSW") {
@@ -293,6 +301,16 @@ const removeModuleScopePlugin = () => config => {
   return config;
 };
 
+const addTslintLoader = (options) => config => {
+  config.module.rules.unshift({
+    test: /\.(ts|tsx)$/,
+    loader: require.resolve("tslint-loader"),
+    options,
+    enforce: "pre",
+  });
+  return config;
+};
+
 module.exports = {
   override,
   addBundleVisualizer,
@@ -300,6 +318,7 @@ module.exports = {
   addDecoratorsLegacy,
   disableEsLint,
   addWebpackAlias,
+  addWebpackResolve,
   adjustWorkbox,
   useEslintRc,
   enableEslintTypescript,
@@ -315,5 +334,6 @@ module.exports = {
   disableChunk,
   addPostcssPlugins,
   getBabelLoader,
-  removeModuleScopePlugin
+  removeModuleScopePlugin,
+  addTslintLoader,
 };

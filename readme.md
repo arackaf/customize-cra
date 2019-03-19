@@ -91,7 +91,7 @@ module.exports = override(
 
 ### babelInclude
 
-Overwites the `include` option for babel loader, for when you need to transpile a module in your `node_modules` folder.
+Overwrites the `include` option for babel loader, for when you need to transpile a module in your `node_modules` folder.
 
 ```js
 module.exports = override(
@@ -145,6 +145,10 @@ Updates Webpack eslint-loader to lint both .js(x) and .ts(x) files and show lint
 ### addWebpackAlias(alias)
 
 Adds the provided alias info into webpack's alias section. Pass an object literal with as many entries as you'd like, and the whole object will be merged in.
+
+### addWebpackResolve(resolve)
+
+Adds the provided resolve info into webpack's resolve section. Pass an object literal with as many entries as you'd like, and the whole object will be merged in.
 
 ### addBundleVisualizer(options, behindFlag = false)
 
@@ -293,7 +297,6 @@ outside the `src` directory, useful if you use a different directory.
 A common use case is if you are using CRA in a monorepo setup, where your packages
 are under `packages/` rather than `src/`.
 
-
 ## MobX Users
 
 If you want CRA 2 to work with MobX, use the `addDecoratorsLegacy` and `disableEsLint`.
@@ -336,15 +339,24 @@ watchAll();
 To add post-css plugins, you can use `addPostcssPlugins`.
 
 ```js
+const { override, addPostcssPlugins } = require("customize-cra");
+
+module.exports = override(
+  addPostcssPlugins([require("postcss-px2rem")({ remUnit: 37.5 })])
+);
+```
+
+### addTslintLoader(loaderOptions)
+
+Need to install `tslint-loader`.
+
+```js
 const {
-  override,
-  addPostcssPlugins
+  addTslintLoader
 } = require("customize-cra");
 
 module.exports = override(
-  addPostcssPlugins([
-    require('postcss-px2rem')({ remUnit: 37.5 })
-  ]),
+  addTslintLoader(),
 );
 
 ```
