@@ -252,6 +252,15 @@ Once `less-loader` is enabled, you can import `.less` file in your project.
 
 `.module.less` will use CSS Modules.
 
+> if you use TypeScript (npm init react-app my-app --typescript) with CSS Modules, you should edit `react-app-env.d.ts`.
+
+```typescript
+declare module '*.module.less' {
+  const classes: { [key: string]: string };
+  export default classes;
+}
+```
+
 ### disableChunk
 
 Prevents the default static chunking, and forces the entire build into one file. See [this thread](https://github.com/facebook/create-react-app/issues/5306) for more info.
