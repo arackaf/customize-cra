@@ -275,6 +275,16 @@ const disableChunk = () => config => {
   return config;
 };
 
+// to be used to ignore replace packages with global variable
+// Useful when trying to offload libs to CDN
+const addWebpackExternals = (externalDeps) => config => {
+  config.externals = {
+    ...config.externals,
+    externalDeps
+  };
+  return config;
+};
+
 const addPostcssPlugins = (plugins) => config => {
   const rules = config.module.rules.find(rule => Array.isArray(rule.oneOf))
     .oneOf;
@@ -316,6 +326,7 @@ module.exports = {
   addBundleVisualizer,
   addBabelPlugin,
   addDecoratorsLegacy,
+  addWebpackExternals,
   disableEsLint,
   addWebpackAlias,
   addWebpackResolve,
