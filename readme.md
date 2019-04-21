@@ -152,7 +152,16 @@ Adds the provided resolve info into webpack's resolve section. Pass an object li
 
 ### addWebpackExternals(deps)
 
-Add external dependencies, useful when trying to offload libs to CDN
+Add external dependencies, useful when trying to offload libs to CDN. 
+
+For example you can [offload](https://github.com/facebook/create-react-app/issues/2758) `react` and `react-dom` by 
+
+```js
+addWebpackExternals({
+  'react': 'React',
+  'react-dom': 'ReactDom'
+})
+```
 
 ### addBundleVisualizer(options, behindFlag = false)
 
