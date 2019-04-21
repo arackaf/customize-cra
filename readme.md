@@ -150,6 +150,19 @@ Adds the provided alias info into webpack's alias section. Pass an object litera
 
 Adds the provided resolve info into webpack's resolve section. Pass an object literal with as many entries as you'd like, and the whole object will be merged in.
 
+### addWebpackExternals(deps)
+
+Add external dependencies, useful when trying to offload libs to CDN. 
+
+For example you can [offload](https://github.com/facebook/create-react-app/issues/2758) `react` and `react-dom` by 
+
+```js
+addWebpackExternals({
+  'react': 'React',
+  'react-dom': 'ReactDom'
+})
+```
+
 ### addBundleVisualizer(options, behindFlag = false)
 
 Adds the bundle visualizer plugin to your webpack config. Be sure to have `webpack-bundle-analyzer` installed. By default, the options passed to the plugin will be:
