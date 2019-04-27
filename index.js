@@ -280,7 +280,7 @@ const disableChunk = () => config => {
 const addWebpackExternals = (externalDeps) => config => {
   config.externals = {
     ...config.externals,
-    externalDeps
+    ...externalDeps
   };
   return config;
 };
