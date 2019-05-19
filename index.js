@@ -89,6 +89,11 @@ const addWebpackResolve = resolve => config => {
   return config;
 }
 
+const addWebpackPlugin = plugin => config => {
+  config.plugins.push(plugin);
+  return config;
+};
+
 const adjustWorkbox = adjust => config => {
   config.plugins.forEach(p => {
     if (p.constructor.name === "GenerateSW") {
@@ -330,6 +335,7 @@ module.exports = {
   disableEsLint,
   addWebpackAlias,
   addWebpackResolve,
+  addWebpackPlugin,
   adjustWorkbox,
   useEslintRc,
   enableEslintTypescript,
