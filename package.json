@@ -1,6 +1,6 @@
 {
-  "name": "customize-cra",
-  "version": "0.2.12",
+  "name": "@zhigang1992/customize-cra",
+  "version": "0.2.20",
   "description": "",
   "repository": "arackaf/customize-cra",
   "main": "index.js",
