@@ -150,6 +150,10 @@ Adds the provided alias info into webpack's alias section. Pass an object litera
 
 Adds the provided resolve info into webpack's resolve section. Pass an object literal with as many entries as you'd like, and the whole object will be merged in.
 
+### addWebpackPlugin(plugin)
+
+Adds the provided plugin info into webpack's plugin array. Pass an plugin defined with  `new webpack.DefinePlugin({...})`
+
 ### addWebpackExternals(deps)
 
 Add external dependencies, useful when trying to offload libs to CDN. 
