@@ -152,7 +152,7 @@ Adds the provided resolve info into webpack's resolve section. Pass an object li
 
 ### addWebpackPlugin(plugin)
 
-Adds the provided plugin info into webpack's plugin array. Pass an plugin defined with  `new webpack.DefinePlugin({...})`
+Adds the provided plugin info into webpack's plugin array. Pass a plugin defined with  `new webpack.DefinePlugin({...})`
 
 ### addWebpackExternals(deps)
 
