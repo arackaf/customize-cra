@@ -43,7 +43,7 @@ const getBabelLoader = config => {
     babelLoader = loaders.find(babelLoaderFilter);
   }
   return babelLoader;
-}
+};
 
 const addBabelPlugin = plugin => config => {
   getBabelLoader(config).options.plugins.push(plugin);
@@ -87,7 +87,7 @@ const addWebpackResolve = resolve => config => {
   }
   Object.assign(config.resolve, resolve);
   return config;
-}
+};
 
 const addWebpackPlugin = plugin => config => {
   config.plugins.push(plugin);
@@ -180,9 +180,10 @@ const addLessLoader = (loaderOptions = {}) => config => {
     mode === "prod" && process.env.GENERATE_SOURCEMAP !== "false";
   const lessRegex = /\.less$/;
   const lessModuleRegex = /\.module\.less$/;
-  const localIdentName = loaderOptions.localIdentName || "[path][name]__[local]--[hash:base64:5]";
+  const localIdentName =
+    loaderOptions.localIdentName || "[path][name]__[local]--[hash:base64:5]";
 
-  const getLessLoader = (cssOptions) => {
+  const getLessLoader = cssOptions => {
     return [
       mode === "dev"
         ? require.resolve("style-loader")
@@ -226,21 +227,26 @@ const addLessLoader = (loaderOptions = {}) => config => {
     .oneOf;
 
   // Insert less-loader as the penultimate item of loaders (before file-loader)
-  loaders.splice(loaders.length - 1, 0, {
-    test: lessRegex,
-    exclude: lessModuleRegex,
-    use: getLessLoader({
-      importLoaders: 2
-    }),
-    sideEffects: mode === "prod"
-  }, {
-    test: lessModuleRegex,
-    use: getLessLoader({
-      importLoaders: 2,
-      modules: true,
-      localIdentName: localIdentName
-    })
-  });
+  loaders.splice(
+    loaders.length - 1,
+    0,
+    {
+      test: lessRegex,
+      exclude: lessModuleRegex,
+      use: getLessLoader({
+        importLoaders: 2
+      }),
+      sideEffects: mode === "prod"
+    },
+    {
+      test: lessModuleRegex,
+      use: getLessLoader({
+        importLoaders: 2,
+        modules: true,
+        localIdentName: localIdentName
+      })
+    }
+  );
 
   return config;
 };
@@ -271,8 +277,8 @@ const watchAll = () => config => {
 const disableChunk = () => config => {
   config.optimization.splitChunks = {
     cacheGroups: {
-        default: false,
-    },
+      default: false
+    }
   };
 
   config.optimization.runtimeChunk = false;
@@ -282,7 +288,7 @@ const disableChunk = () => config => {
 
 // to be used to ignore replace packages with global variable
 // Useful when trying to offload libs to CDN
-const addWebpackExternals = (externalDeps) => config => {
+const addWebpackExternals = externalDeps => config => {
   config.externals = {
     ...config.externals,
     ...externalDeps
@@ -290,22 +296,26 @@ const addWebpackExternals = (externalDeps) => config => {
   return config;
 };
 
-const addPostcssPlugins = (plugins) => config => {
+const addPostcssPlugins = plugins => config => {
   const rules = config.module.rules.find(rule => Array.isArray(rule.oneOf))
     .oneOf;
-  rules.forEach(r => r.use && r.use.forEach(u => {
-    if (u.options && u.options.ident === "postcss") {
-      if (!u.options.plugins) {
-        u.options.plugins = () => [...plugins];
-      }
-      if (u.options.plugins) {
-        const originalPlugins = u.options.plugins;
-        u.options.plugins = () => [...originalPlugins(), ...plugins];
-      }
-    }
-  }));
+  rules.forEach(
+    r =>
+      r.use &&
+      r.use.forEach(u => {
+        if (u.options && u.options.ident === "postcss") {
+          if (!u.options.plugins) {
+            u.options.plugins = () => [...plugins];
+          }
+          if (u.options.plugins) {
+            const originalPlugins = u.options.plugins;
+            u.options.plugins = () => [...originalPlugins(), ...plugins];
+          }
+        }
+      })
+  );
   return config;
-}
+};
 
 // This will remove the CRA plugin that prevents to import modules from
 // outside the `src` directory, useful if you use a different directory
@@ -316,12 +326,12 @@ const removeModuleScopePlugin = () => config => {
   return config;
 };
 
-const addTslintLoader = (options) => config => {
+const addTslintLoader = options => config => {
   config.module.rules.unshift({
     test: /\.(ts|tsx)$/,
     loader: require.resolve("tslint-loader"),
     options,
-    enforce: "pre",
+    enforce: "pre"
   });
   return config;
 };
@@ -352,5 +362,5 @@ module.exports = {
   addPostcssPlugins,
   getBabelLoader,
   removeModuleScopePlugin,
-  addTslintLoader,
+  addTslintLoader
 };
