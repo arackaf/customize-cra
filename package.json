@@ -5,11 +5,14 @@
   "repository": "arackaf/customize-cra",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "Adam Rackis",
   "license": "MIT",
   "dependencies": {
     "lodash.flow": "^3.5.0"
+  },
+  "devDependencies": {
+    "jest": "^24.8.0"
   }
 }

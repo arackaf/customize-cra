@@ -62,18 +62,18 @@ module.exports = override(
 );
 ```
 
-### addBabelPresets(preset)
+### addBabelPreset(preset)
 
-Adds a babel plugin. Whatever you pass for `preset` will be added to Babel's `preset` array. Consult their docs for more info.
+Adds a babel preset. Whatever you pass for `preset` will be added to Babel's `preset` array. Consult their docs for more info.
 Note that this rewirer will not add the preset to the `yarn test`'s Babel configuration. See `useBabelRc()` to learn more.
 
-### addBabelPresets(presets)
+### addBabelPresets(...presets)
 
-A simple helper that calls `addBabelPreset` for each preset you pass in here. Make sure you use the spread operator when using this, for example
+A simple helper that calls `addBabelPreset` for each preset you pass in here. Make sure you don't pass an array and use the spread operator when using this, for example
 
 ```js
 module.exports = override(
-  ...addBabelPresets([
+  ...addBabelPresets(
     [
       "@babel/env",
       {
@@ -85,7 +85,7 @@ module.exports = override(
     ],
     "@babel/preset-flow",
     "@babel/preset-react"
-  ])
+  )
 );
 ```
 
