@@ -7,6 +7,7 @@ const {
   fixBabelImports,
   useBabelRc,
   babelInclude,
+  addDecoratorsLegacy,
   addWebpackExternals,
   addWebpackAlias,
   addWebpackResolve,
@@ -308,6 +309,34 @@ describe("babel", () => {
               {
                 loader: "babel",
                 options: { presets }
+              }
+            ]
+          }
+        ]
+      }
+    });
+  });
+
+  test("addDecoratorsLegacy returns a function that adds the decorators plugin to the plugins list", () => {
+    const inputConfig = {
+      module: {
+        rules: [{ oneOf: [{ loader: "babel", options: { plugins: [] } }] }]
+      }
+    };
+    const outputConfig = addDecoratorsLegacy()(inputConfig);
+
+    expect(outputConfig).toMatchObject({
+      module: {
+        rules: [
+          {
+            oneOf: [
+              {
+                loader: "babel",
+                options: {
+                  plugins: [
+                    ["@babel/plugin-proposal-decorators", { legacy: true }]
+                  ]
+                }
               }
             ]
           }
