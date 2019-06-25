@@ -6,7 +6,11 @@ const {
   addBabelPresets,
   fixBabelImports,
   useBabelRc,
-  babelInclude
+  babelInclude,
+  addWebpackExternals,
+  addWebpackAlias,
+  addWebpackResolve,
+  addWebpackPlugin
 } = require(".");
 
 describe("babel", () => {
@@ -309,5 +313,78 @@ describe("babel", () => {
         ]
       }
     });
+  });
+});
+
+describe("webpack", () => {
+  test("addWebpackExternals returns function that spreads provided args last in externals list", () => {
+    const config = {
+      externals: { lodash: "Lodash", "react-dom": "NotReactDom" }
+    };
+    const externals = {
+      react: "React",
+      "react-dom": "ReactDom"
+    };
+    const outputConfig = addWebpackExternals(externals)(config);
+
+    expect(outputConfig).toMatchObject({
+      externals: {
+        lodash: "Lodash",
+        react: "React",
+        "react-dom": "ReactDom"
+      }
+    });
+  });
+
+  describe("addWebpackAlias", () => {
+    test("initializes resolve.alias with empty objects if non-existant", () => {
+      const config = {};
+      const outputConfig = addWebpackAlias({})(config);
+
+      expect(outputConfig).toEqual({ resolve: { alias: {} } });
+    });
+
+    test("merges the provided alias object with the config resolve.alias object", () => {
+      const config = {
+        resolve: {
+          alias: { a: "A", b: "B" }
+        }
+      };
+      const alias = { b: "b", c: "c" };
+      const outputConfig = addWebpackAlias(alias)(config);
+
+      expect(outputConfig).toEqual({
+        resolve: { alias: { a: "A", b: "b", c: "c" } }
+      });
+    });
+  });
+
+  describe("addWebpackResolve", () => {
+    test("initializes resolve with empty object if non-existant", () => {
+      const config = {};
+      const outputConfig = addWebpackResolve({})(config);
+
+      expect(outputConfig).toEqual({ resolve: {} });
+    });
+
+    test("merges the provided resolve object into the config resolve object", () => {
+      const config = {
+        resolve: {
+          alias: { a: "A", b: "b" }
+        }
+      };
+      const resolve = { alias: { a: "a", b: "B" } };
+      const outputConfig = addWebpackResolve(resolve)(config);
+
+      expect(outputConfig).toEqual({ resolve: { alias: { a: "a", b: "B" } } });
+    });
+  });
+
+  test("addWebpackPlugin adds the provided plugin to the config plugins list", () => {
+    const config = {
+      plugins: ["A"]
+    };
+    const plugin = "B";
+    const outputConfig = addWebpackPlugin(plugin)(config);
   });
 });
