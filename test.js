@@ -10,7 +10,8 @@ const {
   addWebpackExternals,
   addWebpackAlias,
   addWebpackResolve,
-  addWebpackPlugin
+  addWebpackPlugin,
+  override
 } = require(".");
 
 describe("babel", () => {
@@ -387,4 +388,15 @@ describe("webpack", () => {
     const plugin = "B";
     const outputConfig = addWebpackPlugin(plugin)(config);
   });
+});
+
+test("override composes provided plugin functions", () => {
+  const plugin1 = jest.fn(x => x);
+  const plugin2 = jest.fn(x => x);
+  const composed = override(plugin1, plugin2);
+  const result = composed("hello");
+
+  expect(result).toBe("hello");
+  expect(plugin1).toHaveBeenCalledWith("hello");
+  expect(plugin2).toHaveBeenCalledWith("hello");
 });
