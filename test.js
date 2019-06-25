@@ -12,7 +12,11 @@ const {
   addWebpackAlias,
   addWebpackResolve,
   addWebpackPlugin,
-  override
+  override,
+  disableEsLint,
+  useEslintRc,
+  enableEslintTypescript,
+  addTslintLoader
 } = require(".");
 
 describe("babel", () => {
@@ -416,6 +420,88 @@ describe("webpack", () => {
     };
     const plugin = "B";
     const outputConfig = addWebpackPlugin(plugin)(config);
+
+    expect(outputConfig).toEqual({
+      plugins: ["A", "B"]
+    });
+  });
+});
+
+describe("eslint", () => {
+  test("disableEsLint filters out the eslint rules from the config rules list", () => {
+    const inputConfig = {
+      module: { rules: [{ use: [{ options: { useEslintrc: true } }] }] }
+    };
+    const outputConfig = disableEsLint()(inputConfig);
+
+    expect(outputConfig).toEqual({ module: { rules: [] } });
+  });
+
+  test("useEslintRc removes the base eslint config and uses the passed filename instead", () => {
+    const configFile = ".eslintrc";
+    const inputConfig = {
+      module: {
+        rules: [
+          {
+            use: [
+              { options: { useEslintrc: false, baseConfig: { test: true } } }
+            ]
+          }
+        ]
+      }
+    };
+    const outputConfig = useEslintRc(configFile)(inputConfig);
+
+    expect(outputConfig).toEqual({
+      module: {
+        rules: [
+          {
+            use: [{ options: { useEslintrc: true, ignore: true, configFile } }]
+          }
+        ]
+      }
+    });
+  });
+
+  describe("enableEslintTypescript adds /tsx?/ to eslint file pattern test config ", () => {
+    const inputConfig = {
+      module: {
+        rules: [{ use: [{ options: { useEslintrc: false } }] }]
+      }
+    };
+    const outputConfig = enableEslintTypescript()(inputConfig);
+    const regex = outputConfig.module.rules[0].test;
+    const validExtensions = ["js", "jsx", "ts", "tsx", "mjs"];
+
+    validExtensions.forEach(extension => {
+      test(extension, () => {
+        expect(regex.test(`.${extension}`)).toBe(true);
+      });
+    });
+  });
+
+  test("addTslintLoader adds tslint-loader as the first rule", () => {
+    const options = { test: true };
+    const inputConfig = {
+      module: { rules: [{ test: true }] }
+    };
+    const outputConfig = addTslintLoader(options)(inputConfig);
+
+    expect(outputConfig).toEqual(
+      expect.objectContaining({
+        module: {
+          rules: [
+            {
+              test: expect.any(RegExp),
+              loader: "tslint-loader",
+              options,
+              enforce: "pre"
+            },
+            { test: true }
+          ]
+        }
+      })
+    );
   });
 });
 
