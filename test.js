@@ -16,7 +16,13 @@ const {
   disableEsLint,
   useEslintRc,
   enableEslintTypescript,
-  addTslintLoader
+  addTslintLoader,
+  adjustWorkbox,
+  overrideDevServer,
+  watchAll,
+  disableChunk,
+  removeModuleScopePlugin,
+  addPostcssPlugins
 } = require(".");
 
 describe("babel", () => {
@@ -514,4 +520,110 @@ test("override composes provided plugin functions", () => {
   expect(result).toBe("hello");
   expect(plugin1).toHaveBeenCalledWith("hello");
   expect(plugin2).toHaveBeenCalledWith("hello");
+});
+
+test("adjustWorkbox calls the provided adjustment using the workbox plugin config", () => {
+  const adjustment = jest.fn(x => x);
+  const innerConfig = { test: true };
+  const inputConfig = {
+    plugins: [{ constructor: { name: "GenerateSW" }, config: innerConfig }]
+  };
+
+  expect(adjustWorkbox(adjustment)(inputConfig)).toEqual(inputConfig);
+  expect(adjustment).toHaveBeenCalledWith(innerConfig);
+});
+
+test("addLessLoader", () => {});
+
+test("overrideDevServer overrides the webpack-dev-server config via provided plugin functions", () => {
+  const plugins = [
+    config => ({ ...config, test: false }),
+    config => ({ ...config, foo: "bar" })
+  ];
+  const inputConfig = { test: true };
+  const configFunction = jest.fn(() => inputConfig);
+
+  expect(
+    overrideDevServer(...plugins)(configFunction)("proxy", "allowedHost")
+  ).toEqual({
+    test: false,
+    foo: "bar"
+  });
+  expect(configFunction).toHaveBeenCalledWith("proxy", "allowedHost");
+});
+
+test("watchAll removes the watchOptions from config if --watch-all passed", () => {
+  const watchOptions = { watch: true };
+  const inputConfig = { watchOptions };
+
+  expect(watchAll()(inputConfig)).toEqual(inputConfig);
+  process.argv.push("--watch-all");
+  expect(watchAll()(inputConfig)).toEqual({});
+});
+
+test("disableChunk disables chunking config options", () => {
+  const inputConfig = {
+    optimization: {
+      splitChunks: { cacheGroups: { default: true } },
+      runtimeChunk: true
+    }
+  };
+
+  expect(disableChunk()(inputConfig)).toEqual({
+    optimization: {
+      splitChunks: { cacheGroups: { default: false } },
+      runtimeChunk: false
+    }
+  });
+});
+
+test("addPostcssPlugins adds postcss plugins to the postcss rule", () => {
+  const plugin1 = jest.fn(() => "plugin1");
+  const plugin2 = jest.fn(() => "plugin2");
+  const plugins = [plugin2];
+  const inputConfig = {
+    module: {
+      rules: [
+        {
+          oneOf: [
+            {
+              use: [{ options: { plugins: () => [plugin1], ident: "postcss" } }]
+            }
+          ]
+        }
+      ]
+    }
+  };
+  const outputConfig = addPostcssPlugins(plugins)(inputConfig);
+
+  expect(outputConfig).toMatchObject({
+    module: {
+      rules: [
+        {
+          oneOf: [
+            {
+              use: [{ options: { plugins: expect.any(Function) } }]
+            }
+          ]
+        }
+      ]
+    }
+  });
+  const result = outputConfig.module.rules[0].oneOf[0].use[0].options
+    .plugins()
+    .forEach(p => p());
+  expect(plugin1).toHaveBeenCalled();
+  expect(plugin2).toHaveBeenCalled();
+});
+
+test("removeModuleScopePlugin removes the 'ModuleScopePlugin' resolve plugin", () => {
+  const inputConfig = {
+    resolve: {
+      plugins: [{ constructor: { name: "ModuleScopePlugin" } }, { test: true }]
+    }
+  };
+
+  expect(removeModuleScopePlugin()(inputConfig)).toEqual({
+    resolve: { plugins: [{ test: true }] }
+  });
 });
