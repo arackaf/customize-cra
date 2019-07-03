@@ -22,12 +22,21 @@ const addBundleVisualizer = (options = {}, behindFlag = false) => config => {
   return config;
 };
 
-const getBabelLoader = config => {
-  const babelLoaderFilter = rule =>
-    rule.loader &&
-    rule.loader.includes("babel") &&
-    rule.options &&
-    rule.options.plugins;
+const getBabelLoader = (config, isOutsideOfApp) => {
+  let babelLoaderFilter;
+  if (isOutsideOfApp) {
+    babelLoaderFilter = rule =>
+      rule.loader &&
+      rule.loader.includes("babel") &&
+      rule.options &&
+      !rule.options.plugins;
+  } else {
+    babelLoaderFilter = rule =>
+      rule.loader &&
+      rule.loader.includes("babel") &&
+      rule.options &&
+      rule.options.plugins;
+  }
 
   // First, try to find the babel loader inside the oneOf array.
   // This is where we can find it when working with react-scripts@2.0.3.
@@ -47,6 +56,11 @@ const getBabelLoader = config => {
 
 const addBabelPlugin = plugin => config => {
   getBabelLoader(config).options.plugins.push(plugin);
+  return config;
+};
+
+const addBabelPluginOutSideOfApp = plugin => config => {
+  getBabelLoader(config, true).options.plugins.push(plugin);
   return config;
 };
 
@@ -154,6 +168,8 @@ const babelInclude = include => config => {
 const override = (...plugins) => flow(...plugins.filter(f => f));
 
 const addBabelPlugins = (...plugins) => plugins.map(p => addBabelPlugin(p));
+
+const addBabelPluginsOutSideOfApp = (...plugins) => plugins.map(p => addBabelPluginOutSideOfApp(p));
 
 const addBabelPresets = (...plugins) => plugins.map(p => addBabelPreset(p));
 
@@ -340,6 +356,7 @@ module.exports = {
   override,
   addBundleVisualizer,
   addBabelPlugin,
+  addBabelPluginOutSideOfApp,
   addDecoratorsLegacy,
   addWebpackExternals,
   disableEsLint,
@@ -350,6 +367,7 @@ module.exports = {
   useEslintRc,
   enableEslintTypescript,
   addBabelPlugins,
+  addBabelPluginsOutSideOfApp,
   fixBabelImports,
   useBabelRc,
   addLessLoader,
