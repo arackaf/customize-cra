@@ -59,8 +59,12 @@ const addBabelPlugin = plugin => config => {
   return config;
 };
 
-const addBabelPluginOutSideOfApp = plugin => config => {
-  getBabelLoader(config, true).options.plugins.push(plugin);
+const addBabelPluginOutSideOfApp = plugin => config => { 
+  const outsideBabelOptions = getBabelLoader(config, true).options;
+  if (!outsideBabelOptions.plugins) {
+    outsideBabelOptions.plugins = [];
+  }
+  outsideBabelOptions.plugins.push(plugin);
   return config;
 };
 
