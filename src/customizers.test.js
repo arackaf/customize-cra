@@ -1,5 +1,4 @@
 const {
-  getBabelLoader,
   addBabelPlugin,
   addBabelPlugins,
   addBabelPreset,
@@ -12,52 +11,18 @@ const {
   addWebpackAlias,
   addWebpackResolve,
   addWebpackPlugin,
-  override,
   disableEsLint,
   useEslintRc,
   enableEslintTypescript,
   addTslintLoader,
   adjustWorkbox,
-  overrideDevServer,
   watchAll,
   disableChunk,
   removeModuleScopePlugin,
   addPostcssPlugins
-} = require(".");
+} = require("./customizers");
 
 describe("babel", () => {
-  describe("getBabelLoader finds the babel loader options", () => {
-    const loader = { loader: "babel", options: { plugins: ["test"] } };
-
-    test('in "oneOf" array', () => {
-      const config = {
-        module: {
-          rules: [
-            {
-              oneOf: [loader]
-            }
-          ]
-        }
-      };
-
-      expect(getBabelLoader(config)).toEqual(loader);
-    });
-
-    test('in a rule\'s "use" array', () => {
-      const config = {
-        module: {
-          rules: [
-            {
-              oneOf: [{ use: [loader] }]
-            }
-          ]
-        }
-      };
-
-      expect(getBabelLoader(config)).toEqual(loader);
-    });
-  });
-
   test("fixBabelImports adds the babel imports plugin for the provided library", () => {
     const options = { libraryDirectory: "" };
     const plugin = [
@@ -511,17 +476,6 @@ describe("eslint", () => {
   });
 });
 
-test("override composes provided plugin functions", () => {
-  const plugin1 = jest.fn(x => x);
-  const plugin2 = jest.fn(x => x);
-  const composed = override(plugin1, plugin2);
-  const result = composed("hello");
-
-  expect(result).toBe("hello");
-  expect(plugin1).toHaveBeenCalledWith("hello");
-  expect(plugin2).toHaveBeenCalledWith("hello");
-});
-
 test("adjustWorkbox calls the provided adjustment using the workbox plugin config", () => {
   const adjustment = jest.fn(x => x);
   const innerConfig = { test: true };
@@ -534,23 +488,6 @@ test("adjustWorkbox calls the provided adjustment using the workbox plugin confi
 });
 
 test("addLessLoader", () => {});
-
-test("overrideDevServer overrides the webpack-dev-server config via provided plugin functions", () => {
-  const plugins = [
-    config => ({ ...config, test: false }),
-    config => ({ ...config, foo: "bar" })
-  ];
-  const inputConfig = { test: true };
-  const configFunction = jest.fn(() => inputConfig);
-
-  expect(
-    overrideDevServer(...plugins)(configFunction)("proxy", "allowedHost")
-  ).toEqual({
-    test: false,
-    foo: "bar"
-  });
-  expect(configFunction).toHaveBeenCalledWith("proxy", "allowedHost");
-});
 
 test("watchAll removes the watchOptions from config if --watch-all passed", () => {
   const watchOptions = { watch: true };
