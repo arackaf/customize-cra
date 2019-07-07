@@ -1,4 +1,4 @@
-const { getBabelLoader } = require("./utilities");
+const { getBabelLoader } = require("../utilities");
 
 const addBundleVisualizer = (options = {}, behindFlag = false) => config => {
   const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
@@ -21,21 +21,6 @@ const addBundleVisualizer = (options = {}, behindFlag = false) => config => {
   }
   return config;
 };
-
-const addBabelPlugin = plugin => config => {
-  getBabelLoader(config).options.plugins.push(plugin);
-  return config;
-};
-
-const addBabelPreset = preset => config => {
-  getBabelLoader(config).options.presets.push(preset);
-  return config;
-};
-
-const addDecoratorsLegacy = () => config =>
-  addBabelPlugin(["@babel/plugin-proposal-decorators", { legacy: true }])(
-    config
-  );
 
 const disableEsLint = () => config => {
   let eslintRules = config.module.rules.filter(
@@ -117,33 +102,6 @@ const enableEslintTypescript = () => config => {
 
   return config;
 };
-
-const useBabelRc = () => config => {
-  getBabelLoader(config).options.babelrc = true;
-  return config;
-};
-
-const babelInclude = include => config => {
-  getBabelLoader(config).include = include;
-  return config;
-};
-
-const addBabelPlugins = (...plugins) => plugins.map(p => addBabelPlugin(p));
-
-const addBabelPresets = (...plugins) => plugins.map(p => addBabelPreset(p));
-
-const fixBabelImports = (libraryName, options) =>
-  addBabelPlugin([
-    "import",
-    Object.assign(
-      {},
-      {
-        libraryName
-      },
-      options
-    ),
-    `fix-${libraryName}-imports`
-  ]);
 
 const addLessLoader = (loaderOptions = {}) => config => {
   const mode = process.env.NODE_ENV === "development" ? "dev" : "prod";
@@ -302,8 +260,6 @@ const addTslintLoader = options => config => {
 
 module.exports = {
   addBundleVisualizer,
-  addBabelPlugin,
-  addDecoratorsLegacy,
   addWebpackExternals,
   disableEsLint,
   addWebpackAlias,
@@ -312,14 +268,8 @@ module.exports = {
   adjustWorkbox,
   useEslintRc,
   enableEslintTypescript,
-  addBabelPlugins,
-  fixBabelImports,
-  useBabelRc,
   addLessLoader,
   watchAll,
-  babelInclude,
-  addBabelPreset,
-  addBabelPresets,
   disableChunk,
   addPostcssPlugins,
   removeModuleScopePlugin,
