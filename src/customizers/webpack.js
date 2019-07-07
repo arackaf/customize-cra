@@ -1,4 +1,4 @@
-const flow = require("lodash.flow");
+const { getBabelLoader } = require("../utilities");
 
 const addBundleVisualizer = (options = {}, behindFlag = false) => config => {
   const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
@@ -21,44 +21,6 @@ const addBundleVisualizer = (options = {}, behindFlag = false) => config => {
   }
   return config;
 };
-
-const getBabelLoader = config => {
-  const babelLoaderFilter = rule =>
-    rule.loader &&
-    rule.loader.includes("babel") &&
-    rule.options &&
-    rule.options.plugins;
-
-  // First, try to find the babel loader inside the oneOf array.
-  // This is where we can find it when working with react-scripts@2.0.3.
-  let loaders = config.module.rules.find(rule => Array.isArray(rule.oneOf))
-    .oneOf;
-
-  let babelLoader = loaders.find(babelLoaderFilter);
-
-  // If the loader was not found, try to find it inside of the "use" array, within the rules.
-  // This should work when dealing with react-scripts@2.0.0.next.* versions.
-  if (!babelLoader) {
-    loaders = loaders.reduce((ldrs, rule) => ldrs.concat(rule.use || []), []);
-    babelLoader = loaders.find(babelLoaderFilter);
-  }
-  return babelLoader;
-};
-
-const addBabelPlugin = plugin => config => {
-  getBabelLoader(config).options.plugins.push(plugin);
-  return config;
-};
-
-const addBabelPreset = preset => config => {
-  getBabelLoader(config).options.presets.push(preset);
-  return config;
-};
-
-const addDecoratorsLegacy = () => config =>
-  addBabelPlugin(["@babel/plugin-proposal-decorators", { legacy: true }])(
-    config
-  );
 
 const disableEsLint = () => config => {
   let eslintRules = config.module.rules.filter(
@@ -141,35 +103,6 @@ const enableEslintTypescript = () => config => {
   return config;
 };
 
-const useBabelRc = () => config => {
-  getBabelLoader(config).options.babelrc = true;
-  return config;
-};
-
-const babelInclude = include => config => {
-  getBabelLoader(config).include = include;
-  return config;
-};
-
-const override = (...plugins) => flow(...plugins.filter(f => f));
-
-const addBabelPlugins = (...plugins) => plugins.map(p => addBabelPlugin(p));
-
-const addBabelPresets = (...plugins) => plugins.map(p => addBabelPreset(p));
-
-const fixBabelImports = (libraryName, options) =>
-  addBabelPlugin([
-    "import",
-    Object.assign(
-      {},
-      {
-        libraryName
-      },
-      options
-    ),
-    `fix-${libraryName}-imports`
-  ]);
-
 const addLessLoader = (loaderOptions = {}) => config => {
   const mode = process.env.NODE_ENV === "development" ? "dev" : "prod";
 
@@ -251,17 +184,6 @@ const addLessLoader = (loaderOptions = {}) => config => {
   return config;
 };
 
-// Use this helper to override the webpack dev server settings
-//  it works just like the `override` utility
-const overrideDevServer = (...plugins) => configFunction => (
-  proxy,
-  allowedHost
-) => {
-  const config = configFunction(proxy, allowedHost);
-  const updatedConfig = override(...plugins)(config);
-  return updatedConfig;
-};
-
 // to be used inside `overrideDevServer`, makes CRA watch all the folders
 // included `node_modules`, useful when you are working with linked packages
 // usage: `yarn start --watch-all`
@@ -337,10 +259,7 @@ const addTslintLoader = options => config => {
 };
 
 module.exports = {
-  override,
   addBundleVisualizer,
-  addBabelPlugin,
-  addDecoratorsLegacy,
   addWebpackExternals,
   disableEsLint,
   addWebpackAlias,
@@ -349,18 +268,10 @@ module.exports = {
   adjustWorkbox,
   useEslintRc,
   enableEslintTypescript,
-  addBabelPlugins,
-  fixBabelImports,
-  useBabelRc,
   addLessLoader,
-  overrideDevServer,
   watchAll,
-  babelInclude,
-  addBabelPreset,
-  addBabelPresets,
   disableChunk,
   addPostcssPlugins,
-  getBabelLoader,
   removeModuleScopePlugin,
   addTslintLoader
 };
