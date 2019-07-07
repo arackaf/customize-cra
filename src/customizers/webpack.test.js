@@ -14,81 +14,56 @@ const {
   addPostcssPlugins
 } = require("./webpack");
 
-describe("webpack", () => {
-  test("addWebpackExternals returns function that spreads provided args last in externals list", () => {
-    const config = {
-      externals: { lodash: "Lodash", "react-dom": "NotReactDom" }
-    };
-    const externals = {
-      react: "React",
-      "react-dom": "ReactDom"
-    };
-    const outputConfig = addWebpackExternals(externals)(config);
+test("addWebpackExternals returns function that spreads provided args last in externals list", () => {
+  const config = {
+    externals: { lodash: "Lodash", "react-dom": "NotReactDom" }
+  };
+  const externals = { react: "React", "react-dom": "ReactDom" };
+  const actual = addWebpackExternals(externals)(config);
 
-    expect(outputConfig).toMatchObject({
-      externals: {
-        lodash: "Lodash",
-        react: "React",
-        "react-dom": "ReactDom"
-      }
-    });
+  expect(actual).toMatchSnapshot();
+});
+
+describe("addWebpackAlias", () => {
+  test("initializes resolve.alias with empty objects if non-existant", () => {
+    const config = {};
+    const actual = addWebpackAlias({})(config);
+
+    expect(actual).toMatchSnapshot();
   });
 
-  describe("addWebpackAlias", () => {
-    test("initializes resolve.alias with empty objects if non-existant", () => {
-      const config = {};
-      const outputConfig = addWebpackAlias({})(config);
+  test("merges the provided alias object with the config resolve.alias object", () => {
+    const config = { resolve: { alias: { a: "A", b: "B" } } };
+    const alias = { b: "b", c: "c" };
+    const actual = addWebpackAlias(alias)(config);
 
-      expect(outputConfig).toEqual({ resolve: { alias: {} } });
-    });
+    expect(actual).toMatchSnapshot();
+  });
+});
 
-    test("merges the provided alias object with the config resolve.alias object", () => {
-      const config = {
-        resolve: {
-          alias: { a: "A", b: "B" }
-        }
-      };
-      const alias = { b: "b", c: "c" };
-      const outputConfig = addWebpackAlias(alias)(config);
+describe("addWebpackResolve", () => {
+  test("initializes resolve with empty object if non-existant", () => {
+    const config = {};
+    const actual = addWebpackResolve({})(config);
 
-      expect(outputConfig).toEqual({
-        resolve: { alias: { a: "A", b: "b", c: "c" } }
-      });
-    });
+    expect(actual).toMatchSnapshot();
   });
 
-  describe("addWebpackResolve", () => {
-    test("initializes resolve with empty object if non-existant", () => {
-      const config = {};
-      const outputConfig = addWebpackResolve({})(config);
+  test("merges the provided resolve object into the config resolve object", () => {
+    const config = { resolve: { alias: { a: "A", b: "b" } } };
+    const resolve = { alias: { a: "a", b: "B" } };
+    const actual = addWebpackResolve(resolve)(config);
 
-      expect(outputConfig).toEqual({ resolve: {} });
-    });
-
-    test("merges the provided resolve object into the config resolve object", () => {
-      const config = {
-        resolve: {
-          alias: { a: "A", b: "b" }
-        }
-      };
-      const resolve = { alias: { a: "a", b: "B" } };
-      const outputConfig = addWebpackResolve(resolve)(config);
-
-      expect(outputConfig).toEqual({ resolve: { alias: { a: "a", b: "B" } } });
-    });
+    expect(actual).toMatchSnapshot();
   });
+});
 
-  test("addWebpackPlugin adds the provided plugin to the config plugins list", () => {
-    const config = {
-      plugins: ["A"]
-    };
-    const plugin = "B";
-    const outputConfig = addWebpackPlugin(plugin)(config);
+test("addWebpackPlugin adds the provided plugin to the config plugins list", () => {
+  const config = { plugins: ["A"] };
+  const plugin = "B";
+  const actual = addWebpackPlugin(plugin)(config);
 
-    expect(outputConfig).toEqual({
-      plugins: ["A", "B"]
-    });
-  });
+  expect(actual).toMatchSnapshot();
 });
 
 describe("eslint", () => {
@@ -96,9 +71,9 @@ describe("eslint", () => {
     const inputConfig = {
       module: { rules: [{ use: [{ options: { useEslintrc: true } }] }] }
     };
-    const outputConfig = disableEsLint()(inputConfig);
+    const actual = disableEsLint()(inputConfig);
 
-    expect(outputConfig).toEqual({ module: { rules: [] } });
+    expect(actual).toMatchSnapshot();
   });
 
   test("useEslintRc removes the base eslint config and uses the passed filename instead", () => {
@@ -114,27 +89,17 @@ describe("eslint", () => {
         ]
       }
     };
-    const outputConfig = useEslintRc(configFile)(inputConfig);
+    const actual = useEslintRc(configFile)(inputConfig);
 
-    expect(outputConfig).toEqual({
-      module: {
-        rules: [
-          {
-            use: [{ options: { useEslintrc: true, ignore: true, configFile } }]
-          }
-        ]
-      }
-    });
+    expect(actual).toMatchSnapshot();
   });
 
   describe("enableEslintTypescript adds /tsx?/ to eslint file pattern test config ", () => {
     const inputConfig = {
-      module: {
-        rules: [{ use: [{ options: { useEslintrc: false } }] }]
-      }
+      module: { rules: [{ use: [{ options: { useEslintrc: false } }] }] }
     };
-    const outputConfig = enableEslintTypescript()(inputConfig);
-    const regex = outputConfig.module.rules[0].test;
+    const actual = enableEslintTypescript()(inputConfig);
+    const regex = actual.module.rules[0].test;
     const validExtensions = ["js", "jsx", "ts", "tsx", "mjs"];
 
     validExtensions.forEach(extension => {
@@ -146,12 +111,11 @@ describe("eslint", () => {
 
   test("addTslintLoader adds tslint-loader as the first rule", () => {
     const options = { test: true };
-    const inputConfig = {
-      module: { rules: [{ test: true }] }
-    };
-    const outputConfig = addTslintLoader(options)(inputConfig);
+    const inputConfig = { module: { rules: [{ test: true }] } };
+    const actual = addTslintLoader(options)(inputConfig);
 
-    expect(outputConfig).toEqual(
+    expect(actual).toMatchSnapshot();
+    expect(actual).toEqual(
       expect.objectContaining({
         module: {
           rules: [
@@ -175,8 +139,9 @@ test("adjustWorkbox calls the provided adjustment using the workbox plugin confi
   const inputConfig = {
     plugins: [{ constructor: { name: "GenerateSW" }, config: innerConfig }]
   };
+  const actual = adjustWorkbox(adjustment)(inputConfig);
 
-  expect(adjustWorkbox(adjustment)(inputConfig)).toEqual(inputConfig);
+  expect(actual).toMatchSnapshot();
   expect(adjustment).toHaveBeenCalledWith(innerConfig);
 });
 
@@ -198,13 +163,9 @@ test("disableChunk disables chunking config options", () => {
       runtimeChunk: true
     }
   };
+  const actual = disableChunk()(inputConfig);
 
-  expect(disableChunk()(inputConfig)).toEqual({
-    optimization: {
-      splitChunks: { cacheGroups: { default: false } },
-      runtimeChunk: false
-    }
-  });
+  expect(actual).toMatchSnapshot();
 });
 
 test("addPostcssPlugins adds postcss plugins to the postcss rule", () => {
@@ -224,22 +185,10 @@ test("addPostcssPlugins adds postcss plugins to the postcss rule", () => {
       ]
     }
   };
-  const outputConfig = addPostcssPlugins(plugins)(inputConfig);
+  const actual = addPostcssPlugins(plugins)(inputConfig);
 
-  expect(outputConfig).toMatchObject({
-    module: {
-      rules: [
-        {
-          oneOf: [
-            {
-              use: [{ options: { plugins: expect.any(Function) } }]
-            }
-          ]
-        }
-      ]
-    }
-  });
-  const result = outputConfig.module.rules[0].oneOf[0].use[0].options
+  expect(actual).toMatchSnapshot();
+  const result = actual.module.rules[0].oneOf[0].use[0].options
     .plugins()
     .forEach(p => p());
   expect(plugin1).toHaveBeenCalled();
@@ -252,8 +201,7 @@ test("removeModuleScopePlugin removes the 'ModuleScopePlugin' resolve plugin", (
       plugins: [{ constructor: { name: "ModuleScopePlugin" } }, { test: true }]
     }
   };
+  const actual = removeModuleScopePlugin()(inputConfig);
 
-  expect(removeModuleScopePlugin()(inputConfig)).toEqual({
-    resolve: { plugins: [{ test: true }] }
-  });
+  expect(actual).toMatchSnapshot();
 });
