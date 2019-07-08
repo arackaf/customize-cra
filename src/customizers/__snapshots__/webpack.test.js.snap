@@ -1,0 +1,168 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`addPostcssPlugins adds postcss plugins to the postcss rule 1`] = `
+Object {
+  "module": Object {
+    "rules": Array [
+      Object {
+        "oneOf": Array [
+          Object {
+            "use": Array [
+              Object {
+                "options": Object {
+                  "ident": "postcss",
+                  "plugins": [Function],
+                },
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`addWebpackAlias initializes resolve.alias with empty objects if non-existant 1`] = `
+Object {
+  "resolve": Object {
+    "alias": Object {},
+  },
+}
+`;
+
+exports[`addWebpackAlias merges the provided alias object with the config resolve.alias object 1`] = `
+Object {
+  "resolve": Object {
+    "alias": Object {
+      "a": "A",
+      "b": "b",
+      "c": "c",
+    },
+  },
+}
+`;
+
+exports[`addWebpackExternals returns function that spreads provided args last in externals list 1`] = `
+Object {
+  "externals": Object {
+    "lodash": "Lodash",
+    "react": "React",
+    "react-dom": "ReactDom",
+  },
+}
+`;
+
+exports[`addWebpackPlugin adds the provided plugin to the config plugins list 1`] = `
+Object {
+  "plugins": Array [
+    "A",
+    "B",
+  ],
+}
+`;
+
+exports[`addWebpackResolve initializes resolve with empty object if non-existant 1`] = `
+Object {
+  "resolve": Object {},
+}
+`;
+
+exports[`addWebpackResolve merges the provided resolve object into the config resolve object 1`] = `
+Object {
+  "resolve": Object {
+    "alias": Object {
+      "a": "a",
+      "b": "B",
+    },
+  },
+}
+`;
+
+exports[`adjustWorkbox calls the provided adjustment using the workbox plugin config 1`] = `
+Object {
+  "plugins": Array [
+    Object {
+      "config": Object {
+        "test": true,
+      },
+      "constructor": Object {
+        "name": "GenerateSW",
+      },
+    },
+  ],
+}
+`;
+
+exports[`disableChunk disables chunking config options 1`] = `
+Object {
+  "optimization": Object {
+    "runtimeChunk": false,
+    "splitChunks": Object {
+      "cacheGroups": Object {
+        "default": false,
+      },
+    },
+  },
+}
+`;
+
+exports[`eslint addTslintLoader adds tslint-loader as the first rule 1`] = `
+Object {
+  "module": Object {
+    "rules": Array [
+      Object {
+        "enforce": "pre",
+        "loader": "tslint-loader",
+        "options": Object {
+          "test": true,
+        },
+        "test": /\\\\\\.\\(ts\\|tsx\\)\\$/,
+      },
+      Object {
+        "test": true,
+      },
+    ],
+  },
+}
+`;
+
+exports[`eslint disableEsLint filters out the eslint rules from the config rules list 1`] = `
+Object {
+  "module": Object {
+    "rules": Array [],
+  },
+}
+`;
+
+exports[`eslint useEslintRc removes the base eslint config and uses the passed filename instead 1`] = `
+Object {
+  "module": Object {
+    "rules": Array [
+      Object {
+        "use": Array [
+          Object {
+            "options": Object {
+              "configFile": ".eslintrc",
+              "ignore": true,
+              "useEslintrc": true,
+            },
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`removeModuleScopePlugin removes the 'ModuleScopePlugin' resolve plugin 1`] = `
+Object {
+  "resolve": Object {
+    "plugins": Array [
+      Object {
+        "test": true,
+      },
+    ],
+  },
+}
+`;

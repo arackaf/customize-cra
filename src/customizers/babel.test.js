@@ -9,301 +9,87 @@ const {
   babelInclude
 } = require("./babel");
 
-describe("babel", () => {
-  test("fixBabelImports adds the babel imports plugin for the provided library", () => {
-    const options = { libraryDirectory: "" };
-    const plugin = [
-      "import",
-      { libraryDirectory: "", libraryName: "lodash" },
-      "fix-lodash-imports"
-    ];
-    const config = {
-      module: {
-        rules: [
+const config = () => ({
+  module: {
+    rules: [
+      {
+        oneOf: [
           {
-            oneOf: [
-              {
-                loader: "babel",
-                options: {
-                  plugins: []
-                }
-              }
-            ]
+            loader: "babel",
+            options: {
+              plugins: []
+            }
           }
         ]
       }
-    };
+    ]
+  }
+});
 
-    expect(fixBabelImports("lodash", options)(config)).toMatchObject({
-      module: {
-        rules: [
-          {
-            oneOf: [
-              {
-                loader: "babel",
-                options: {
-                  plugins: [plugin]
-                }
-              }
-            ]
-          }
-        ]
-      }
-    });
-  });
+test("fixBabelImports adds the babel imports plugin for the provided library", () => {
+  const options = { libraryDirectory: "" };
+  const plugin = [
+    "import",
+    { libraryDirectory: "", libraryName: "lodash" },
+    "fix-lodash-imports"
+  ];
+  const actual = fixBabelImports("lodash", options)(config());
 
-  test("useBabelRc enables the babel loader's babelrc flag", () => {
-    const config = {
-      module: {
-        rules: [
-          {
-            oneOf: [
-              {
-                loader: "babel",
-                options: {
-                  plugins: [],
-                  babelrc: false
-                }
-              }
-            ]
-          }
-        ]
-      }
-    };
+  expect(actual).toMatchSnapshot();
+});
 
-    expect(useBabelRc()(config)).toMatchObject({
-      module: {
-        rules: [
-          {
-            oneOf: [
-              {
-                loader: "babel",
-                options: {
-                  babelrc: true
-                }
-              }
-            ]
-          }
-        ]
-      }
-    });
-  });
+test("useBabelRc enables the babel loader's babelrc flag", () => {
+  const actual = useBabelRc()(config());
 
-  test("babelInclude sets the babel loader include", () => {
-    const include = ["src"];
-    const config = {
-      module: {
-        rules: [
-          {
-            oneOf: [
-              {
-                loader: "babel",
-                options: {
-                  plugins: []
-                }
-              }
-            ]
-          }
-        ]
-      }
-    };
+  expect(actual).toMatchSnapshot();
+});
 
-    expect(babelInclude(include)(config)).toMatchObject({
-      module: {
-        rules: [
-          {
-            oneOf: [
-              {
-                loader: "babel",
-                include
-              }
-            ]
-          }
-        ]
-      }
-    });
-  });
+test("babelInclude sets the babel loader include", () => {
+  const include = ["src"];
+  const actual = babelInclude(include)(config());
 
-  test("addBabelPlugin returns a function that adds a plugin to the plugins list", () => {
-    const plugin = "@babel/plugin-transform-runtime";
-    const config = {
-      module: {
-        rules: [
-          {
-            oneOf: [
-              {
-                loader: "babel",
-                options: {
-                  plugins: []
-                }
-              }
-            ]
-          }
-        ]
-      }
-    };
+  expect(actual).toMatchSnapshot();
+});
 
-    expect(addBabelPlugin(plugin)(config)).toMatchObject({
-      module: {
-        rules: [
-          {
-            oneOf: [
-              {
-                loader: "babel",
-                options: { plugins: [plugin] }
-              }
-            ]
-          }
-        ]
-      }
-    });
-  });
+test("addBabelPlugin returns a function that adds a plugin to the plugins list", () => {
+  const plugin = "@babel/plugin-transform-runtime";
+  const actual = addBabelPlugin(plugin)(config());
 
-  test("addBabelPlugins returns functions that add plugins to the plugins list", () => {
-    const plugins = [
-      ["@babel/plugin-proposal-object-rest-spread", { loose: true }],
-      "@babel/plugin-transform-runtime"
-    ];
-    const inputConfig = {
-      module: {
-        rules: [
-          {
-            oneOf: [
-              {
-                loader: "babel",
-                options: {
-                  plugins: []
-                }
-              }
-            ]
-          }
-        ]
-      }
-    };
-    const functions = addBabelPlugins(...plugins);
-    const outputConfig = functions.reduce(
-      (config, fn) => fn(config),
-      inputConfig
-    );
+  expect(actual).toMatchSnapshot();
+});
 
-    expect(outputConfig).toMatchObject({
-      module: {
-        rules: [
-          {
-            oneOf: [
-              {
-                loader: "babel",
-                options: { plugins }
-              }
-            ]
-          }
-        ]
-      }
-    });
-  });
+test("addBabelPlugins returns functions that add plugins to the plugins list", () => {
+  const plugins = [
+    ["@babel/plugin-proposal-object-rest-spread", { loose: true }],
+    "@babel/plugin-transform-runtime"
+  ];
+  const functions = addBabelPlugins(...plugins);
+  const actual = functions.reduce((config, fn) => fn(config), config());
 
-  test("addBabelPreset returns a function that adds a preset to the presets list", () => {
-    const preset = "@babel/env";
-    const config = {
-      module: {
-        rules: [
-          {
-            oneOf: [
-              {
-                loader: "babel",
-                options: {
-                  plugins: [],
-                  presets: []
-                }
-              }
-            ]
-          }
-        ]
-      }
-    };
+  expect(actual).toMatchSnapshot();
+});
 
-    expect(addBabelPreset(preset)(config)).toMatchObject({
-      module: {
-        rules: [
-          {
-            oneOf: [
-              {
-                loader: "babel",
-                options: { presets: [preset] }
-              }
-            ]
-          }
-        ]
-      }
-    });
-  });
+test("addBabelPreset returns a function that adds a preset to the presets list", () => {
+  const preset = "@babel/env";
+  const conf = config();
+  conf.module.rules[0].oneOf[0].options.presets = [];
+  const actual = addBabelPreset(preset)(conf);
 
-  test("addBabelPresets returns functions that add presets to the presets list", () => {
-    const presets = [["@babel/env", { loose: true }], "@babel/typescript"];
-    const inputConfig = {
-      module: {
-        rules: [
-          {
-            oneOf: [
-              {
-                loader: "babel",
-                options: {
-                  plugins: [],
-                  presets: []
-                }
-              }
-            ]
-          }
-        ]
-      }
-    };
-    const functions = addBabelPresets(...presets);
-    const outputConfig = functions.reduce(
-      (config, fn) => fn(config),
-      inputConfig
-    );
+  expect(actual).toMatchSnapshot();
+});
 
-    expect(outputConfig).toMatchObject({
-      module: {
-        rules: [
-          {
-            oneOf: [
-              {
-                loader: "babel",
-                options: { presets }
-              }
-            ]
-          }
-        ]
-      }
-    });
-  });
+test("addBabelPresets returns functions that add presets to the presets list", () => {
+  const presets = [["@babel/env", { loose: true }], "@babel/typescript"];
+  const conf = config();
+  conf.module.rules[0].oneOf[0].options.presets = [];
+  const functions = addBabelPresets(...presets);
+  const actual = functions.reduce((config, fn) => fn(config), conf);
 
-  test("addDecoratorsLegacy returns a function that adds the decorators plugin to the plugins list", () => {
-    const inputConfig = {
-      module: {
-        rules: [{ oneOf: [{ loader: "babel", options: { plugins: [] } }] }]
-      }
-    };
-    const outputConfig = addDecoratorsLegacy()(inputConfig);
+  expect(actual).toMatchSnapshot();
+});
 
-    expect(outputConfig).toMatchObject({
-      module: {
-        rules: [
-          {
-            oneOf: [
-              {
-                loader: "babel",
-                options: {
-                  plugins: [
-                    ["@babel/plugin-proposal-decorators", { legacy: true }]
-                  ]
-                }
-              }
-            ]
-          }
-        ]
-      }
-    });
-  });
+test("addDecoratorsLegacy returns a function that adds the decorators plugin to the plugins list", () => {
+  const actual = addDecoratorsLegacy()(config());
+
+  expect(actual).toMatchSnapshot();
 });

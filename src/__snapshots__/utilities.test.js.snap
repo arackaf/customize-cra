@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getBabelLoader finds the babel loader options in "oneOf" array 1`] = `
+Object {
+  "loader": "babel",
+  "options": Object {
+    "plugins": Array [
+      "test",
+    ],
+  },
+}
+`;
+
+exports[`getBabelLoader finds the babel loader options in a rule's "use" array 1`] = `
+Object {
+  "loader": "babel",
+  "options": Object {
+    "plugins": Array [
+      "test",
+    ],
+  },
+}
+`;
