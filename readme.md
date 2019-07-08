@@ -1,7 +1,6 @@
 # customize-cra
 
-This project provides a set of utilities to customize the Create React App v2
-configurations leveraging [`react-app-rewired`](https://github.com/timarney/react-app-rewired/) core functionalities.
+This project provides a set of utilities to customize [`create-react-app`](https://github.com/facebook/create-react-app) versions 2 and 3 configurations leveraging [`react-app-rewired`](https://github.com/timarney/react-app-rewired/) core functionalities.
 
 ## How to install
 
