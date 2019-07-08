@@ -2,6 +2,7 @@
 
 exports[`getBabelLoader finds the babel loader options in "oneOf" array 1`] = `
 Object {
+  "include": "src",
   "loader": "babel",
   "options": Object {
     "plugins": Array [
@@ -13,11 +14,28 @@ Object {
 
 exports[`getBabelLoader finds the babel loader options in a rule's "use" array 1`] = `
 Object {
+  "include": "src",
   "loader": "babel",
   "options": Object {
     "plugins": Array [
       "test",
     ],
   },
+}
+`;
+
+exports[`getBabelLoader finds the babel loader options in "oneOf" array for outside of app 1`] = `
+Object {
+  "exclude": "src",
+  "loader": "babel",
+  "options": Object {},
+}
+`;
+
+exports[`getBabelLoader finds the babel loader options in a rule's "use" array for outside of app 1`] = `
+Object {
+  "exclude": "src",
+  "loader": "babel",
+  "options": Object {},
 }
 `;

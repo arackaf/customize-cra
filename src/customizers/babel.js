@@ -5,6 +5,15 @@ const addBabelPlugin = plugin => config => {
   return config;
 };
 
+const addBabelPluginOutSideOfApp = plugin => config => { 
+  const outsideBabelOptions = getBabelLoader(config, true).options;
+  if (!outsideBabelOptions.plugins) {
+    outsideBabelOptions.plugins = [];
+  }
+  outsideBabelOptions.plugins.push(plugin);
+  return config;
+};
+
 const addBabelPreset = preset => config => {
   getBabelLoader(config).options.presets.push(preset);
   return config;
@@ -44,6 +53,7 @@ const fixBabelImports = (libraryName, options) =>
 
 module.exports = {
   addBabelPlugin,
+  addBabelPluginOutSideOfApp,
   addBabelPlugins,
   addDecoratorsLegacy,
   addBabelPreset,

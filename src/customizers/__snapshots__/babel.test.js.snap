@@ -7,10 +7,45 @@ Object {
       Object {
         "oneOf": Array [
           Object {
+            "include": "src",
             "loader": "babel",
             "options": Object {
               "plugins": Array [
                 "@babel/plugin-transform-runtime",
+              ],
+            },
+          },
+          Object {
+            "exclude": "src",
+            "loader": "babel",
+            "options": Object {},
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`addBabelPluginOutSideOfApp returns a function that adds a plugin to the 'outside of app' babel-loader's plugins list 1`] = `
+Object {
+  "module": Object {
+    "rules": Array [
+      Object {
+        "oneOf": Array [
+          Object {
+            "include": "src",
+            "loader": "babel",
+            "options": Object {
+              "plugins": Array [],
+            },
+          },
+          Object {
+            "exclude": "src",
+            "loader": "babel",
+            "options": Object {
+              "plugins": Array [
+                "@babel/plugin-proposal-class-properties",
               ],
             },
           },
@@ -28,6 +63,7 @@ Object {
       Object {
         "oneOf": Array [
           Object {
+            "include": "src",
             "loader": "babel",
             "options": Object {
               "plugins": Array [
@@ -40,6 +76,11 @@ Object {
                 "@babel/plugin-transform-runtime",
               ],
             },
+          },
+          Object {
+            "exclude": "src",
+            "loader": "babel",
+            "options": Object {},
           },
         ],
       },
@@ -55,6 +96,7 @@ Object {
       Object {
         "oneOf": Array [
           Object {
+            "include": "src",
             "loader": "babel",
             "options": Object {
               "plugins": Array [],
@@ -62,6 +104,11 @@ Object {
                 "@babel/env",
               ],
             },
+          },
+          Object {
+            "exclude": "src",
+            "loader": "babel",
+            "options": Object {},
           },
         ],
       },
@@ -77,6 +124,7 @@ Object {
       Object {
         "oneOf": Array [
           Object {
+            "include": "src",
             "loader": "babel",
             "options": Object {
               "plugins": Array [],
@@ -90,6 +138,11 @@ Object {
                 "@babel/typescript",
               ],
             },
+          },
+          Object {
+            "exclude": "src",
+            "loader": "babel",
+            "options": Object {},
           },
         ],
       },
@@ -105,6 +158,7 @@ Object {
       Object {
         "oneOf": Array [
           Object {
+            "include": "src",
             "loader": "babel",
             "options": Object {
               "plugins": Array [
@@ -116,6 +170,11 @@ Object {
                 ],
               ],
             },
+          },
+          Object {
+            "exclude": "src",
+            "loader": "babel",
+            "options": Object {},
           },
         ],
       },
@@ -139,6 +198,11 @@ Object {
               "plugins": Array [],
             },
           },
+          Object {
+            "exclude": "src",
+            "loader": "babel",
+            "options": Object {},
+          },
         ],
       },
     ],
@@ -153,6 +217,7 @@ Object {
       Object {
         "oneOf": Array [
           Object {
+            "include": "src",
             "loader": "babel",
             "options": Object {
               "plugins": Array [
@@ -166,6 +231,11 @@ Object {
                 ],
               ],
             },
+          },
+          Object {
+            "exclude": "src",
+            "loader": "babel",
+            "options": Object {},
           },
         ],
       },
@@ -181,11 +251,17 @@ Object {
       Object {
         "oneOf": Array [
           Object {
+            "include": "src",
             "loader": "babel",
             "options": Object {
               "babelrc": true,
               "plugins": Array [],
             },
+          },
+          Object {
+            "exclude": "src",
+            "loader": "babel",
+            "options": Object {},
           },
         ],
       },

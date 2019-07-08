@@ -1,6 +1,7 @@
 const {
   addBabelPlugin,
   addBabelPlugins,
+  addBabelPluginOutSideOfApp,
   addDecoratorsLegacy,
   addBabelPreset,
   addBabelPresets,
@@ -9,6 +10,9 @@ const {
   babelInclude
 } = require("./babel");
 
+/**
+ * Actually the create-react-app2/3 has two babel-loader rules. One is for app's src and the other is for 'outside of app'( like node_modules ). This config mocks babel-loader for outside of app.
+ */
 const config = () => ({
   module: {
     rules: [
@@ -16,12 +20,18 @@ const config = () => ({
         oneOf: [
           {
             loader: "babel",
+            include: "src",
             options: {
-              plugins: []
-            }
+              plugins: [],
+            },
+          },
+          {
+            loader: "babel",
+            exclude: "src",
+            options: {},
           }
         ]
-      }
+      },
     ]
   }
 });
@@ -54,6 +64,13 @@ test("babelInclude sets the babel loader include", () => {
 test("addBabelPlugin returns a function that adds a plugin to the plugins list", () => {
   const plugin = "@babel/plugin-transform-runtime";
   const actual = addBabelPlugin(plugin)(config());
+
+  expect(actual).toMatchSnapshot();
+});
+
+test("addBabelPluginOutSideOfApp returns a function that adds a plugin to the 'outside of app' babel-loader's plugins list", () => {
+  const plugin = "@babel/plugin-proposal-class-properties";
+  const actual = addBabelPluginOutSideOfApp(plugin)(config());
 
   expect(actual).toMatchSnapshot();
 });
