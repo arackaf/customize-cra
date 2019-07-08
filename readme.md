@@ -1,7 +1,6 @@
 # customize-cra
 
-This project provides a set of utilities to customize the Create React App v2
-configurations leveraging [`react-app-rewired`](https://github.com/timarney/react-app-rewired/) core functionalities.
+This project provides a set of utilities to customize [`create-react-app`](https://github.com/facebook/create-react-app) versions 2 and 3 configurations leveraging [`react-app-rewired`](https://github.com/timarney/react-app-rewired/) core functionalities.
 
 ## How to install
 
@@ -152,19 +151,19 @@ Adds the provided resolve info into webpack's resolve section. Pass an object li
 
 ### addWebpackPlugin(plugin)
 
-Adds the provided plugin info into webpack's plugin array. Pass a plugin defined with  `new webpack.DefinePlugin({...})`
+Adds the provided plugin info into webpack's plugin array. Pass a plugin defined with `new webpack.DefinePlugin({...})`
 
 ### addWebpackExternals(deps)
 
-Add external dependencies, useful when trying to offload libs to CDN. 
+Add external dependencies, useful when trying to offload libs to CDN.
 
-For example you can [offload](https://github.com/facebook/create-react-app/issues/2758) `react` and `react-dom` by 
+For example you can [offload](https://github.com/facebook/create-react-app/issues/2758) `react` and `react-dom` by
 
 ```js
 addWebpackExternals({
-  'react': 'React',
-  'react-dom': 'ReactDom'
-})
+  react: "React",
+  "react-dom": "ReactDom"
+});
 ```
 
 ### addBundleVisualizer(options, behindFlag = false)
@@ -258,7 +257,7 @@ module.exports = override(
   addLessLoader({
     strictMath: true,
     noIeCompat: true,
-    localIdentName: '[local]--[hash:base64:5]' // if you use CSS Modules, and custom `localIdentName`, default is '[local]--[hash:base64:5]'.
+    localIdentName: "[local]--[hash:base64:5]" // if you use CSS Modules, and custom `localIdentName`, default is '[local]--[hash:base64:5]'.
   })
 );
 ```
@@ -272,7 +271,7 @@ Once `less-loader` is enabled, you can import `.less` file in your project.
 > if you use TypeScript (npm init react-app my-app --typescript) with CSS Modules, you should edit `react-app-env.d.ts`.
 
 ```typescript
-declare module '*.module.less' {
+declare module "*.module.less" {
   const classes: { [key: string]: string };
   export default classes;
 }
@@ -377,12 +376,7 @@ module.exports = override(
 Need to install `tslint-loader`.
 
 ```js
-const {
-  addTslintLoader
-} = require("customize-cra");
+const { addTslintLoader } = require("customize-cra");
 
-module.exports = override(
-  addTslintLoader(),
-);
-
+module.exports = override(addTslintLoader());
 ```
