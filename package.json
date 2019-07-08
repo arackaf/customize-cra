@@ -3,7 +3,8 @@
   "version": "0.2.14",
   "description": "",
   "repository": "arackaf/customize-cra",
-  "main": "src/index.js",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
   "scripts": {
     "test": "jest"
   },
