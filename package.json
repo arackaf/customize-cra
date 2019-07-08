@@ -9,8 +9,10 @@
     "dist"
   ],
   "scripts": {
-    "build": "rollup -c",
-    "test": "jest"
+    "build": "npm run clean && rollup -c",
+    "clean": "rimraf dist",
+    "test": "jest",
+    "prepack": "npm run build"
   },
   "author": "Adam Rackis",
   "license": "MIT",
@@ -22,6 +24,7 @@
     "@babel/preset-env": "^7.5.0",
     "babel-jest": "^24.8.0",
     "jest": "^24.8.0",
+    "rimraf": "^2.6.3",
     "rollup": "^1.16.6",
     "rollup-plugin-commonjs": "^10.0.1",
     "rollup-plugin-node-resolve": "^5.2.0"
