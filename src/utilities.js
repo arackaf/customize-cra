@@ -1,4 +1,4 @@
-const getBabelLoader = config => {
+export const getBabelLoader = config => {
   const babelLoaderFilter = rule =>
     rule.loader &&
     rule.loader.includes("babel") &&
@@ -20,5 +20,3 @@ const getBabelLoader = config => {
   }
   return babelLoader;
 };
-
-module.exports = { getBabelLoader };

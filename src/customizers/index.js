@@ -1,7 +1,2 @@
-const webpack = require("./webpack");
-const babel = require("./babel");
-
-module.exports = {
-  ...babel,
-  ...webpack
-};
+export * from "./webpack";
+export * from "./babel";

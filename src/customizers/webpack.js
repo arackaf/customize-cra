@@ -1,6 +1,9 @@
-const { getBabelLoader } = require("../utilities");
+import { getBabelLoader } from "../utilities";
 
-const addBundleVisualizer = (options = {}, behindFlag = false) => config => {
+export const addBundleVisualizer = (
+  options = {},
+  behindFlag = false
+) => config => {
   const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
     .BundleAnalyzerPlugin;
 
@@ -22,7 +25,7 @@ const addBundleVisualizer = (options = {}, behindFlag = false) => config => {
   return config;
 };
 
-const disableEsLint = () => config => {
+export const disableEsLint = () => config => {
   let eslintRules = config.module.rules.filter(
     r => r.use && r.use.some(u => u.options && u.options.useEslintrc !== void 0)
   );
@@ -32,7 +35,7 @@ const disableEsLint = () => config => {
   return config;
 };
 
-const addWebpackAlias = alias => config => {
+export const addWebpackAlias = alias => config => {
   if (!config.resolve) {
     config.resolve = {};
   }
@@ -43,7 +46,7 @@ const addWebpackAlias = alias => config => {
   return config;
 };
 
-const addWebpackResolve = resolve => config => {
+export const addWebpackResolve = resolve => config => {
   if (!config.resolve) {
     config.resolve = {};
   }
@@ -51,12 +54,12 @@ const addWebpackResolve = resolve => config => {
   return config;
 };
 
-const addWebpackPlugin = plugin => config => {
+export const addWebpackPlugin = plugin => config => {
   config.plugins.push(plugin);
   return config;
 };
 
-const adjustWorkbox = adjust => config => {
+export const adjustWorkbox = adjust => config => {
   config.plugins.forEach(p => {
     if (p.constructor.name === "GenerateSW") {
       adjust(p.config);
@@ -65,7 +68,7 @@ const adjustWorkbox = adjust => config => {
   return config;
 };
 
-const useEslintRc = configFile => config => {
+export const useEslintRc = configFile => config => {
   const eslintRule = config.module.rules.filter(
     r => r.use && r.use.some(u => u.options && u.options.useEslintrc !== void 0)
   )[0];
@@ -86,7 +89,7 @@ const useEslintRc = configFile => config => {
   return config;
 };
 
-const enableEslintTypescript = () => config => {
+export const enableEslintTypescript = () => config => {
   const eslintRule = config.module.rules.filter(
     r => r.use && r.use.some(u => u.options && u.options.useEslintrc !== void 0)
   )[0];
@@ -103,7 +106,7 @@ const enableEslintTypescript = () => config => {
   return config;
 };
 
-const addLessLoader = (loaderOptions = {}) => config => {
+export const addLessLoader = (loaderOptions = {}) => config => {
   const mode = process.env.NODE_ENV === "development" ? "dev" : "prod";
 
   // Need these for production mode, which are copied from react-scripts
@@ -187,7 +190,7 @@ const addLessLoader = (loaderOptions = {}) => config => {
 // to be used inside `overrideDevServer`, makes CRA watch all the folders
 // included `node_modules`, useful when you are working with linked packages
 // usage: `yarn start --watch-all`
-const watchAll = () => config => {
+export const watchAll = () => config => {
   if (process.argv.includes("--watch-all")) {
     delete config.watchOptions;
   }
@@ -196,7 +199,7 @@ const watchAll = () => config => {
 
 // to be used to disable chunk according to:
 // https://github.com/facebook/create-react-app/issues/5306#issuecomment-433425838
-const disableChunk = () => config => {
+export const disableChunk = () => config => {
   config.optimization.splitChunks = {
     cacheGroups: {
       default: false
@@ -210,7 +213,7 @@ const disableChunk = () => config => {
 
 // to be used to ignore replace packages with global variable
 // Useful when trying to offload libs to CDN
-const addWebpackExternals = externalDeps => config => {
+export const addWebpackExternals = externalDeps => config => {
   config.externals = {
     ...config.externals,
     ...externalDeps
@@ -218,7 +221,7 @@ const addWebpackExternals = externalDeps => config => {
   return config;
 };
 
-const addPostcssPlugins = plugins => config => {
+export const addPostcssPlugins = plugins => config => {
   const rules = config.module.rules.find(rule => Array.isArray(rule.oneOf))
     .oneOf;
   rules.forEach(
@@ -241,14 +244,14 @@ const addPostcssPlugins = plugins => config => {
 
 // This will remove the CRA plugin that prevents to import modules from
 // outside the `src` directory, useful if you use a different directory
-const removeModuleScopePlugin = () => config => {
+export const removeModuleScopePlugin = () => config => {
   config.resolve.plugins = config.resolve.plugins.filter(
     p => p.constructor.name !== "ModuleScopePlugin"
   );
   return config;
 };
 
-const addTslintLoader = options => config => {
+export const addTslintLoader = options => config => {
   config.module.rules.unshift({
     test: /\.(ts|tsx)$/,
     loader: "tslint-loader",
@@ -256,22 +259,4 @@ const addTslintLoader = options => config => {
     enforce: "pre"
   });
   return config;
-};
-
-module.exports = {
-  addBundleVisualizer,
-  addWebpackExternals,
-  disableEsLint,
-  addWebpackAlias,
-  addWebpackResolve,
-  addWebpackPlugin,
-  adjustWorkbox,
-  useEslintRc,
-  enableEslintTypescript,
-  addLessLoader,
-  watchAll,
-  disableChunk,
-  addPostcssPlugins,
-  removeModuleScopePlugin,
-  addTslintLoader
 };

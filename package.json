@@ -3,9 +3,16 @@
   "version": "0.2.14",
   "description": "",
   "repository": "arackaf/customize-cra",
-  "main": "src/index.js",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "test": "jest"
+    "build": "npm run clean && rollup -c",
+    "clean": "rimraf dist",
+    "test": "jest",
+    "prepack": "npm run build"
   },
   "author": "Adam Rackis",
   "license": "MIT",
@@ -13,6 +20,17 @@
     "lodash.flow": "^3.5.0"
   },
   "devDependencies": {
-    "jest": "^24.8.0"
+    "@babel/core": "^7.5.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.5.1",
+    "@babel/preset-env": "^7.5.0",
+    "babel-jest": "^24.8.0",
+    "jest": "^24.8.0",
+    "rimraf": "^2.6.3",
+    "rollup": "^1.16.6",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-commonjs": "^10.0.1",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-sourcemaps": "^0.4.2",
+    "rollup-plugin-terser": "^5.1.1"
   }
 }

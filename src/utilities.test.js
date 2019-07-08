@@ -1,4 +1,4 @@
-const { getBabelLoader } = require("./utilities");
+import { getBabelLoader } from "./utilities";
 
 describe("getBabelLoader finds the babel loader options", () => {
   const loader = { loader: "babel", options: { plugins: ["test"] } };
