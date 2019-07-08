@@ -1,4 +1,4 @@
-const {
+import {
   addBabelPlugin,
   addBabelPlugins,
   addDecoratorsLegacy,
@@ -7,7 +7,7 @@ const {
   fixBabelImports,
   useBabelRc,
   babelInclude
-} = require("./babel");
+} from "./babel";
 
 const config = () => ({
   module: {
