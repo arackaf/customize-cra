@@ -380,3 +380,7 @@ const { addTslintLoader } = require("customize-cra");
 
 module.exports = override(addTslintLoader());
 ```
+
+## Contributing
+
+For more information about contributing to this project, like a directory map or a how-to for reporting an issue about the project, please [`see contributing.md`](contributing.md).
