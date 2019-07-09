@@ -25,6 +25,10 @@ customize-cra/
        └── utility functions that the customizers rely on (like 'getBabelConfig')
 ```
 
+## Committing code
+
+This project enforces conventional commit messages via [`commitlint`](https://github.com/conventional-changelog/commitlint). See [this summary](https://www.conventionalcommits.org/en/v1.0.0-beta.4/#summary) for more information on how to write a commit message that follows the rules.
+
 ## Opening a Pull Request
 
 Please open all Pull Requests against the `master` branch. If your Pull Request has breaking changes, open against the `next` branch instead.
