@@ -1,4 +1,4 @@
-const {
+import {
   addBabelPlugin,
   addBabelPlugins,
   addBabelPluginOutSideOfApp,
@@ -8,7 +8,7 @@ const {
   fixBabelImports,
   useBabelRc,
   babelInclude
-} = require("./babel");
+} from "./babel";
 
 /**
  * Actually the create-react-app2/3 has two babel-loader rules. One is for app's src and the other is for 'outside of app'( like node_modules ). This config mocks babel-loader for outside of app.

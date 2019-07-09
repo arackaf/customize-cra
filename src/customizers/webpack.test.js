@@ -1,4 +1,4 @@
-const {
+import {
   addWebpackExternals,
   addWebpackAlias,
   addWebpackResolve,
@@ -12,7 +12,7 @@ const {
   disableChunk,
   removeModuleScopePlugin,
   addPostcssPlugins
-} = require("./webpack");
+} from "./webpack";
 
 test("addWebpackExternals returns function that spreads provided args last in externals list", () => {
   const config = {

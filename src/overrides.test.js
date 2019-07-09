@@ -1,4 +1,4 @@
-const { override, overrideDevServer } = require("./overrides");
+import { override, overrideDevServer } from "./overrides";
 
 test("override composes provided plugin functions", () => {
   const plugin1 = jest.fn(x => x);

@@ -1,4 +1,4 @@
-const getBabelLoader = (config, isOutsideOfApp) => {
+export const getBabelLoader = (config, isOutsideOfApp) => {
   let babelLoaderFilter;
   if (isOutsideOfApp) {
     babelLoaderFilter = rule =>
@@ -27,5 +27,3 @@ const getBabelLoader = (config, isOutsideOfApp) => {
   }
   return babelLoader;
 };
-
-module.exports = { getBabelLoader };
