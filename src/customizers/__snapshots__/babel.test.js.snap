@@ -27,7 +27,7 @@ Object {
 }
 `;
 
-exports[`addBabelPluginOutSideOfApp returns a function that adds a plugin to the 'outside of app' babel-loader's plugins list 1`] = `
+exports[`addExternalBabelPlugin returns a function that adds a plugin to the 'outside of app' babel-loader's plugins list 1`] = `
 Object {
   "module": Object {
     "rules": Array [
@@ -81,6 +81,41 @@ Object {
             "exclude": "src",
             "loader": "babel",
             "options": Object {},
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`addExternalBabelPlugins returns functions that add plugins to the 'outside of app' babel-loader's plugins list 1`] = `
+Object {
+  "module": Object {
+    "rules": Array [
+      Object {
+        "oneOf": Array [
+          Object {
+            "include": "src",
+            "loader": "babel",
+            "options": Object {
+              "plugins": Array [],
+            },
+          },
+          Object {
+            "exclude": "src",
+            "loader": "babel",
+            "options": Object {
+              "plugins": Array [
+                Array [
+                  "@babel/plugin-proposal-object-rest-spread",
+                  Object {
+                    "loose": true,
+                  },
+                ],
+                "@babel/plugin-transform-runtime",
+              ],
+            },
           },
         ],
       },

@@ -1,7 +1,8 @@
 import {
   addBabelPlugin,
   addBabelPlugins,
-  addBabelPluginOutSideOfApp,
+  addExternalBabelPlugin,
+  addExternalBabelPlugins,
   addDecoratorsLegacy,
   addBabelPreset,
   addBabelPresets,
@@ -68,9 +69,9 @@ test("addBabelPlugin returns a function that adds a plugin to the plugins list",
   expect(actual).toMatchSnapshot();
 });
 
-test("addBabelPluginOutSideOfApp returns a function that adds a plugin to the 'outside of app' babel-loader's plugins list", () => {
+test("addExternalBabelPlugin returns a function that adds a plugin to the 'outside of app' babel-loader's plugins list", () => {
   const plugin = "@babel/plugin-proposal-class-properties";
-  const actual = addBabelPluginOutSideOfApp(plugin)(config());
+  const actual = addExternalBabelPlugin(plugin)(config());
 
   expect(actual).toMatchSnapshot();
 });
@@ -81,6 +82,17 @@ test("addBabelPlugins returns functions that add plugins to the plugins list", (
     "@babel/plugin-transform-runtime"
   ];
   const functions = addBabelPlugins(...plugins);
+  const actual = functions.reduce((config, fn) => fn(config), config());
+
+  expect(actual).toMatchSnapshot();
+});
+
+test("addExternalBabelPlugins returns functions that add plugins to the 'outside of app' babel-loader's plugins list", () => {
+  const plugins = [
+    ["@babel/plugin-proposal-object-rest-spread", { loose: true }],
+    "@babel/plugin-transform-runtime"
+  ];
+  const functions = addExternalBabelPlugins(...plugins);
   const actual = functions.reduce((config, fn) => fn(config), config());
 
   expect(actual).toMatchSnapshot();

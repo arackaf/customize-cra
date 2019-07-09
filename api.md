@@ -28,6 +28,32 @@ module.exports = override(
 );
 ```
 
+### addExternalBabelPlugin(plugin)
+
+Just like `addBabelPlugin`, you can add a babel plugin for 'external' babel-loader by this way. Actually in create-react-app v2/v3, it has two rules for babel-loader. One is for the codes which in `appSrc` and the other is for the codes which 'outside of your app' like `node_modules`. If you need customize the second babel-loader plugins, you can use this method. Reminder again, Whatever you pass for `plugin` will be added to Babel's `plugins` array. Consult their docs for more info.
+
+### addExternalBabelPlugins(plugins)
+
+A simple helper that calls `addExternalBabelPlugin` for each plugin you pass in here. Make sure you use the spread operator when using this, for example
+
+```js
+module.exports = override(
+  disableEsLint(),
+  ...addExternalBabelPlugins(
+    "babel-plugin-transform-do-expressions",
+    "@babel/plugin-proposal-object-rest-spread",
+  ),
+  fixBabelImports("lodash", {
+    libraryDirectory: "",
+    camel2DashComponentName: false
+  }),
+  fixBabelImports("react-feather", {
+    libraryName: "react-feather",
+    libraryDirectory: "dist/icons"
+  })
+);
+```
+
 ### addBabelPreset(preset)
 
 Adds a babel preset. Whatever you pass for `preset` will be added to Babel's `preset` array. Consult their docs for more info.

@@ -5,7 +5,7 @@ export const addBabelPlugin = plugin => config => {
   return config;
 };
 
-export const addBabelPluginOutSideOfApp = plugin => config => { 
+export const addExternalBabelPlugin = plugin => config => { 
   const outsideBabelOptions = getBabelLoader(config, true).options;
   if (!outsideBabelOptions.plugins) {
     outsideBabelOptions.plugins = [];
@@ -36,6 +36,9 @@ export const babelInclude = include => config => {
 
 export const addBabelPlugins = (...plugins) =>
   plugins.map(p => addBabelPlugin(p));
+
+export const addExternalBabelPlugins = (...plugins) =>
+  plugins.map(p => addExternalBabelPlugin(p));
 
 export const addBabelPresets = (...plugins) =>
   plugins.map(p => addBabelPreset(p));
