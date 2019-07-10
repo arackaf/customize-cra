@@ -218,15 +218,16 @@ export const addWebpackExternals = externalDeps => config => {
   if (!externals) {
     externals = externalDeps;
 
-  } else if (Array.isArray(externals)) {
-    externals = externals.concat(externalDeps);
+  } else if (Array.isArray(externalDeps)) {
+    externals = externalDeps.concat(externals);
 
-  } else if (Array.isArray(externalDeps)
+  } else if (Array.isArray(externals)
     || externalDeps.constructor === Function
     || externalDeps.constructor === RegExp) {
-    externals = [externals].concat(externalDeps);
+    externals = [externalDeps].concat(externals);
 
-  } else if (externalDeps.constructor === Object) {
+  } else if (externalDeps instanceof Object
+    && externals instanceof Object) {
     externals = {
       ...externals,
       ...externalDeps,

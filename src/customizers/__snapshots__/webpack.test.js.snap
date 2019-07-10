@@ -46,13 +46,13 @@ Object {
 exports[`addWebpackExternals returns function that spreads provided args last in externals list 1`] = `
 Object {
   "externals": Array [
+    [Function],
+    /\\^\\(jquery\\|\\\\\\$\\)\\$/i,
     Object {
       "lodash": "Lodash",
       "react": "React",
       "react-dom": "ReactDom",
     },
-    /\\^\\(jquery\\|\\\\\\$\\)\\$/i,
-    [Function],
   ],
 }
 `;
