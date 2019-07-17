@@ -214,10 +214,27 @@ export const disableChunk = () => config => {
 // to be used to ignore replace packages with global variable
 // Useful when trying to offload libs to CDN
 export const addWebpackExternals = externalDeps => config => {
-  config.externals = {
-    ...config.externals,
-    ...externalDeps
-  };
+  let externals = config.externals;
+  if (!externals) {
+    externals = externalDeps;
+
+  } else if (Array.isArray(externalDeps)) {
+    externals = externalDeps.concat(externals);
+
+  } else if (Array.isArray(externals)
+    || externalDeps.constructor === Function
+    || externalDeps.constructor === RegExp) {
+    externals = [externalDeps].concat(externals);
+
+  } else if (externalDeps instanceof Object
+    && externals instanceof Object) {
+    externals = {
+      ...externals,
+      ...externalDeps,
+    };
+  }
+
+  config.externals = externals;
   return config;
 };
 

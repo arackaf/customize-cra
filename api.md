@@ -133,6 +133,8 @@ addWebpackExternals({
 });
 ```
 
+`addWebpackExternals` can also accept a `string`, `function`, or `regex`. See [the webpack documentation](https://webpack.js.org/configuration/externals/) for more information.
+
 ### addBundleVisualizer(options, behindFlag = false)
 
 Adds the bundle visualizer plugin to your webpack config. Be sure to have `webpack-bundle-analyzer` installed. By default, the options passed to the plugin will be:

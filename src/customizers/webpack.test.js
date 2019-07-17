@@ -19,7 +19,16 @@ test("addWebpackExternals returns function that spreads provided args last in ex
     externals: { lodash: "Lodash", "react-dom": "NotReactDom" }
   };
   const externals = { react: "React", "react-dom": "ReactDom" };
-  const actual = addWebpackExternals(externals)(config);
+  const extReg = /^(jquery|\$)$/i;
+  function extFun(context, request, callback) {
+    if (/^yourregex$/.test(request)) {
+      return callback(null, 'commonjs ' + request);
+    }
+    callback();
+  }
+  let actual = addWebpackExternals(externals)(config);
+  actual = addWebpackExternals(extReg)(actual);
+  actual = addWebpackExternals(extFun)(actual);
 
   expect(actual).toMatchSnapshot();
 });
