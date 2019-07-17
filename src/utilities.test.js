@@ -1,15 +1,36 @@
 import { getBabelLoader } from "./utilities";
 
 describe("getBabelLoader finds the babel loader options", () => {
-  const loader = { loader: "babel", options: { plugins: ["test"] } };
+  const loader = {
+    loader: "babel",
+    include: "src",
+    options: {
+      plugins: ["test"],
+    },
+  };
+
+  const loaderOutsideOfApp = {
+    loader: "babel",
+    exclude: "src",
+    options: {},
+  };
+
+  const configForOneOfArray = { module: { rules: [{ oneOf: [loader, loaderOutsideOfApp] }] } };
+  const configForRuleUseArray = { module: { rules: [{ oneOf: [{ use: [loader, loaderOutsideOfApp] }] }] } };
 
   test('in "oneOf" array', () => {
-    const config = { module: { rules: [{ oneOf: [loader] }] } };
-    expect(getBabelLoader(config)).toMatchSnapshot();
+    expect(getBabelLoader(configForOneOfArray)).toMatchSnapshot();
   });
 
   test('in a rule\'s "use" array', () => {
-    const config = { module: { rules: [{ oneOf: [{ use: [loader] }] }] } };
-    expect(getBabelLoader(config)).toMatchSnapshot();
+    expect(getBabelLoader(configForRuleUseArray)).toMatchSnapshot();
+  });
+
+  test('in "oneOf" array for outside of app', () => {
+    expect(getBabelLoader(configForOneOfArray, true)).toMatchSnapshot();
+  });
+
+  test('in a rule\'s "use" array for outside of app', () => {
+    expect(getBabelLoader(configForRuleUseArray, true)).toMatchSnapshot();
   });
 });

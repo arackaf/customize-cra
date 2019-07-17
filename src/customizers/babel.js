@@ -5,6 +5,15 @@ export const addBabelPlugin = plugin => config => {
   return config;
 };
 
+export const addExternalBabelPlugin = plugin => config => { 
+  const outsideBabelOptions = getBabelLoader(config, true).options;
+  if (!outsideBabelOptions.plugins) {
+    outsideBabelOptions.plugins = [];
+  }
+  outsideBabelOptions.plugins.push(plugin);
+  return config;
+};
+
 export const addBabelPreset = preset => config => {
   getBabelLoader(config).options.presets.push(preset);
   return config;
@@ -27,6 +36,9 @@ export const babelInclude = include => config => {
 
 export const addBabelPlugins = (...plugins) =>
   plugins.map(p => addBabelPlugin(p));
+
+export const addExternalBabelPlugins = (...plugins) =>
+  plugins.map(p => addExternalBabelPlugin(p));
 
 export const addBabelPresets = (...plugins) =>
   plugins.map(p => addBabelPreset(p));

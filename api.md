@@ -347,3 +347,31 @@ const { addTslintLoader } = require("customize-cra");
 
 module.exports = override(addTslintLoader());
 ```
+
+### addExternalBabelPlugin(plugin)
+
+`create-react-app` actually has two rules in its `webpack` config for `babel-loader`: one for code in `addSrc` (`src/` by default) and the other for code `external` to that folder (like `node_modules`). You can add plugins to the `external` loader using `addExternalBabelPlugin` in the same way you'd use `addBabelPlugin`.
+
+### addExternalBabelPlugins(plugins)
+
+A simple helper that calls `addExternalBabelPlugin` for each plugin passed.
+
+Note: Make sure to use the spread operator if adding multiple plugins.
+
+```js
+module.exports = override(
+  disableEsLint(),
+  ...addExternalBabelPlugins(
+    "babel-plugin-transform-do-expressions",
+    "@babel/plugin-proposal-object-rest-spread",
+  ),
+  fixBabelImports("lodash", {
+    libraryDirectory: "",
+    camel2DashComponentName: false
+  }),
+  fixBabelImports("react-feather", {
+    libraryName: "react-feather",
+    libraryDirectory: "dist/icons"
+  })
+);
+```

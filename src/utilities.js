@@ -1,9 +1,16 @@
-export const getBabelLoader = config => {
-  const babelLoaderFilter = rule =>
+export const getBabelLoader = (config, isOutsideOfApp) => {
+  let babelLoaderFilter;
+  if (isOutsideOfApp) {
+    babelLoaderFilter = rule =>
     rule.loader &&
     rule.loader.includes("babel") &&
-    rule.options &&
-    rule.options.plugins;
+    rule.exclude;
+  } else {
+    babelLoaderFilter = rule =>
+    rule.loader &&
+    rule.loader.includes("babel") &&
+    rule.include;
+  }
 
   // First, try to find the babel loader inside the oneOf array.
   // This is where we can find it when working with react-scripts@2.0.3.

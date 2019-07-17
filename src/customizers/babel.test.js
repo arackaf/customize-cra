@@ -1,6 +1,8 @@
 import {
   addBabelPlugin,
   addBabelPlugins,
+  addExternalBabelPlugin,
+  addExternalBabelPlugins,
   addDecoratorsLegacy,
   addBabelPreset,
   addBabelPresets,
@@ -9,6 +11,9 @@ import {
   babelInclude
 } from "./babel";
 
+/**
+ * Actually the create-react-app2/3 has two babel-loader rules. One is for app's src and the other is for 'outside of app'( like node_modules ). This config mocks babel-loader for outside of app.
+ */
 const config = () => ({
   module: {
     rules: [
@@ -16,12 +21,18 @@ const config = () => ({
         oneOf: [
           {
             loader: "babel",
+            include: "src",
             options: {
-              plugins: []
-            }
+              plugins: [],
+            },
+          },
+          {
+            loader: "babel",
+            exclude: "src",
+            options: {},
           }
         ]
-      }
+      },
     ]
   }
 });
@@ -58,12 +69,30 @@ test("addBabelPlugin returns a function that adds a plugin to the plugins list",
   expect(actual).toMatchSnapshot();
 });
 
+test("addExternalBabelPlugin returns a function that adds a plugin to the 'outside of app' babel-loader's plugins list", () => {
+  const plugin = "@babel/plugin-proposal-class-properties";
+  const actual = addExternalBabelPlugin(plugin)(config());
+
+  expect(actual).toMatchSnapshot();
+});
+
 test("addBabelPlugins returns functions that add plugins to the plugins list", () => {
   const plugins = [
     ["@babel/plugin-proposal-object-rest-spread", { loose: true }],
     "@babel/plugin-transform-runtime"
   ];
   const functions = addBabelPlugins(...plugins);
+  const actual = functions.reduce((config, fn) => fn(config), config());
+
+  expect(actual).toMatchSnapshot();
+});
+
+test("addExternalBabelPlugins returns functions that add plugins to the 'outside of app' babel-loader's plugins list", () => {
+  const plugins = [
+    ["@babel/plugin-proposal-object-rest-spread", { loose: true }],
+    "@babel/plugin-transform-runtime"
+  ];
+  const functions = addExternalBabelPlugins(...plugins);
   const actual = functions.reduce((config, fn) => fn(config), config());
 
   expect(actual).toMatchSnapshot();
