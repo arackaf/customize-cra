@@ -350,11 +350,13 @@ module.exports = override(addTslintLoader());
 
 ### addExternalBabelPlugin(plugin)
 
-Just like `addBabelPlugin`, you can add a babel plugin for 'external' babel-loader by this way. Actually in create-react-app v2/v3, it has two rules for babel-loader. One is for the codes which in `appSrc` and the other is for the codes which 'outside of your app' like `node_modules`. If you need customize the second babel-loader plugins, you can use this method. Reminder again, Whatever you pass for `plugin` will be added to Babel's `plugins` array. Consult their docs for more info.
+`create-react-app` actually has two rules in its `webpack` config for `babel-loader`: one for code in `addSrc` (`src/` by default) and the other for code `external` to that folder (like `node_modules`). You can add plugins to the `external` loader using `addExternalBabelPlugin` in the same way you'd use `addBabelPlugin`.
 
 ### addExternalBabelPlugins(plugins)
 
-A simple helper that calls `addExternalBabelPlugin` for each plugin you pass in here. Make sure you use the spread operator when using this, for example
+A simple helper that calls `addExternalBabelPlugin` for each plugin passed.
+
+Note: Make sure to use the spread operator if adding multiple plugins.
 
 ```js
 module.exports = override(
