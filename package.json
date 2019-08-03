@@ -12,7 +12,9 @@
     "build": "npm run clean && rollup -c",
     "clean": "rimraf dist",
     "test": "jest",
-    "prepack": "npm run build"
+    "prepack": "npm run build",
+    "contributors:add": "all-contributors add",
+    "contributors:generate": "all-contributors generate"
   },
   "author": "Adam Rackis",
   "license": "MIT",
@@ -25,6 +27,7 @@
     "@babel/preset-env": "^7.5.0",
     "@commitlint/cli": "^8.0.0",
     "@commitlint/config-conventional": "^8.0.0",
+    "all-contributors-cli": "^6.8.1",
     "babel-jest": "^24.8.0",
     "husky": "^3.0.0",
     "jest": "^24.8.0",

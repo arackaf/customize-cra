@@ -1,0 +1,14 @@
+{
+  "projectName": "customize-cra",
+  "projectOwner": "arackaf",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "angular",
+  "contributors": [],
+  "contributorsPerLine": 7
+}
