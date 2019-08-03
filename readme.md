@@ -1,5 +1,5 @@
 # customize-cra
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
 
 This project provides a set of utilities to customize [`create-react-app`](https://github.com/facebook/create-react-app) versions 2 and 3 configurations leveraging [`react-app-rewired`](https://github.com/timarney/react-app-rewired/) core functionalities.
 
@@ -52,6 +52,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/dqu"><img src="https://avatars2.githubusercontent.com/u/4287468?v=4" width="100px;" alt="dqu"/><br /><sub><b>dqu</b></sub></a><br /><a href="#question-dqu" title="Answering Questions">💬</a></td>
     <td align="center"><a href="https://blog.breezelin.cn"><img src="https://avatars2.githubusercontent.com/u/5266711?v=4" width="100px;" alt="Breeze"/><br /><sub><b>Breeze</b></sub></a><br /><a href="https://github.com/arackaf/customize-cra/commits?author=breeze2" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/Terryand"><img src="https://avatars2.githubusercontent.com/u/22273687?v=4" width="100px;" alt="Terryand"/><br /><sub><b>Terryand</b></sub></a><br /><a href="https://github.com/arackaf/customize-cra/commits?author=Terryand" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/m-weeks"><img src="https://avatars0.githubusercontent.com/u/37918120?v=4" width="100px;" alt="m-weeks"/><br /><sub><b>m-weeks</b></sub></a><br /><a href="https://github.com/arackaf/customize-cra/issues?q=author%3Am-weeks" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
