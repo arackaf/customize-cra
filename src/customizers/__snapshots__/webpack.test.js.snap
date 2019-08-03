@@ -57,6 +57,18 @@ Object {
 }
 `;
 
+exports[`addWebpackModuleRule adds the provided rule to module.rules 1`] = `
+Object {
+  "module": Object {
+    "rules": Array [
+      Object {
+        "name": "__TEST__",
+      },
+    ],
+  },
+}
+`;
+
 exports[`addWebpackPlugin adds the provided plugin to the config plugins list 1`] = `
 Object {
   "plugins": Array [
