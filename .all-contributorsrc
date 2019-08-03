@@ -18,6 +18,15 @@
       "contributions": [
         "question"
       ]
+    },
+    {
+      "login": "breeze2",
+      "name": "Breeze",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/5266711?v=4",
+      "profile": "https://blog.breezelin.cn",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
