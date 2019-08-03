@@ -27,35 +27,6 @@ Object {
 }
 `;
 
-exports[`addExternalBabelPlugin returns a function that adds a plugin to the 'outside of app' babel-loader's plugins list 1`] = `
-Object {
-  "module": Object {
-    "rules": Array [
-      Object {
-        "oneOf": Array [
-          Object {
-            "include": "src",
-            "loader": "babel",
-            "options": Object {
-              "plugins": Array [],
-            },
-          },
-          Object {
-            "exclude": "src",
-            "loader": "babel",
-            "options": Object {
-              "plugins": Array [
-                "@babel/plugin-proposal-class-properties",
-              ],
-            },
-          },
-        ],
-      },
-    ],
-  },
-}
-`;
-
 exports[`addBabelPlugins returns functions that add plugins to the plugins list 1`] = `
 Object {
   "module": Object {
@@ -81,41 +52,6 @@ Object {
             "exclude": "src",
             "loader": "babel",
             "options": Object {},
-          },
-        ],
-      },
-    ],
-  },
-}
-`;
-
-exports[`addExternalBabelPlugins returns functions that add plugins to the 'outside of app' babel-loader's plugins list 1`] = `
-Object {
-  "module": Object {
-    "rules": Array [
-      Object {
-        "oneOf": Array [
-          Object {
-            "include": "src",
-            "loader": "babel",
-            "options": Object {
-              "plugins": Array [],
-            },
-          },
-          Object {
-            "exclude": "src",
-            "loader": "babel",
-            "options": Object {
-              "plugins": Array [
-                Array [
-                  "@babel/plugin-proposal-object-rest-spread",
-                  Object {
-                    "loose": true,
-                  },
-                ],
-                "@babel/plugin-transform-runtime",
-              ],
-            },
           },
         ],
       },
@@ -204,6 +140,98 @@ Object {
                   },
                 ],
               ],
+            },
+          },
+          Object {
+            "exclude": "src",
+            "loader": "babel",
+            "options": Object {},
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`addExternalBabelPlugin returns a function that adds a plugin to the 'outside of app' babel-loader's plugins list 1`] = `
+Object {
+  "module": Object {
+    "rules": Array [
+      Object {
+        "oneOf": Array [
+          Object {
+            "include": "src",
+            "loader": "babel",
+            "options": Object {
+              "plugins": Array [],
+            },
+          },
+          Object {
+            "exclude": "src",
+            "loader": "babel",
+            "options": Object {
+              "plugins": Array [
+                "@babel/plugin-proposal-class-properties",
+              ],
+            },
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`addExternalBabelPlugins returns functions that add plugins to the 'outside of app' babel-loader's plugins list 1`] = `
+Object {
+  "module": Object {
+    "rules": Array [
+      Object {
+        "oneOf": Array [
+          Object {
+            "include": "src",
+            "loader": "babel",
+            "options": Object {
+              "plugins": Array [],
+            },
+          },
+          Object {
+            "exclude": "src",
+            "loader": "babel",
+            "options": Object {
+              "plugins": Array [
+                Array [
+                  "@babel/plugin-proposal-object-rest-spread",
+                  Object {
+                    "loose": true,
+                  },
+                ],
+                "@babel/plugin-transform-runtime",
+              ],
+            },
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`babelExclude sets the babel loader exclude 1`] = `
+Object {
+  "module": Object {
+    "rules": Array [
+      Object {
+        "oneOf": Array [
+          Object {
+            "exclude": Array [
+              "fake_directory",
+            ],
+            "include": "src",
+            "loader": "babel",
+            "options": Object {
+              "plugins": Array [],
             },
           },
           Object {
