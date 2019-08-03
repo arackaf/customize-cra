@@ -6,6 +6,10 @@ It's not to that point yet though!
 
 If you're finding yourself lost or want to suggest opportunities for better documentation, please don't hesitate to [open an issue](https://github.com/arackaf/customize-cra/issues/new)!
 
+## 💎 Give yourself credit!
+
+This project uses [`all-contributors`](https://allcontributors.org) to recognize contributions. If you contribute to the project, be sure to give yourself credit by [using the `all-contributors add` script](https://allcontributors.org/docs/en/cli/usage#all-contributors-add).
+
 ## Project Map
 
 ```
