@@ -9,6 +9,16 @@
   "imageSize": 100,
   "commit": true,
   "commitConvention": "angular",
-  "contributors": [],
+  "contributors": [
+    {
+      "login": "dqu",
+      "name": "dqu",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/4287468?v=4",
+      "profile": "https://github.com/dqu",
+      "contributions": [
+        "question"
+      ]
+    }
+  ],
   "contributorsPerLine": 7
 }
