@@ -1,5 +1,5 @@
 # customize-cra
-[![All Contributors](https://img.shields.io/badge/all_contributors-0-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 
 This project provides a set of utilities to customize [`create-react-app`](https://github.com/facebook/create-react-app) versions 2 and 3 configurations leveraging [`react-app-rewired`](https://github.com/timarney/react-app-rewired/) core functionalities.
 
@@ -47,6 +47,14 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/dqu"><img src="https://avatars2.githubusercontent.com/u/4287468?v=4" width="100px;" alt="dqu"/><br /><sub><b>dqu</b></sub></a><br /><a href="#question-dqu" title="Answering Questions">💬</a></td>
+    <td align="center"><a href="https://blog.breezelin.cn"><img src="https://avatars2.githubusercontent.com/u/5266711?v=4" width="100px;" alt="Breeze"/><br /><sub><b>Breeze</b></sub></a><br /><a href="https://github.com/arackaf/customize-cra/commits?author=breeze2" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/Terryand"><img src="https://avatars2.githubusercontent.com/u/22273687?v=4" width="100px;" alt="Terryand"/><br /><sub><b>Terryand</b></sub></a><br /><a href="https://github.com/arackaf/customize-cra/commits?author=Terryand" title="Code">💻</a></td>
+  </tr>
+</table>
+
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
