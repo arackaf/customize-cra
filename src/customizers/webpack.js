@@ -243,7 +243,7 @@ export const addStylusLoader = (loaderOptions = {}) => config => {
   const loaders = config.module.rules.find(rule => Array.isArray(rule.oneOf))
     .oneOf;
 
-  // Insert less-loader as the penultimate item of loaders (before file-loader)
+  // Insert stylus-loader as the penultimate item of loaders (before file-loader)
   loaders.splice(
     loaders.length - 1,
     0,
