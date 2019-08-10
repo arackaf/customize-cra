@@ -135,6 +135,20 @@ addWebpackExternals({
 
 `addWebpackExternals` can also accept a `string`, `function`, or `regex`. See [the webpack documentation](https://webpack.js.org/configuration/externals/) for more information.
 
+### addWebpackModuleRule(rule)
+
+Adds the provided rule to the webpack config's `module.rules` array.
+
+See https://webpack.js.org/configuration/module/#modulerules for more information
+
+```js
+module.exports = {
+  override(
+    addWebpackModuleRule({text: /\.txt$/, use: 'raw-loader'})
+  )
+}
+```
+
 ### addBundleVisualizer(options, behindFlag = false)
 
 Adds the bundle visualizer plugin to your webpack config. Be sure to have `webpack-bundle-analyzer` installed. By default, the options passed to the plugin will be:
@@ -365,7 +379,7 @@ module.exports = override(
   disableEsLint(),
   ...addExternalBabelPlugins(
     "babel-plugin-transform-do-expressions",
-    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-proposal-object-rest-spread"
   ),
   fixBabelImports("lodash", {
     libraryDirectory: "",

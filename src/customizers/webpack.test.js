@@ -7,6 +7,7 @@ import {
   useEslintRc,
   enableEslintTypescript,
   addTslintLoader,
+  addWebpackModuleRule,
   adjustWorkbox,
   watchAll,
   disableChunk,
@@ -22,7 +23,7 @@ test("addWebpackExternals returns function that spreads provided args last in ex
   const extReg = /^(jquery|\$)$/i;
   function extFun(context, request, callback) {
     if (/^yourregex$/.test(request)) {
-      return callback(null, 'commonjs ' + request);
+      return callback(null, "commonjs " + request);
     }
     callback();
   }
@@ -140,6 +141,14 @@ describe("eslint", () => {
       })
     );
   });
+});
+
+test("addWebpackModuleRule adds the provided rule to module.rules", () => {
+  const rule = { name: "__TEST__" };
+  const inputConfig = { module: { rules: [] } };
+  const actual = addWebpackModuleRule(rule)(inputConfig);
+
+  expect(actual).toMatchSnapshot();
 });
 
 test("adjustWorkbox calls the provided adjustment using the workbox plugin config", () => {

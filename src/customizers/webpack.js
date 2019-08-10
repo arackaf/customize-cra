@@ -217,20 +217,18 @@ export const addWebpackExternals = externalDeps => config => {
   let externals = config.externals;
   if (!externals) {
     externals = externalDeps;
-
   } else if (Array.isArray(externalDeps)) {
     externals = externalDeps.concat(externals);
-
-  } else if (Array.isArray(externals)
-    || externalDeps.constructor === Function
-    || externalDeps.constructor === RegExp) {
+  } else if (
+    Array.isArray(externals) ||
+    externalDeps.constructor === Function ||
+    externalDeps.constructor === RegExp
+  ) {
     externals = [externalDeps].concat(externals);
-
-  } else if (externalDeps instanceof Object
-    && externals instanceof Object) {
+  } else if (externalDeps instanceof Object && externals instanceof Object) {
     externals = {
       ...externals,
-      ...externalDeps,
+      ...externalDeps
     };
   }
 
@@ -265,6 +263,17 @@ export const removeModuleScopePlugin = () => config => {
   config.resolve.plugins = config.resolve.plugins.filter(
     p => p.constructor.name !== "ModuleScopePlugin"
   );
+  return config;
+};
+
+/**
+ * Add the provided module to the webpack module rules array.
+ *
+ * @param rule The rule to be added
+ * @see https://webpack.js.org/configuration/module/#modulerules
+ */
+export const addWebpackModuleRule = rule => config => {
+  config.module.rules.push(rule);
   return config;
 };
 
