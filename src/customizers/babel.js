@@ -5,7 +5,7 @@ export const addBabelPlugin = plugin => config => {
   return config;
 };
 
-export const addExternalBabelPlugin = plugin => config => { 
+export const addExternalBabelPlugin = plugin => config => {
   const outsideBabelOptions = getBabelLoader(config, true).options;
   if (!outsideBabelOptions.plugins) {
     outsideBabelOptions.plugins = [];
@@ -31,6 +31,15 @@ export const useBabelRc = () => config => {
 
 export const babelInclude = include => config => {
   getBabelLoader(config).include = include;
+  return config;
+};
+
+/**
+ * Replaces the `exclude` option of `babel-loader`.
+ * @param exclude The new `exclude` value.
+ */
+export const babelExclude = exclude => config => {
+  getBabelLoader(config).exclude = exclude;
   return config;
 };
 

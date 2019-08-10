@@ -8,11 +8,14 @@ import {
   addBabelPresets,
   fixBabelImports,
   useBabelRc,
-  babelInclude
+  babelInclude,
+  babelExclude
 } from "./babel";
 
 /**
- * Actually the create-react-app2/3 has two babel-loader rules. One is for app's src and the other is for 'outside of app'( like node_modules ). This config mocks babel-loader for outside of app.
+ * Actually the create-react-app2/3 has two babel-loader rules. One is for
+ * app's src and the other is for 'outside of app'( like node_modules ). This
+ * config mocks babel-loader for outside of app.
  */
 const config = () => ({
   module: {
@@ -23,16 +26,16 @@ const config = () => ({
             loader: "babel",
             include: "src",
             options: {
-              plugins: [],
-            },
+              plugins: []
+            }
           },
           {
             loader: "babel",
             exclude: "src",
-            options: {},
+            options: {}
           }
         ]
-      },
+      }
     ]
   }
 });
@@ -58,6 +61,13 @@ test("useBabelRc enables the babel loader's babelrc flag", () => {
 test("babelInclude sets the babel loader include", () => {
   const include = ["src"];
   const actual = babelInclude(include)(config());
+
+  expect(actual).toMatchSnapshot();
+});
+
+test("babelExclude sets the babel loader exclude", () => {
+  const exclude = ["fake_directory"];
+  const actual = babelExclude(exclude)(config());
 
   expect(actual).toMatchSnapshot();
 });

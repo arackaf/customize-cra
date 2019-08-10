@@ -70,6 +70,14 @@ module.exports = override(
 );
 ```
 
+### babelExclude(exclude)
+
+Overwrites the `exclude` option for `babel-loader`. Useful for excluding a specific folder that you don't want to be transpiled.
+
+```js
+module.exports = override(babelExclude([path.resolve("src/excluded-folder")]));
+```
+
 ### fixBabelImports(libraryName, options)
 
 Adds the [babel-plugin-import plugin](https://www.npmjs.com/package/babel-plugin-import). See above for an example.
