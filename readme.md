@@ -1,36 +1,114 @@
-# customize-cra
+# `customize-cra`
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
 
 This project provides a set of utilities to customize [`create-react-app`](https://github.com/facebook/create-react-app) versions 2 and 3 configurations leveraging [`react-app-rewired`](https://github.com/timarney/react-app-rewired/) core functionalities.
 
+- [How to install](#how-to-install)
+- [Warning](#--warning)
+- [Overview](#overview)
+- [Usage](#usage)
+  - [With `webpack`](#with--webpack-)
+  - [With `webpack-dev-server`](#with--webpack-dev-server-)
+  - [With `MobX`](#with--mobx-)
+- [Documentation](#documentation)
+- [Contributing](#contributing)
+- [Contributors](#contributors--)
+
 ## How to install
 
-⚠️ make sure you have [react-app-rewired](https://github.com/timarney/react-app-rewired/) installed. You need to use this project with `react-app-rewired`; be sure to read their docs if you never have. The code in this project, documented below, is designed to work inside of `react-app-rewired`'s `config-overrides.js` file.
-
-### npm
+This project relies on [`react-app-rewired`](https://github.com/timarney/react-app-rewired/). You'll need to install that in order for `customize-cra` to work.
 
 ```bash
-npm install customize-cra --save-dev
+yarn add customize-cra react-app-rewired --dev
 ```
 
-### yarn
-
-```bash
-yarn add customize-cra --dev
-```
-
-## Warning
+## ❗ Warning
 
 > "Stuff can break"
 > \- Dan Abramov
 
-Using this library will override default behavior and configuration of create-react-app, and therefore invalidate the guarantees that come with it. Use with discretion!
+Using this library will override the default behavior and configuration of `create-react-app`, therefore invalidating the guarantees that come with it. Use with discretion!
 
 ## Overview
 
-To start, this project will export functions I need for what I'm using CRA for, but PRs will of course be welcome.
+`customize-cra` takes advantage of `react-app-rewired`'s `config-overrides.js` file. By importing `customize-cra` functions and exporting a few function calls wrapped in our `override` function, you can easily modify the underlying config objects (`webpack`, `webpack-dev-server`, `babel`, etc.) that make up `create-react-app`.
 
-The functions documented below can be imported by name, and used in your `config-overrides.js` file, as explained below.
+## Usage
+
+**Note:** all code should be added to `config-overrides.js` at the same level as `package.json`.
+
+See the [api docs](api.md) for documentation for each function.
+
+### With `webpack`
+
+To use these plugins, import the `override` function, and call it with whatever plugins you need. Each of these plugin invocations will return a new function, that `override` will call with the newly modified config object. Falsy values will be ignored though, so if you need to conditionally apply any of these plugins, you can do so like below.
+
+For example:
+
+```js
+const {
+  override,
+  addDecoratorsLegacy,
+  disableEsLint,
+  addBundleVisualizer,
+  addWebpackAlias,
+  adjustWorkbox
+} = require("customize-cra");
+const path = require("path");
+
+module.exports = override(
+  // enable legacy decorators babel plugin
+  addDecoratorsLegacy(),
+
+  // disable eslint in webpack
+  disableEsLint(),
+
+  // add webpack bundle visualizer if BUNDLE_VISUALIZE flag is enabled
+  process.env.BUNDLE_VISUALIZE == 1 && addBundleVisualizer(),
+
+  // add an alias for "ag-grid-react" imports
+  addWebpackAlias({
+    ["ag-grid-react$"]: path.resolve(__dirname, "src/shared/agGridWrapper.js")
+  }),
+
+  // adjust the underlying workbox
+  adjustWorkbox(wb =>
+    Object.assign(wb, {
+      skipWaiting: true,
+      exclude: (wb.exclude || []).concat("index.html")
+    })
+  )
+);
+```
+
+### With `webpack-dev-server`
+
+You can use the `overrideDevServer` function to override the `webpack-dev-server` config. It works the same way as `override`:
+
+```js
+const {
+  override,
+  disableEsLint,
+  overrideDevServer,
+  watchAll
+} = require("customize-cra");
+
+module.exports = {
+  webpack: override(
+    // usual webpack plugin
+    disableEsLint()
+  ),
+  devServer: overrideDevServer(
+    // dev server plugin
+    watchAll()
+  )
+};
+```
+
+### With `MobX`
+
+If you want CRA 2 to work with MobX, use the `addDecoratorsLegacy` and `disableEsLint`.
 
 ## Documentation
 
@@ -58,6 +136,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
