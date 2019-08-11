@@ -2,37 +2,36 @@
 
 This file documents the functions exported by `customize-cra`.
 
-- [`customizers`](#-customizers-)
-  - [addTslintLoader](#addtslintloader-loaderoptions-)
-  - [addExternalBabelPlugin](#addexternalbabelplugin-plugin-)
-  - [addExternalBabelPlugins](#addexternalbabelplugins-plugins-)
-  - [addBabelPlugin](#addbabelplugin-plugin-)
-  - [addBabelPlugins](#addbabelplugins-plugins-)
-  - [addBabelPreset](#addbabelpreset-preset-)
-  - [addBabelPresets](#addbabelpresets-presets-)
+- [`customizers`](#customizers)
+  - [addTslintLoader](#addtslintloaderloaderoptions)
+  - [addExternalBabelPlugin](#addexternalbabelpluginplugin)
+  - [addExternalBabelPlugins](#addexternalbabelpluginsplugins)
+  - [addBabelPlugin](#addbabelpluginplugin)
+  - [addBabelPlugins](#addbabelpluginsplugins)
+  - [addBabelPreset](#addbabelpresetpreset)
+  - [addBabelPresets](#addbabelpresetspresets)
   - [babelInclude](#babelinclude)
-  - [babelExclude](#babelexclude-exclude-)
-  - [fixBabelImports](#fixbabelimports-libraryname--options-)
-  - [addDecoratorsLegacy](#adddecoratorslegacy--)
-  - [useBabelRc](#usebabelrc--)
-  - [disableEsLint](#disableeslint--)
-  - [useEslintRc](#useeslintrc-configfile-)
-  - [enableEslintTypescript](#enableeslinttypescript--)
-  - [addWebpackAlias](#addwebpackalias-alias-)
-  - [addWebpackResolve](#addwebpackresolve-resolve-)
-  - [addWebpackPlugin](#addwebpackplugin-plugin-)
-  - [addWebpackExternals](#addwebpackexternals-deps-)
-  - [addWebpackModuleRule](#addwebpackmodulerule-rule-)
-  - [addBundleVisualizer](#addbundlevisualizer-options--behindflag---false-)
-  - [useBabelRc](#usebabelrc---1)
-  - [adjustWorkbox](#adjustworkbox-fn-)
-  - [addLessLoader](#addlessloader-loaderoptions-)
-  - [addPostcssPlugins](#addpostcssplugins--plugins--)
+  - [babelExclude](#babelexcludeexclude)
+  - [fixBabelImports](#fixbabelimportslibrarynameoptions)
+  - [addDecoratorsLegacy](#adddecoratorslegacy)
+  - [useBabelRc](#usebabelrc)
+  - [disableEsLint](#disableeslint)
+  - [useEslintRc](#useeslintrcconfigfile)
+  - [enableEslintTypescript](#enableeslinttypescript)
+  - [addWebpackAlias](#addwebpackaliasalias)
+  - [addWebpackResolve](#addwebpackresolveresolve)
+  - [addWebpackPlugin](#addwebpackpluginplugin)
+  - [addWebpackExternals](#addwebpackexternalsdeps)
+  - [addWebpackModuleRule](#addwebpackmodulerulerule)
+  - [addBundleVisualizer](#addbundlevisualizeroptionsbehindflagfalse)
+  - [adjustWorkbox](#adjustworkboxfn)
+  - [addLessLoader](#addlessloaderloaderoptions)
+  - [addPostcssPlugins](#addpostcsspluginsplugins)
   - [disableChunk](#disablechunk)
-  - [removeModuleScopePlugin](#removemodulescopeplugin--)
-  - [watchAll](#watchall--)
-- [`utilities`](#-utilities-)
-  - [getBabelLoader](#getbabelloader-config--isoutsideofapp-)
+  - [removeModuleScopePlugin](#removemodulescopeplugin)
+  - [watchAll](#watchall)
+- [`utilities`](#utilities)
+  - [getBabelLoader](#getbabelloaderconfigisoutsideofapp)
 
 ## `customizers`
 
@@ -161,10 +160,6 @@ Adds the [babel-plugin-import plugin](https://www.npmjs.com/package/babel-plugin
 ### addDecoratorsLegacy()
 
 Add decorators in legacy mode. Be sure to have `@babel/plugin-proposal-decorators` installed.
-
-### useBabelRc()
-
-Use a .babelrc file for Babel configuration.
 
 ### disableEsLint()
 

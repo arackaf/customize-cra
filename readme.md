@@ -5,15 +5,15 @@
 This project provides a set of utilities to customize [`create-react-app`](https://github.com/facebook/create-react-app) versions 2 and 3 configurations leveraging [`react-app-rewired`](https://github.com/timarney/react-app-rewired/) core functionalities.
 
 - [How to install](#how-to-install)
-- [Warning](#--warning)
+- [Warning](#warning)
 - [Overview](#overview)
 - [Usage](#usage)
-  - [With `webpack`](#with--webpack-)
-  - [With `webpack-dev-server`](#with--webpack-dev-server-)
-  - [With `MobX`](#with--mobx-)
+  - [With `webpack`](#with-webpack)
+  - [With `webpack-dev-server`](#with-webpack-dev-server)
+  - [With `MobX`](#with-mobx)
 - [Documentation](#documentation)
 - [Contributing](#contributing)
-- [Contributors](#contributors--)
+- [Contributors](#contributors)
 
 ## How to install
 
