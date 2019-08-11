@@ -1,4 +1,80 @@
+# api docs
+
 This file documents the functions exported by `customize-cra`.
+
+- [`customizers`](#-customizers-)
+  - [addTslintLoader](#addtslintloader-loaderoptions-)
+  - [addExternalBabelPlugin](#addexternalbabelplugin-plugin-)
+  - [addExternalBabelPlugins](#addexternalbabelplugins-plugins-)
+  - [addBabelPlugin](#addbabelplugin-plugin-)
+  - [addBabelPlugins](#addbabelplugins-plugins-)
+  - [addBabelPreset](#addbabelpreset-preset-)
+  - [addBabelPresets](#addbabelpresets-presets-)
+  - [babelInclude](#babelinclude)
+  - [babelExclude](#babelexclude-exclude-)
+  - [fixBabelImports](#fixbabelimports-libraryname--options-)
+  - [addDecoratorsLegacy](#adddecoratorslegacy--)
+  - [useBabelRc](#usebabelrc--)
+  - [disableEsLint](#disableeslint--)
+  - [useEslintRc](#useeslintrc-configfile-)
+  - [enableEslintTypescript](#enableeslinttypescript--)
+  - [addWebpackAlias](#addwebpackalias-alias-)
+  - [addWebpackResolve](#addwebpackresolve-resolve-)
+  - [addWebpackPlugin](#addwebpackplugin-plugin-)
+  - [addWebpackExternals](#addwebpackexternals-deps-)
+  - [addWebpackModuleRule](#addwebpackmodulerule-rule-)
+  - [addBundleVisualizer](#addbundlevisualizer-options--behindflag---false-)
+  - [useBabelRc](#usebabelrc---1)
+  - [adjustWorkbox](#adjustworkbox-fn-)
+  - [addLessLoader](#addlessloader-loaderoptions-)
+  - [addPostcssPlugins](#addpostcssplugins--plugins--)
+  - [disableChunk](#disablechunk)
+  - [removeModuleScopePlugin](#removemodulescopeplugin--)
+  - [watchAll](#watchall--)
+- [`utilities`](#-utilities-)
+  - [getBabelLoader](#getbabelloader-config--isoutsideofapp-)
+
+## `customizers`
+
+`customizers` are functions that produce modifications to a config object, allowing a user to easily enable or disable `webpack`, `webpack-dev-server`, `babel`, et al., features.
+
+### addTslintLoader(loaderOptions)
+
+Need to install `tslint-loader`.
+
+```js
+const { addTslintLoader } = require("customize-cra");
+
+module.exports = override(addTslintLoader());
+```
+
+### addExternalBabelPlugin(plugin)
+
+`create-react-app` actually has two rules in its `webpack` config for `babel-loader`: one for code in `addSrc` (`src/` by default) and the other for code `external` to that folder (like `node_modules`). You can add plugins to the `external` loader using `addExternalBabelPlugin` in the same way you'd use `addBabelPlugin`.
+
+### addExternalBabelPlugins(plugins)
+
+A simple helper that calls `addExternalBabelPlugin` for each plugin passed.
+
+Note: Make sure to use the spread operator if adding multiple plugins.
+
+```js
+module.exports = override(
+  disableEsLint(),
+  ...addExternalBabelPlugins(
+    "babel-plugin-transform-do-expressions",
+    "@babel/plugin-proposal-object-rest-spread"
+  ),
+  fixBabelImports("lodash", {
+    libraryDirectory: "",
+    camel2DashComponentName: false
+  }),
+  fixBabelImports("react-feather", {
+    libraryName: "react-feather",
+    libraryDirectory: "dist/icons"
+  })
+);
+```
 
 ### addBabelPlugin(plugin)
 
@@ -81,15 +157,6 @@ module.exports = override(babelExclude([path.resolve("src/excluded-folder")]));
 ### fixBabelImports(libraryName, options)
 
 Adds the [babel-plugin-import plugin](https://www.npmjs.com/package/babel-plugin-import). See above for an example.
-
-### getBabelLoader(config, isOutsideOfApp)
-
-Returns the `babel` loader from the provided `config`.
-
-`create-react-app` defines two `babel` configurations, one for js files
-found in `src/` and another for any js files found outside that directory. This function can target either using the `isOutsideOfApp` param.
-
-`getBabelLoader` is used to implement most of the `babel`-related `customizers`. Check out [`src/customizers/babel.js`](src/customizers/babel.js) for examples.
 
 ### addDecoratorsLegacy()
 
@@ -277,89 +344,7 @@ declare module "*.module.less" {
 }
 ```
 
-### disableChunk
-
-Prevents the default static chunking, and forces the entire build into one file. See [this thread](https://github.com/facebook/create-react-app/issues/5306) for more info.
-
-## Using the plugins
-
-To use these plugins, import the `override` function, and call it with whatever plugins you need. Each of these plugin invocations will return a new function, that `override` will call with the newly modified config object. Falsy values will be ignored though, so if you need to conditionally apply any of these plugins, you can do so like below.
-
-For example
-
-```js
-const {
-  override,
-  addDecoratorsLegacy,
-  disableEsLint,
-  addBundleVisualizer,
-  addWebpackAlias,
-  adjustWorkbox
-} = require("customize-cra");
-const path = require("path");
-
-module.exports = override(
-  addDecoratorsLegacy(),
-  disableEsLint(),
-  process.env.BUNDLE_VISUALIZE == 1 && addBundleVisualizer(),
-  addWebpackAlias({
-    ["ag-grid-react$"]: path.resolve(__dirname, "src/shared/agGridWrapper.js")
-  }),
-  adjustWorkbox(wb =>
-    Object.assign(wb, {
-      skipWaiting: true,
-      exclude: (wb.exclude || []).concat("index.html")
-    })
-  )
-);
-```
-
-## removeModuleScopePlugin()
-
-This will remove the CRA plugin that prevents to import modules from
-outside the `src` directory, useful if you use a different directory.
-
-A common use case is if you are using CRA in a monorepo setup, where your packages
-are under `packages/` rather than `src/`.
-
-## MobX Users
-
-If you want CRA 2 to work with MobX, use the `addDecoratorsLegacy` and `disableEsLint`.
-
-## Override dev server configuration
-
-To override the webpack dev server configuration, you can use the `overrideDevServer` utility:
-
-```js
-const {
-  override,
-  disableEsLint,
-  overrideDevServer,
-  watchAll
-} = require("customize-cra");
-
-module.exports = {
-  webpack: override(
-    // usual webpack plugin
-    disableEsLint()
-  ),
-  devServer: overrideDevServer(
-    // dev server plugin
-    watchAll()
-  )
-};
-```
-
-### watchAll()
-
-When applied, CRA will watch all the project's files, included `node_modules`.
-To use it, just apply it and run the dev server with `yarn start --watch-all`.
-
-```js
-watchAll();
-```
-
-### add post-css plugins
+### addPostcssPlugins([plugins])
 
 To add post-css plugins, you can use `addPostcssPlugins`.
 
@@ -371,40 +356,36 @@ module.exports = override(
 );
 ```
 
-### addTslintLoader(loaderOptions)
+### disableChunk
 
-Need to install `tslint-loader`.
+Prevents the default static chunking, and forces the entire build into one file. See [this thread](https://github.com/facebook/create-react-app/issues/5306) for more info.
 
-```js
-const { addTslintLoader } = require("customize-cra");
+### removeModuleScopePlugin()
 
-module.exports = override(addTslintLoader());
-```
+This will remove the CRA plugin that prevents to import modules from
+outside the `src` directory, useful if you use a different directory.
 
-### addExternalBabelPlugin(plugin)
+A common use case is if you are using CRA in a monorepo setup, where your packages
+are under `packages/` rather than `src/`.
 
-`create-react-app` actually has two rules in its `webpack` config for `babel-loader`: one for code in `addSrc` (`src/` by default) and the other for code `external` to that folder (like `node_modules`). You can add plugins to the `external` loader using `addExternalBabelPlugin` in the same way you'd use `addBabelPlugin`.
+### watchAll()
 
-### addExternalBabelPlugins(plugins)
-
-A simple helper that calls `addExternalBabelPlugin` for each plugin passed.
-
-Note: Make sure to use the spread operator if adding multiple plugins.
+When applied, CRA will watch all the project's files, included `node_modules`.
+To use it, just apply it and run the dev server with `yarn start --watch-all`.
 
 ```js
-module.exports = override(
-  disableEsLint(),
-  ...addExternalBabelPlugins(
-    "babel-plugin-transform-do-expressions",
-    "@babel/plugin-proposal-object-rest-spread"
-  ),
-  fixBabelImports("lodash", {
-    libraryDirectory: "",
-    camel2DashComponentName: false
-  }),
-  fixBabelImports("react-feather", {
-    libraryName: "react-feather",
-    libraryDirectory: "dist/icons"
-  })
-);
+watchAll();
 ```
+
+## `utilities`
+
+`utilities` are functions consumed by `customizers` in order to navigate their config.
+
+### getBabelLoader(config, isOutsideOfApp)
+
+Returns the `babel` loader from the provided `config`.
+
+`create-react-app` defines two `babel` configurations, one for js files
+found in `src/` and another for any js files found outside that directory. This function can target either using the `isOutsideOfApp` param.
+
+`getBabelLoader` is used to implement most of the `babel`-related `customizers`. Check out [`src/customizers/babel.js`](src/customizers/babel.js) for examples.
