@@ -1,37 +1,45 @@
 import { getBabelLoader } from "../utilities";
 
 export const addBabelPlugin = plugin => config => {
-  getBabelLoader(config).options.plugins.push(plugin);
-  return config;
+  const c = { ...config };
+  getBabelLoader(c).options.plugins.push(plugin);
+  return c;
 };
 
 export const addExternalBabelPlugin = plugin => config => {
-  const outsideBabelOptions = getBabelLoader(config, true).options;
+  const c = { ...config };
+  const outsideBabelOptions = getBabelLoader(c, true).options;
   if (!outsideBabelOptions.plugins) {
     outsideBabelOptions.plugins = [];
   }
   outsideBabelOptions.plugins.push(plugin);
-  return config;
+  return c;
 };
 
 export const addBabelPreset = preset => config => {
-  getBabelLoader(config).options.presets.push(preset);
-  return config;
+  const c = { ...config };
+  getBabelLoader(c).options.presets.push(preset);
+  return c;
 };
 
-export const addDecoratorsLegacy = () => config =>
-  addBabelPlugin(["@babel/plugin-proposal-decorators", { legacy: true }])(
-    config
-  );
+export const addDecoratorsLegacy = () => config => {
+  const c = { ...config };
+  return addBabelPlugin([
+    "@babel/plugin-proposal-decorators",
+    { legacy: true }
+  ])(c);
+};
 
 export const useBabelRc = () => config => {
-  getBabelLoader(config).options.babelrc = true;
-  return config;
+  const c = { ...config };
+  getBabelLoader(c).options.babelrc = true;
+  return c;
 };
 
 export const babelInclude = include => config => {
-  getBabelLoader(config).include = include;
-  return config;
+  const c = { ...config };
+  getBabelLoader(c).include = include;
+  return c;
 };
 
 /**
@@ -39,8 +47,9 @@ export const babelInclude = include => config => {
  * @param exclude The new `exclude` value.
  */
 export const babelExclude = exclude => config => {
-  getBabelLoader(config).exclude = exclude;
-  return config;
+  const c = { ...config };
+  getBabelLoader(c).exclude = exclude;
+  return c;
 };
 
 export const addBabelPlugins = (...plugins) =>
