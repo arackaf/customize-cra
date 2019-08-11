@@ -12,7 +12,7 @@ This file documents the functions exported by `customize-cra`.
   - [addBabelPresets](#addbabelpresetspresets)
   - [babelInclude](#babelinclude)
   - [babelExclude](#babelexcludeexclude)
-  - [fixBabelImports](#fixbabelimportslibrarynameoptions)
+  - [fixBabelImports](#fixbabelimportslibraryname-options)
   - [addDecoratorsLegacy](#adddecoratorslegacy)
   - [useBabelRc](#usebabelrc)
   - [disableEsLint](#disableeslint)
@@ -23,7 +23,7 @@ This file documents the functions exported by `customize-cra`.
   - [addWebpackPlugin](#addwebpackpluginplugin)
   - [addWebpackExternals](#addwebpackexternalsdeps)
   - [addWebpackModuleRule](#addwebpackmodulerulerule)
-  - [addBundleVisualizer](#addbundlevisualizeroptionsbehindflagfalse)
+  - [addBundleVisualizer](#addbundlevisualizeroptions-behindflag--false)
   - [adjustWorkbox](#adjustworkboxfn)
   - [addLessLoader](#addlessloaderloaderoptions)
   - [addPostcssPlugins](#addpostcsspluginsplugins)
@@ -31,7 +31,7 @@ This file documents the functions exported by `customize-cra`.
   - [removeModuleScopePlugin](#removemodulescopeplugin)
   - [watchAll](#watchall)
 - [`utilities`](#utilities)
-  - [getBabelLoader](#getbabelloaderconfigisoutsideofapp)
+  - [getBabelLoader](#getbabelloaderconfig-isoutsideofapp)
 
 ## `customizers`
 
