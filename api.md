@@ -82,6 +82,15 @@ module.exports = override(babelExclude([path.resolve("src/excluded-folder")]));
 
 Adds the [babel-plugin-import plugin](https://www.npmjs.com/package/babel-plugin-import). See above for an example.
 
+### getBabelLoader(config, isOutsideOfApp)
+
+Returns the `babel` loader from the provided `config`.
+
+`create-react-app` defines two `babel` configurations, one for js files
+found in `src/` and another for any js files found outside that directory. This function can target either using the `isOutsideOfApp` param.
+
+`getBabelLoader` is used to implement most of the `babel`-related `customizers`. Check out [`src/customizers/babel.js`](src/customizers/babel.js) for examples.
+
 ### addDecoratorsLegacy()
 
 Add decorators in legacy mode. Be sure to have `@babel/plugin-proposal-decorators` installed.
