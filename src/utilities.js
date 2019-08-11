@@ -1,15 +1,23 @@
+/**
+ *
+ * Returns the `babel` loader from the provided `config`.
+ *
+ * `create-react-app` defines two `babel` configurations, one for js files
+ * found in `src/` and another for any js files found outside that directory.
+ * This function can target either using the `isOutsideOfApp` param.
+ *
+ * @param {*} config The webpack config to search.
+ * @param {boolean} isOutsideOfApp Flag for whether to use the `babel-loader`
+ * for matching files in `src/` or files outside of `src/`.
+ */
 export const getBabelLoader = (config, isOutsideOfApp) => {
   let babelLoaderFilter;
   if (isOutsideOfApp) {
     babelLoaderFilter = rule =>
-    rule.loader &&
-    rule.loader.includes("babel") &&
-    rule.exclude;
+      rule.loader && rule.loader.includes("babel") && rule.exclude;
   } else {
     babelLoaderFilter = rule =>
-    rule.loader &&
-    rule.loader.includes("babel") &&
-    rule.include;
+      rule.loader && rule.loader.includes("babel") && rule.include;
   }
 
   // First, try to find the babel loader inside the oneOf array.
