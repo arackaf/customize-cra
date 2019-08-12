@@ -2,6 +2,8 @@
 
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
 
+# ⚠️ You are viewing the readme for the `next` branch, which is for the upcoming 1.0.0 release. To view the current stable version, please look at the [`master` branch](https://github.com/arackaf/customize-cra).
+
 This project provides a set of utilities to customize [`create-react-app`](https://github.com/facebook/create-react-app) versions 2 and 3 configurations leveraging [`react-app-rewired`](https://github.com/timarney/react-app-rewired/) core functionalities.
 
 - [How to install](#how-to-install)
