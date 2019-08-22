@@ -223,7 +223,7 @@ See https://webpack.js.org/configuration/module/#modulerules for more informatio
 ```js
 module.exports = {
   override(
-    addWebpackModuleRule({text: /\.txt$/, use: 'raw-loader'})
+    addWebpackModuleRule({test: /\.txt$/, use: 'raw-loader'})
   )
 }
 ```
