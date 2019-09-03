@@ -23,6 +23,7 @@ This file documents the functions exported by `customize-cra`.
   - [addWebpackPlugin](#addwebpackpluginplugin)
   - [addWebpackExternals](#addwebpackexternalsdeps)
   - [addWebpackModuleRule](#addwebpackmodulerulerule)
+  - [setWebpackTarget](#setwebpacktargettarget)
   - [addBundleVisualizer](#addbundlevisualizeroptions-behindflag--false)
   - [adjustWorkbox](#adjustworkboxfn)
   - [addLessLoader](#addlessloaderloaderoptions)
@@ -224,6 +225,18 @@ See https://webpack.js.org/configuration/module/#modulerules for more informatio
 module.exports = {
   override(
     addWebpackModuleRule({test: /\.txt$/, use: 'raw-loader'})
+  )
+}
+```
+
+### setWebpackTarget(target)
+
+Sets the `target` config variable for webpack. This can be, [as described in the webpack docs](https://webpack.js.org/configuration/target/), a string or a function.
+
+```js
+module.exports = {
+  override(
+    setWebpackTarget('electron-renderer')
   )
 }
 ```

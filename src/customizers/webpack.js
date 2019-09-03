@@ -286,3 +286,15 @@ export const addTslintLoader = options => config => {
   });
   return config;
 };
+
+/**
+ * Override the webpack target.
+ *
+ * @param target What to set the webpack target as (can be string or function).
+ *
+ * @see https://webpack.js.org/configuration/target/
+ */
+export const setWebpackTarget = target => config => {
+  config.target = target;
+  return config;
+}

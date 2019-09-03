@@ -12,7 +12,8 @@ import {
   watchAll,
   disableChunk,
   removeModuleScopePlugin,
-  addPostcssPlugins
+  addPostcssPlugins,
+  setWebpackTarget
 } from "./webpack";
 
 test("addWebpackExternals returns function that spreads provided args last in externals list", () => {
@@ -220,6 +221,16 @@ test("removeModuleScopePlugin removes the 'ModuleScopePlugin' resolve plugin", (
     }
   };
   const actual = removeModuleScopePlugin()(inputConfig);
+
+  expect(actual).toMatchSnapshot();
+});
+
+test("setWebpackTarget sets the target as the config target", () => {
+  const inputConfig = {
+    target: "mocked-initial-target"
+  };
+
+  const actual = setWebpackTarget("mocked-new-target")(inputConfig);
 
   expect(actual).toMatchSnapshot();
 });
