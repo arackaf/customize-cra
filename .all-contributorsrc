@@ -54,6 +54,15 @@
       "contributions": [
         "example"
       ]
+    },
+    {
+      "login": "jthistle",
+      "name": "James Thistlewood",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/8274049?v=4",
+      "profile": "http://jamesthistlewood.co.uk",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
