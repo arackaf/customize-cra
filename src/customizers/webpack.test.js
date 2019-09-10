@@ -13,7 +13,8 @@ import {
   disableChunk,
   removeModuleScopePlugin,
   addPostcssPlugins,
-  setWebpackTarget
+  setWebpackTarget,
+  setWebpackPublicPath
 } from "./webpack";
 
 test("addWebpackExternals returns function that spreads provided args last in externals list", () => {
@@ -231,6 +232,18 @@ test("setWebpackTarget sets the target as the config target", () => {
   };
 
   const actual = setWebpackTarget("mocked-new-target")(inputConfig);
+
+  expect(actual).toMatchSnapshot();
+});
+
+test("setWebpackPublicPath sets the path as the config publicPath", () => {
+  const inputConfig = {
+    output: {
+      publicPath: 'mocked-public-path'
+    }
+  };
+
+  const actual = setWebpackPublicPath("mocked-public-path")(inputConfig);
 
   expect(actual).toMatchSnapshot();
 });

@@ -190,6 +190,14 @@ Object {
 }
 `;
 
+exports[`setWebpackPublicPath sets the path as the config publicPath 1`] = `
+Object {
+  "output": Object {
+    "publicPath": "/mocked-public-path/",
+  },
+}
+`;
+
 exports[`setWebpackTarget sets the target as the config target 1`] = `
 Object {
   "target": "mocked-new-target",
