@@ -90,6 +90,15 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "gfafei",
+      "name": "afei",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/12234890?v=4",
+      "profile": "https://github.com/gfafei",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
