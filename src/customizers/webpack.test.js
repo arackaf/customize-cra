@@ -146,7 +146,7 @@ describe("eslint", () => {
 
 test("addWebpackModuleRule adds the provided rule to module.rules", () => {
   const rule = { name: "__TEST__" };
-  const inputConfig = { module: { rules: [] } };
+  const inputConfig = { module: { rules: [{ oneOf: [{ test: true }] }] } };
   const actual = addWebpackModuleRule(rule)(inputConfig);
 
   expect(actual).toMatchSnapshot();
