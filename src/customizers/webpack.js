@@ -273,7 +273,12 @@ export const removeModuleScopePlugin = () => config => {
  * @see https://webpack.js.org/configuration/module/#modulerules
  */
 export const addWebpackModuleRule = rule => config => {
-  config.module.rules.push(rule);
+  for (let _rule of config.module.rules) {
+    if (_rule.oneOf) {
+      _rule.oneOf.unshift(rule);
+      break;
+    }
+  }
   return config;
 };
 
