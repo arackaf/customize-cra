@@ -62,7 +62,14 @@ Object {
   "module": Object {
     "rules": Array [
       Object {
-        "name": "__TEST__",
+        "oneOf": Array [
+          Object {
+            "name": "__TEST__",
+          },
+          Object {
+            "test": true,
+          },
+        ],
       },
     ],
   },
