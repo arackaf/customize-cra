@@ -303,3 +303,22 @@ export const setWebpackTarget = target => config => {
   config.target = target;
   return config;
 }
+
+/**
+ * override the webpack publicPath
+ *
+ * @param path What to set the webpack publicPath as.
+ * @see https://webpack.js.org/configuration/output/#outputpublicpath
+ */
+export const setWebpackPublicPath = path => config => {
+  if (path) {
+    if (!path.startsWith('/')) {
+      path = '/' + path;
+    }
+    if (!path.endsWith('/')) {
+      path = path + '/';
+    }
+    config.output.publicPath = path;
+  }
+  return config;
+};
