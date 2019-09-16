@@ -1,6 +1,6 @@
 # `customize-cra`
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-10-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-11-orange.svg?style=flat-square)](#contributors-)
 
 This project provides a set of utilities to customize [`create-react-app`](https://github.com/facebook/create-react-app) versions 2 and 3 configurations leveraging [`react-app-rewired`](https://github.com/timarney/react-app-rewired/) core functionalities.
 
@@ -139,6 +139,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/postgetme"><img src="https://avatars3.githubusercontent.com/u/5118867?v=4" width="100px;" alt="MeiLin"/><br /><sub><b>MeiLin</b></sub></a><br /><a href="https://github.com/arackaf/customize-cra/commits?author=postgetme" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/badgerwithagun"><img src="https://avatars0.githubusercontent.com/u/6483013?v=4" width="100px;" alt="Graham Crockford"/><br /><sub><b>Graham Crockford</b></sub></a><br /><a href="#ideas-badgerwithagun" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/gfafei"><img src="https://avatars3.githubusercontent.com/u/12234890?v=4" width="100px;" alt="afei"/><br /><sub><b>afei</b></sub></a><br /><a href="https://github.com/arackaf/customize-cra/commits?author=gfafei" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/fireairforce"><img src="https://avatars3.githubusercontent.com/u/32598811?v=4" width="100px;" alt="zoomdong"/><br /><sub><b>zoomdong</b></sub></a><br /><a href="https://github.com/arackaf/customize-cra/commits?author=fireairforce" title="Code">💻</a></td>
   </tr>
 </table>
 
