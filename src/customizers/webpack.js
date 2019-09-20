@@ -68,6 +68,18 @@ export const adjustWorkbox = adjust => config => {
   return config;
 };
 
+export const adjustStyleLoaders = callback => config => {
+  const mode = process.env.NODE_ENV === 'production' ? 'prod' : 'dev';
+  const loader = mode === 'prod' ? 'css-extract-plugin' : 'style-loader';
+
+  const loaders = config.module.rules.find(rule => Array.isArray(rule.oneOf))
+    .oneOf;
+  const styleLoaders = loaders.filter(({ use }) => use && use[0] && (use[0].loader || use[0]).includes(loader));
+  styleLoaders.forEach(loader => callback(loader));
+
+  return config;
+};
+
 export const useEslintRc = configFile => config => {
   const eslintRule = config.module.rules.filter(
     r => r.use && r.use.some(u => u.options && u.options.useEslintrc !== void 0)
