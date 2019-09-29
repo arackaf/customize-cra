@@ -190,10 +190,26 @@ Object {
 }
 `;
 
-exports[`setWebpackPublicPath sets the path as the config publicPath 1`] = `
+exports[`setWebpackPublicPath sets the path and prepends and appends slashes 1`] = `
 Object {
   "output": Object {
     "publicPath": "/mocked-public-path/",
+  },
+}
+`;
+
+exports[`setWebpackPublicPath sets the path as an http address 1`] = `
+Object {
+  "output": Object {
+    "publicPath": "http://github.com/",
+  },
+}
+`;
+
+exports[`setWebpackPublicPath sets the path as an https address 1`] = `
+Object {
+  "output": Object {
+    "publicPath": "https://github.com/",
   },
 }
 `;

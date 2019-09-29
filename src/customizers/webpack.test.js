@@ -236,14 +236,36 @@ test("setWebpackTarget sets the target as the config target", () => {
   expect(actual).toMatchSnapshot();
 });
 
-test("setWebpackPublicPath sets the path as the config publicPath", () => {
-  const inputConfig = {
-    output: {
-      publicPath: 'mocked-public-path'
-    }
-  };
+describe("setWebpackPublicPath", () => {
+  test("sets the path and prepends and appends slashes", () => {
+    const inputConfig = {
+      output: {
+        publicPath: "mocked-public-path"
+      }
+    };
 
-  const actual = setWebpackPublicPath("mocked-public-path")(inputConfig);
+    const actual = setWebpackPublicPath("mocked-public-path")(inputConfig);
 
-  expect(actual).toMatchSnapshot();
+    expect(actual).toMatchSnapshot();
+  });
+
+  test("sets the path as an http address", () => {
+    const inputConfig = {
+      output: {}
+    };
+
+    const actual = setWebpackPublicPath("http://github.com")(inputConfig);
+
+    expect(actual).toMatchSnapshot();
+  });
+
+  test("sets the path as an https address", () => {
+    const inputConfig = {
+      output: {}
+    };
+
+    const actual = setWebpackPublicPath("https://github.com")(inputConfig);
+
+    expect(actual).toMatchSnapshot();
+  });
 });

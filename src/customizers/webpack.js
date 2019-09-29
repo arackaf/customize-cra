@@ -302,7 +302,7 @@ export const addTslintLoader = options => config => {
 export const setWebpackTarget = target => config => {
   config.target = target;
   return config;
-}
+};
 
 /**
  * override the webpack publicPath
@@ -312,11 +312,13 @@ export const setWebpackTarget = target => config => {
  */
 export const setWebpackPublicPath = path => config => {
   if (path) {
-    if (!path.startsWith('/')) {
-      path = '/' + path;
+    if (!(path.startsWith("http") || path.startsWith("https"))) {
+      if (!path.startsWith("/")) {
+        path = "/" + path;
+      }
     }
-    if (!path.endsWith('/')) {
-      path = path + '/';
+    if (!path.endsWith("/")) {
+      path = path + "/";
     }
     config.output.publicPath = path;
   }
