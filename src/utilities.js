@@ -35,3 +35,20 @@ export const getBabelLoader = (config, isOutsideOfApp) => {
   }
   return babelLoader;
 };
+
+export const tap = (message, options) => (config) => {
+  const print = []
+  print.push(`Tapping the configuration`)
+  if (message) print.push(message)
+  print.push(JSON.stringify(config))
+
+  const fileDest = options && options.dest
+  if (fileDest) {
+    const fs = require('fs')
+    fs.writeFile(fileDest, print.join('\n'))
+  } else {
+    print.map(sentence => console.log(sentence))
+  }
+
+  return config
+}
