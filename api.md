@@ -33,6 +33,7 @@ This file documents the functions exported by `customize-cra`.
   - [watchAll](#watchall)
 - [`utilities`](#utilities)
   - [getBabelLoader](#getbabelloaderconfig-isoutsideofapp)
+  - [tap](#tapmessage-options)
 
 ## `customizers`
 
@@ -397,3 +398,25 @@ Returns the `babel` loader from the provided `config`.
 found in `src/` and another for any js files found outside that directory. This function can target either using the `isOutsideOfApp` param.
 
 `getBabelLoader` is used to implement most of the `babel`-related `customizers`. Check out [`src/customizers/babel.js`](src/customizers/babel.js) for examples.
+
+### tap(message, options)
+
+Use `tap` to help you identify the configuration at certain points by printing the configuration in the console or in a separate file.
+
+`Tap` accepts two optional params:
+  - message: String message to be printed at the beginning.
+  - options: Object with configurations for the behavior of tap.
+    - dest: Destination file for the printing logs.
+
+```js
+const { override, tap, addLessLoader } = require("customize-cra");
+
+module.exports = override(
+  // Print initial config in the console prepending a message
+  tap("Pre - Customizers") 
+  /* Your customizers: eg. addLessLoader() */
+  addLessLoader()
+  // Print final config in a separate file
+  tap(, { dest: 'customize-cra.log'}) 
+)
+```
