@@ -69,12 +69,12 @@ describe(`tap`, () => {
     const mockConsole = { log: jest.fn() }
     const expectedPrint = [`Tapping the configuration`, `my message with options`, JSON.stringify(config)]
     global.console = mockConsole
-    fs.writeFile = jest.fn()
+    fs.appendFile = jest.fn()
 
 
     const result = tap("my message with options", { dest: 'customize-cra.log' })(config)
 
-    expect(fs.writeFile).toHaveBeenCalledWith('customize-cra.log', expectedPrint.join('\n'))
+    expect(fs.appendFile).toHaveBeenCalledWith('customize-cra.log', expectedPrint.join('\n') + '\n')
     expect(mockConsole.log).not.toHaveBeenCalled()
     expect(result).toEqual(config)
   })
@@ -85,14 +85,14 @@ describe(`tap`, () => {
 
     const config = { foo: 'bar' }
     const mockConsole = { log: jest.fn() }
-    const expectedPrint = [`Tapping the configuration`, JSON.stringify(config)]
+    const expectedPrint = [`Tapping the configuration`, JSON.stringify(config)].join('\n') + '\n'
     global.console = mockConsole
-    fs.writeFile = jest.fn()
+    fs.appendFile = jest.fn()
 
 
     const result = tap('', { dest: 'customize-cra.log' })(config)
 
-    expect(fs.writeFile).toHaveBeenCalledWith('customize-cra.log', expectedPrint.join('\n'))
+    expect(fs.appendFile).toHaveBeenCalledWith('customize-cra.log', expectedPrint)
     expect(mockConsole.log).not.toHaveBeenCalled()
     expect(result).toEqual(config)
   })

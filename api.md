@@ -406,7 +406,7 @@ Use `tap` to help you identify the configuration at certain points by printing t
 `Tap` accepts two optional params:
   - message: String message to be printed at the beginning.
   - options: Object with configurations for the behavior of tap.
-    - dest: Destination file for the printing logs.
+    - dest: Destination file for writing logs.
 
 ```js
 const { override, tap, addLessLoader } = require("customize-cra");
@@ -417,6 +417,6 @@ module.exports = override(
   /* Your customizers: eg. addLessLoader() */
   addLessLoader()
   // Print final config in a separate file
-  tap(, { dest: 'customize-cra.log'}) 
+  tap('', { dest: 'customize-cra.log'}) 
 )
 ```

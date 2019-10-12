@@ -45,7 +45,7 @@ export const tap = (message, options) => (config) => {
   const fileDest = options && options.dest
   if (fileDest) {
     const fs = require('fs')
-    fs.writeFile(fileDest, print.join('\n'))
+    fs.appendFile(fileDest, `${print.join('\n')}\n`)
   } else {
     print.map(sentence => console.log(sentence))
   }
