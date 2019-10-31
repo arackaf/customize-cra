@@ -64,3 +64,8 @@ export const fixBabelImports = (libraryName, options) =>
     ),
     `fix-${libraryName}-imports`
   ]);
+
+export const removeInternalBabelPlugin = pluginName => config => {
+  config.plugins = config.plugins.filter(p => p.constructor.name !== pluginName);
+  return config;
+};
