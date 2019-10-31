@@ -14,7 +14,8 @@ import {
   removeModuleScopePlugin,
   addPostcssPlugins,
   setWebpackTarget,
-  setWebpackPublicPath
+  setWebpackPublicPath,
+  setWebpackOptimizationSplitChunks,
 } from "./webpack";
 
 test("addWebpackExternals returns function that spreads provided args last in externals list", () => {
@@ -268,4 +269,21 @@ describe("setWebpackPublicPath", () => {
 
     expect(actual).toMatchSnapshot();
   });
+});
+
+test("setWebpackOptimizationSplitChunks sets the customized optimization.splitChunks for webpack", () => {
+  const inputConfig = {
+    optimization: {
+      splitChunks: {
+        chunks: 'all',
+      },
+    },
+  };
+
+  const actual = setWebpackOptimizationSplitChunks({
+    chunks: 'all',
+    maxSize: 1000000,
+  })(inputConfig);
+
+  expect(actual).toMatchSnapshot();
 });
