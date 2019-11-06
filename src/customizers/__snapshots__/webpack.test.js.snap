@@ -219,3 +219,14 @@ Object {
   "target": "mocked-new-target",
 }
 `;
+
+exports[`setWebpackOptimizationSplitChunks sets the customized optimization.splitChunks for webpack 1`] = `
+Object {
+  "optimization": Object {
+    "splitChunks": Object {
+      "chunks": "all",
+      "maxSize": 1000000,
+    },
+  },
+}
+`;

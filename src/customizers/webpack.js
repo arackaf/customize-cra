@@ -324,3 +324,16 @@ export const setWebpackPublicPath = path => config => {
   }
   return config;
 };
+
+/**
+ * override the webpack optimization.splitChunks
+ * 
+ * @param configuration of optimization.splitChunks
+ * @see https://webpack.js.org/plugins/split-chunks-plugin/
+ */
+export const setWebpackOptimizationSplitChunks = splitChunks => config => {
+  if (splitChunks && typeof splitChunks === 'object') {
+    config.optimization.splitChunks = splitChunks;
+  }
+  return config;
+};

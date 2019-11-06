@@ -25,6 +25,7 @@ This file documents the functions exported by `customize-cra`.
   - [addWebpackModuleRule](#addwebpackmodulerulerule)
   - [setWebpackTarget](#setwebpacktargettarget)
   - [addBundleVisualizer](#addbundlevisualizeroptions-behindflag--false)
+  - [setWebpackOptimizationSplitChunks](#setwebpackoptimizationsplitchunks)
   - [adjustWorkbox](#adjustworkboxfn)
   - [addLessLoader](#addlessloaderloaderoptions)
   - [addPostcssPlugins](#addpostcsspluginsplugins)
@@ -249,6 +250,23 @@ Adds the bundle visualizer plugin to your webpack config. Be sure to have `webpa
 {
   "analyzerMode": "static",
   "reportFilename": "report.html"
+}
+```
+
+You can hide this plugin behind a command line flag (`--analyze`) by passing `true` as second argument.
+
+```js
+addBundleVisualizer({}, true);
+```
+
+### setWebpackOptimizationSplitChunks(target)
+
+Sets your customized optimization.splitChunks configuration to your webpack config. Please Use this method cautiously because the webpack default config is effective on most of time. By default, the options in create-react-app is:
+
+```json
+{
+  "chunks": "all",
+  "name": false
 }
 ```
 
