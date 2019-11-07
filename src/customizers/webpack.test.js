@@ -16,6 +16,7 @@ import {
   setWebpackTarget,
   setWebpackPublicPath,
   setWebpackOptimizationSplitChunks,
+  setWebpackStats
 } from "./webpack";
 
 test("addWebpackExternals returns function that spreads provided args last in externals list", () => {
@@ -275,15 +276,39 @@ test("setWebpackOptimizationSplitChunks sets the customized optimization.splitCh
   const inputConfig = {
     optimization: {
       splitChunks: {
-        chunks: 'all',
-      },
-    },
+        chunks: "all"
+      }
+    }
   };
 
   const actual = setWebpackOptimizationSplitChunks({
-    chunks: 'all',
-    maxSize: 1000000,
+    chunks: "all",
+    maxSize: 1000000
   })(inputConfig);
 
   expect(actual).toMatchSnapshot();
+});
+
+describe("setWebpackStats", () => {
+  test("sets stats if it is a string", () => {
+    const config = {};
+    const actual = setWebpackStats("fake-normal-stats")(config);
+
+    expect(actual).toMatchSnapshot();
+  });
+
+  test("sets stats if it is an object", () => {
+    const config = {};
+    const actual = setWebpackStats({ assets: false })(config);
+
+    expect(actual).toMatchSnapshot();
+  });
+
+  test("overrides the config stats object with the provided stats object", () => {
+    const config = { stats: { a: "A", b: "B" } };
+    const stats = { b: "b", c: "c" };
+    const actual = setWebpackStats(stats)(config);
+
+    expect(actual).toMatchSnapshot();
+  });
 });
