@@ -190,6 +190,17 @@ Object {
 }
 `;
 
+exports[`setWebpackOptimizationSplitChunks sets the customized optimization.splitChunks for webpack 1`] = `
+Object {
+  "optimization": Object {
+    "splitChunks": Object {
+      "chunks": "all",
+      "maxSize": 1000000,
+    },
+  },
+}
+`;
+
 exports[`setWebpackPublicPath sets the path and prepends and appends slashes 1`] = `
 Object {
   "output": Object {
@@ -214,19 +225,31 @@ Object {
 }
 `;
 
-exports[`setWebpackTarget sets the target as the config target 1`] = `
+exports[`setWebpackStats overrides the config stats object with the provided stats object 1`] = `
 Object {
-  "target": "mocked-new-target",
+  "stats": Object {
+    "b": "b",
+    "c": "c",
+  },
 }
 `;
 
-exports[`setWebpackOptimizationSplitChunks sets the customized optimization.splitChunks for webpack 1`] = `
+exports[`setWebpackStats sets stats if it is a string 1`] = `
 Object {
-  "optimization": Object {
-    "splitChunks": Object {
-      "chunks": "all",
-      "maxSize": 1000000,
-    },
+  "stats": "fake-normal-stats",
+}
+`;
+
+exports[`setWebpackStats sets stats if it is an object 1`] = `
+Object {
+  "stats": Object {
+    "assets": false,
   },
+}
+`;
+
+exports[`setWebpackTarget sets the target as the config target 1`] = `
+Object {
+  "target": "mocked-new-target",
 }
 `;

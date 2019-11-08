@@ -24,6 +24,7 @@ This file documents the functions exported by `customize-cra`.
   - [addWebpackExternals](#addwebpackexternalsdeps)
   - [addWebpackModuleRule](#addwebpackmodulerulerule)
   - [setWebpackTarget](#setwebpacktargettarget)
+  - [setWebpackStats](#setwebpackstats)
   - [addBundleVisualizer](#addbundlevisualizeroptions-behindflag--false)
   - [setWebpackOptimizationSplitChunks](#setwebpackoptimizationsplitchunks)
   - [adjustWorkbox](#adjustworkboxfn)
@@ -238,6 +239,34 @@ Sets the `target` config variable for webpack. This can be, [as described in the
 module.exports = {
   override(
     setWebpackTarget('electron-renderer')
+  )
+}
+```
+
+### setWebpackStats(stats)
+
+Sets the `stats` attribute for webpack. This is an attribute that can allow you to customize Webpack's error message behaviour, in production builds. This can be, [as described in the webpack docs](https://webpack.js.org/configuration/stats/), a string or an object.
+
+```js
+module.exports = {
+  override(
+    setWebpackStats('errors-only')
+  )
+}
+```
+
+You can configure it to ignore certain expected warning patterns, as create-react-app treats warnings as errors when `CI` env is true:
+
+```js
+module.exports = {
+  override(
+    setWebpackStats({
+      warningsFilter: [
+        'filter',
+        /filter/,
+        (warning) => true
+      ]
+    })
   )
 }
 ```

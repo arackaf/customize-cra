@@ -327,13 +327,25 @@ export const setWebpackPublicPath = path => config => {
 
 /**
  * override the webpack optimization.splitChunks
- * 
+ *
  * @param configuration of optimization.splitChunks
  * @see https://webpack.js.org/plugins/split-chunks-plugin/
  */
 export const setWebpackOptimizationSplitChunks = splitChunks => config => {
-  if (splitChunks && typeof splitChunks === 'object') {
+  if (splitChunks && typeof splitChunks === "object") {
     config.optimization.splitChunks = splitChunks;
   }
+  return config;
+};
+
+/**
+ * Sets the `stats` object in Webpack config
+ * This may not work in development mode
+ *
+ * @param stats Stats configuration in Webpack
+ * @see https://webpack.js.org/configuration/stats/
+ */
+export const setWebpackStats = stats => config => {
+  config.stats = stats;
   return config;
 };
