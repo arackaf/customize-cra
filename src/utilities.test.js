@@ -39,9 +39,12 @@ describe(`tap`, () => {
   const config = { foo: 'bar' }
   const expectedConfigPrint = JSON.stringify(config, null, 2)
   const mockConsole = { log: jest.fn() }
-  global.console = mockConsole
+  const originalConsole = global.console
+  beforeAll(() => { global.console = mockConsole })
 
   afterEach(() => { mockConsole.log.mockClear() })
+
+  afterAll(() => { global.console = originalConsole })
 
   test(`tap with undefined param / missing`, () => {
     const result = tap()(config)
