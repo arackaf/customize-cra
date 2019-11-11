@@ -36,64 +36,71 @@ describe("getBabelLoader finds the babel loader options", () => {
 });
 
 describe(`tap`, () => {
-  test(`tap with message and no options`, () => {
-    const config = { foo: 'bar' }
+  const config = { foo: 'bar' }
+  const expectedConfigPrint = JSON.stringify(config, null, 2)
+  const mockConsole = { log: jest.fn() }
+  global.console = mockConsole
 
-    const mockConsole = { log: jest.fn() }
-    global.console = mockConsole
+  afterEach(() => { mockConsole.log.mockClear() })
 
-    const result = tap("my foobar message")(config)
-    expect(mockConsole.log).toHaveBeenNthCalledWith(1, `Tapping the configuration`)
-    expect(mockConsole.log).toHaveBeenNthCalledWith(2, `my foobar message`)
-    expect(mockConsole.log).toHaveBeenNthCalledWith(3, JSON.stringify(config))
-    expect(result).toEqual(config)
-  })
-
-  test(`tap with no message and no options`, () => {
-    const config = { foo: 'bar' }
-
-    const mockConsole = { log: jest.fn() }
-    global.console = mockConsole
-
+  test(`tap with undefined param / missing`, () => {
     const result = tap()(config)
-    expect(mockConsole.log).toHaveBeenNthCalledWith(1, `Tapping the configuration`)
-    expect(mockConsole.log).toHaveBeenNthCalledWith(2, JSON.stringify(config))
+    expect(mockConsole.log).toHaveBeenNthCalledWith(1, expectedConfigPrint)
     expect(result).toEqual(config)
   })
 
-  test(`tap with message and options`, () => {
-    const fs = require('fs')
-    jest.mock('fs')
-
-    const config = { foo: 'bar' }
-    const mockConsole = { log: jest.fn() }
-    const expectedPrint = [`Tapping the configuration`, `my message with options`, JSON.stringify(config)]
-    global.console = mockConsole
-    fs.appendFile = jest.fn()
-
-
-    const result = tap("my message with options", { dest: 'customize-cra.log' })(config)
-
-    expect(fs.appendFile).toHaveBeenCalledWith('customize-cra.log', expectedPrint.join('\n') + '\n')
-    expect(mockConsole.log).not.toHaveBeenCalled()
+  test(`tap with null`, () => {
+    const result = tap(null)(config)
+    expect(mockConsole.log).toHaveBeenNthCalledWith(1, expectedConfigPrint)
     expect(result).toEqual(config)
   })
 
-  test(`tap with no message but with options`, () => {
-    const fs = require('fs')
-    jest.mock('fs')
-
-    const config = { foo: 'bar' }
-    const mockConsole = { log: jest.fn() }
-    const expectedPrint = [`Tapping the configuration`, JSON.stringify(config)].join('\n') + '\n'
-    global.console = mockConsole
-    fs.appendFile = jest.fn()
-
-
-    const result = tap('', { dest: 'customize-cra.log' })(config)
-
-    expect(fs.appendFile).toHaveBeenCalledWith('customize-cra.log', expectedPrint)
-    expect(mockConsole.log).not.toHaveBeenCalled()
+  test(`tap with empty object`, () => {
+    const result = tap({})(config)
+    expect(mockConsole.log).toHaveBeenNthCalledWith(1, expectedConfigPrint)
     expect(result).toEqual(config)
+  })
+
+  test(`tap with message but falsy value`, () => {
+    const result = tap({ message: '' })(config)
+    expect(mockConsole.log).toHaveBeenNthCalledWith(1, expectedConfigPrint)
+    expect(result).toEqual(config)
+  })
+
+  test(`tap with message`, () => {
+    const result = tap({ message: 'A message I want to print before the configuration' })(config)
+    expect(mockConsole.log).toHaveBeenNthCalledWith(1, 'A message I want to print before the configuration')
+    expect(mockConsole.log).toHaveBeenNthCalledWith(2, expectedConfigPrint)
+    expect(result).toEqual(config)
+  })
+
+  describe(`with destination file option`, () => {
+    const fs = require('fs')
+    const mockAppendFile = jest.fn()
+    jest.mock('fs')
+    fs.appendFile = mockAppendFile
+
+    afterEach(() => mockAppendFile.mockClear())
+
+    test(`tap with no message`, () => {
+      const result = tap({ dest: 'mypath' })(config)
+      const expectedPrint = [expectedConfigPrint]
+      expect(mockAppendFile).toHaveBeenCalledWith('mypath', `${expectedPrint.join('\n')}\n`)
+      expect(result).toEqual(config)
+    })
+
+    test(`tap with message but falsy value`, () => {
+      const result = tap({ dest: 'mypath', message: '' })(config)
+      const expectedPrint = [expectedConfigPrint]
+      expect(mockAppendFile).toHaveBeenCalledWith('mypath', `${expectedPrint.join('\n')}\n`)
+      expect(result).toEqual(config)
+    })
+
+    test(`tap with message`, () => {
+      const result = tap({ dest: 'mypath', message: 'A message I want to print before the configuration' })(config)
+      const expectedPrint = ['A message I want to print before the configuration', expectedConfigPrint]
+      expect(mockAppendFile).toHaveBeenCalledWith('mypath', `${expectedPrint.join('\n')}\n`)
+      expect(result).toEqual(config)
+    })
   })
 })
