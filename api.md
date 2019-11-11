@@ -35,7 +35,7 @@ This file documents the functions exported by `customize-cra`.
   - [watchAll](#watchall)
 - [`utilities`](#utilities)
   - [getBabelLoader](#getbabelloaderconfig-isoutsideofapp)
-  - [tap](#tapmessage-options)
+  - [tap](#tapoptions)
 
 ## `customizers`
 
