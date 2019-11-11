@@ -45,9 +45,9 @@ export const tap = (options) => (config) => {
   if (dest) {
     const fs = require('fs')
     fs.appendFile(dest, `${print.join('\n')}\n`)
-  } else {
-    print.forEach(sentence => console.log(sentence))
   }
+
+  print.forEach(sentence => console.log(sentence))
 
   return config
 }

@@ -89,6 +89,7 @@ describe(`tap`, () => {
       const result = tap({ dest: 'mypath' })(config)
       const expectedPrint = [expectedConfigPrint]
       expect(mockAppendFile).toHaveBeenCalledWith('mypath', `${expectedPrint.join('\n')}\n`)
+      expect(mockConsole.log).toHaveBeenNthCalledWith(1, expectedConfigPrint)
       expect(result).toEqual(config)
     })
 
@@ -96,6 +97,7 @@ describe(`tap`, () => {
       const result = tap({ dest: 'mypath', message: '' })(config)
       const expectedPrint = [expectedConfigPrint]
       expect(mockAppendFile).toHaveBeenCalledWith('mypath', `${expectedPrint.join('\n')}\n`)
+      expect(mockConsole.log).toHaveBeenNthCalledWith(1, expectedConfigPrint)
       expect(result).toEqual(config)
     })
 
@@ -103,6 +105,8 @@ describe(`tap`, () => {
       const result = tap({ dest: 'mypath', message: 'A message I want to print before the configuration' })(config)
       const expectedPrint = ['A message I want to print before the configuration', expectedConfigPrint]
       expect(mockAppendFile).toHaveBeenCalledWith('mypath', `${expectedPrint.join('\n')}\n`)
+      expect(mockConsole.log).toHaveBeenNthCalledWith(1, 'A message I want to print before the configuration')
+      expect(mockConsole.log).toHaveBeenNthCalledWith(2, expectedConfigPrint)
       expect(result).toEqual(config)
     })
   })
