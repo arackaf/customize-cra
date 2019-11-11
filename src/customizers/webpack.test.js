@@ -14,7 +14,9 @@ import {
   removeModuleScopePlugin,
   addPostcssPlugins,
   setWebpackTarget,
-  setWebpackPublicPath
+  setWebpackPublicPath,
+  setWebpackOptimizationSplitChunks,
+  setWebpackStats
 } from "./webpack";
 
 test("addWebpackExternals returns function that spreads provided args last in externals list", () => {
@@ -265,6 +267,47 @@ describe("setWebpackPublicPath", () => {
     };
 
     const actual = setWebpackPublicPath("https://github.com")(inputConfig);
+
+    expect(actual).toMatchSnapshot();
+  });
+});
+
+test("setWebpackOptimizationSplitChunks sets the customized optimization.splitChunks for webpack", () => {
+  const inputConfig = {
+    optimization: {
+      splitChunks: {
+        chunks: "all"
+      }
+    }
+  };
+
+  const actual = setWebpackOptimizationSplitChunks({
+    chunks: "all",
+    maxSize: 1000000
+  })(inputConfig);
+
+  expect(actual).toMatchSnapshot();
+});
+
+describe("setWebpackStats", () => {
+  test("sets stats if it is a string", () => {
+    const config = {};
+    const actual = setWebpackStats("fake-normal-stats")(config);
+
+    expect(actual).toMatchSnapshot();
+  });
+
+  test("sets stats if it is an object", () => {
+    const config = {};
+    const actual = setWebpackStats({ assets: false })(config);
+
+    expect(actual).toMatchSnapshot();
+  });
+
+  test("overrides the config stats object with the provided stats object", () => {
+    const config = { stats: { a: "A", b: "B" } };
+    const stats = { b: "b", c: "c" };
+    const actual = setWebpackStats(stats)(config);
 
     expect(actual).toMatchSnapshot();
   });

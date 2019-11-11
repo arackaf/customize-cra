@@ -24,7 +24,9 @@ This file documents the functions exported by `customize-cra`.
   - [addWebpackExternals](#addwebpackexternalsdeps)
   - [addWebpackModuleRule](#addwebpackmodulerulerule)
   - [setWebpackTarget](#setwebpacktargettarget)
+  - [setWebpackStats](#setwebpackstats)
   - [addBundleVisualizer](#addbundlevisualizeroptions-behindflag--false)
+  - [setWebpackOptimizationSplitChunks](#setwebpackoptimizationsplitchunks)
   - [adjustWorkbox](#adjustworkboxfn)
   - [addLessLoader](#addlessloaderloaderoptions)
   - [addPostcssPlugins](#addpostcsspluginsplugins)
@@ -242,6 +244,34 @@ module.exports = {
 }
 ```
 
+### setWebpackStats(stats)
+
+Sets the `stats` attribute for webpack. This is an attribute that can allow you to customize Webpack's error message behaviour, in production builds. This can be, [as described in the webpack docs](https://webpack.js.org/configuration/stats/), a string or an object.
+
+```js
+module.exports = {
+  override(
+    setWebpackStats('errors-only')
+  )
+}
+```
+
+You can configure it to ignore certain expected warning patterns, as create-react-app treats warnings as errors when `CI` env is true:
+
+```js
+module.exports = {
+  override(
+    setWebpackStats({
+      warningsFilter: [
+        'filter',
+        /filter/,
+        (warning) => true
+      ]
+    })
+  )
+}
+```
+
 ### addBundleVisualizer(options, behindFlag = false)
 
 Adds the bundle visualizer plugin to your webpack config. Be sure to have `webpack-bundle-analyzer` installed. By default, the options passed to the plugin will be:
@@ -250,6 +280,23 @@ Adds the bundle visualizer plugin to your webpack config. Be sure to have `webpa
 {
   "analyzerMode": "static",
   "reportFilename": "report.html"
+}
+```
+
+You can hide this plugin behind a command line flag (`--analyze`) by passing `true` as second argument.
+
+```js
+addBundleVisualizer({}, true);
+```
+
+### setWebpackOptimizationSplitChunks(target)
+
+Sets your customized optimization.splitChunks configuration to your webpack config. Please Use this method cautiously because the webpack default config is effective on most of time. By default, the options in create-react-app is:
+
+```json
+{
+  "chunks": "all",
+  "name": false
 }
 ```
 
