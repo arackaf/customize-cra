@@ -1,6 +1,9 @@
-const flow = require("lodash.flow");
+import { getBabelLoader } from "../utilities";
 
-const addBundleVisualizer = (options = {}, behindFlag = false) => config => {
+export const addBundleVisualizer = (
+  options = {},
+  behindFlag = false
+) => config => {
   const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
     .BundleAnalyzerPlugin;
 
@@ -22,45 +25,7 @@ const addBundleVisualizer = (options = {}, behindFlag = false) => config => {
   return config;
 };
 
-const getBabelLoader = config => {
-  const babelLoaderFilter = rule =>
-    rule.loader &&
-    rule.loader.includes("babel") &&
-    rule.options &&
-    rule.options.plugins;
-
-  // First, try to find the babel loader inside the oneOf array.
-  // This is where we can find it when working with react-scripts@2.0.3.
-  let loaders = config.module.rules.find(rule => Array.isArray(rule.oneOf))
-    .oneOf;
-
-  let babelLoader = loaders.find(babelLoaderFilter);
-
-  // If the loader was not found, try to find it inside of the "use" array, within the rules.
-  // This should work when dealing with react-scripts@2.0.0.next.* versions.
-  if (!babelLoader) {
-    loaders = loaders.reduce((ldrs, rule) => ldrs.concat(rule.use || []), []);
-    babelLoader = loaders.find(babelLoaderFilter);
-  }
-  return babelLoader;
-}
-
-const addBabelPlugin = plugin => config => {
-  getBabelLoader(config).options.plugins.push(plugin);
-  return config;
-};
-
-const addBabelPreset = preset => config => {
-  getBabelLoader(config).options.presets.push(preset);
-  return config;
-};
-
-const addDecoratorsLegacy = () => config =>
-  addBabelPlugin(["@babel/plugin-proposal-decorators", { legacy: true }])(
-    config
-  );
-
-const disableEsLint = () => config => {
+export const disableEsLint = () => config => {
   let eslintRules = config.module.rules.filter(
     r => r.use && r.use.some(u => u.options && u.options.useEslintrc !== void 0)
   );
@@ -70,7 +35,7 @@ const disableEsLint = () => config => {
   return config;
 };
 
-const addWebpackAlias = alias => config => {
+export const addWebpackAlias = alias => config => {
   if (!config.resolve) {
     config.resolve = {};
   }
@@ -81,15 +46,20 @@ const addWebpackAlias = alias => config => {
   return config;
 };
 
-const addWebpackResolve = resolve => config => {
+export const addWebpackResolve = resolve => config => {
   if (!config.resolve) {
     config.resolve = {};
   }
   Object.assign(config.resolve, resolve);
   return config;
-}
+};
 
-const adjustWorkbox = adjust => config => {
+export const addWebpackPlugin = plugin => config => {
+  config.plugins.push(plugin);
+  return config;
+};
+
+export const adjustWorkbox = adjust => config => {
   config.plugins.forEach(p => {
     if (p.constructor.name === "GenerateSW") {
       adjust(p.config);
@@ -98,7 +68,7 @@ const adjustWorkbox = adjust => config => {
   return config;
 };
 
-const useEslintRc = configFile => config => {
+export const useEslintRc = configFile => config => {
   const eslintRule = config.module.rules.filter(
     r => r.use && r.use.some(u => u.options && u.options.useEslintrc !== void 0)
   )[0];
@@ -119,7 +89,7 @@ const useEslintRc = configFile => config => {
   return config;
 };
 
-const enableEslintTypescript = () => config => {
+export const enableEslintTypescript = () => config => {
   const eslintRule = config.module.rules.filter(
     r => r.use && r.use.some(u => u.options && u.options.useEslintrc !== void 0)
   )[0];
@@ -136,36 +106,7 @@ const enableEslintTypescript = () => config => {
   return config;
 };
 
-const useBabelRc = () => config => {
-  getBabelLoader(config).options.babelrc = true;
-  return config;
-};
-
-const babelInclude = include => config => {
-  getBabelLoader(config).include = include;
-  return config;
-};
-
-const override = (...plugins) => flow(...plugins.filter(f => f));
-
-const addBabelPlugins = (...plugins) => plugins.map(p => addBabelPlugin(p));
-
-const addBabelPresets = (...plugins) => plugins.map(p => addBabelPreset(p));
-
-const fixBabelImports = (libraryName, options) =>
-  addBabelPlugin([
-    "import",
-    Object.assign(
-      {},
-      {
-        libraryName
-      },
-      options
-    ),
-    `fix-${libraryName}-imports`
-  ]);
-
-const addLessLoader = (loaderOptions = {}) => config => {
+export const addLessLoader = (loaderOptions = {}) => config => {
   const mode = process.env.NODE_ENV === "development" ? "dev" : "prod";
 
   // Need these for production mode, which are copied from react-scripts
@@ -175,9 +116,10 @@ const addLessLoader = (loaderOptions = {}) => config => {
     mode === "prod" && process.env.GENERATE_SOURCEMAP !== "false";
   const lessRegex = /\.less$/;
   const lessModuleRegex = /\.module\.less$/;
-  const localIdentName = loaderOptions.localIdentName || "[path][name]__[local]--[hash:base64:5]";
+  const localIdentName =
+    loaderOptions.localIdentName || "[path][name]__[local]--[hash:base64:5]";
 
-  const getLessLoader = (cssOptions) => {
+  const getLessLoader = cssOptions => {
     return [
       mode === "dev"
         ? require.resolve("style-loader")
@@ -221,40 +163,34 @@ const addLessLoader = (loaderOptions = {}) => config => {
     .oneOf;
 
   // Insert less-loader as the penultimate item of loaders (before file-loader)
-  loaders.splice(loaders.length - 1, 0, {
-    test: lessRegex,
-    exclude: lessModuleRegex,
-    use: getLessLoader({
-      importLoaders: 2
-    }),
-    sideEffects: mode === "prod"
-  }, {
-    test: lessModuleRegex,
-    use: getLessLoader({
-      importLoaders: 2,
-      modules: true,
-      localIdentName: localIdentName
-    })
-  });
+  loaders.splice(
+    loaders.length - 1,
+    0,
+    {
+      test: lessRegex,
+      exclude: lessModuleRegex,
+      use: getLessLoader({
+        importLoaders: 2
+      }),
+      sideEffects: mode === "prod"
+    },
+    {
+      test: lessModuleRegex,
+      use: getLessLoader({
+        importLoaders: 2,
+        modules: true,
+        localIdentName: localIdentName
+      })
+    }
+  );
 
   return config;
-};
-
-// Use this helper to override the webpack dev server settings
-//  it works just like the `override` utility
-const overrideDevServer = (...plugins) => configFunction => (
-  proxy,
-  allowedHost
-) => {
-  const config = configFunction(proxy, allowedHost);
-  const updatedConfig = override(...plugins)(config);
-  return updatedConfig;
 };
 
 // to be used inside `overrideDevServer`, makes CRA watch all the folders
 // included `node_modules`, useful when you are working with linked packages
 // usage: `yarn start --watch-all`
-const watchAll = () => config => {
+export const watchAll = () => config => {
   if (process.argv.includes("--watch-all")) {
     delete config.watchOptions;
   }
@@ -263,11 +199,11 @@ const watchAll = () => config => {
 
 // to be used to disable chunk according to:
 // https://github.com/facebook/create-react-app/issues/5306#issuecomment-433425838
-const disableChunk = () => config => {
+export const disableChunk = () => config => {
   config.optimization.splitChunks = {
     cacheGroups: {
-        default: false,
-    },
+      default: false
+    }
   };
 
   config.optimization.runtimeChunk = false;
@@ -275,65 +211,141 @@ const disableChunk = () => config => {
   return config;
 };
 
-const addPostcssPlugins = (plugins) => config => {
+// to be used to ignore replace packages with global variable
+// Useful when trying to offload libs to CDN
+export const addWebpackExternals = externalDeps => config => {
+  let externals = config.externals;
+  if (!externals) {
+    externals = externalDeps;
+  } else if (Array.isArray(externalDeps)) {
+    externals = externalDeps.concat(externals);
+  } else if (
+    Array.isArray(externals) ||
+    externalDeps.constructor === Function ||
+    externalDeps.constructor === RegExp
+  ) {
+    externals = [externalDeps].concat(externals);
+  } else if (externalDeps instanceof Object && externals instanceof Object) {
+    externals = {
+      ...externals,
+      ...externalDeps
+    };
+  }
+
+  config.externals = externals;
+  return config;
+};
+
+export const addPostcssPlugins = plugins => config => {
   const rules = config.module.rules.find(rule => Array.isArray(rule.oneOf))
     .oneOf;
-  rules.forEach(r => r.use && r.use.forEach(u => {
-    if (u.options && u.options.ident === "postcss") {
-      if (!u.options.plugins) {
-        u.options.plugins = () => [...plugins];
-      }
-      if (u.options.plugins) {
-        const originalPlugins = u.options.plugins;
-        u.options.plugins = () => [...originalPlugins(), ...plugins];
-      }
-    }
-  }));
+  rules.forEach(
+    r =>
+      r.use &&
+      r.use.forEach(u => {
+        if (u.options && u.options.ident === "postcss") {
+          if (!u.options.plugins) {
+            u.options.plugins = () => [...plugins];
+          }
+          if (u.options.plugins) {
+            const originalPlugins = u.options.plugins;
+            u.options.plugins = () => [...originalPlugins(), ...plugins];
+          }
+        }
+      })
+  );
   return config;
-}
+};
 
 // This will remove the CRA plugin that prevents to import modules from
 // outside the `src` directory, useful if you use a different directory
-const removeModuleScopePlugin = () => config => {
+export const removeModuleScopePlugin = () => config => {
   config.resolve.plugins = config.resolve.plugins.filter(
     p => p.constructor.name !== "ModuleScopePlugin"
   );
   return config;
 };
 
-const addTslintLoader = (options) => config => {
+/**
+ * Add the provided module to the webpack module rules array.
+ *
+ * @param rule The rule to be added
+ * @see https://webpack.js.org/configuration/module/#modulerules
+ */
+export const addWebpackModuleRule = rule => config => {
+  for (let _rule of config.module.rules) {
+    if (_rule.oneOf) {
+      _rule.oneOf.unshift(rule);
+      break;
+    }
+  }
+  return config;
+};
+
+export const addTslintLoader = options => config => {
   config.module.rules.unshift({
     test: /\.(ts|tsx)$/,
-    loader: require.resolve("tslint-loader"),
+    loader: "tslint-loader",
     options,
-    enforce: "pre",
+    enforce: "pre"
   });
   return config;
 };
 
-module.exports = {
-  override,
-  addBundleVisualizer,
-  addBabelPlugin,
-  addDecoratorsLegacy,
-  disableEsLint,
-  addWebpackAlias,
-  addWebpackResolve,
-  adjustWorkbox,
-  useEslintRc,
-  enableEslintTypescript,
-  addBabelPlugins,
-  fixBabelImports,
-  useBabelRc,
-  addLessLoader,
-  overrideDevServer,
-  watchAll,
-  babelInclude,
-  addBabelPreset,
-  addBabelPresets,
-  disableChunk,
-  addPostcssPlugins,
-  getBabelLoader,
-  removeModuleScopePlugin,
-  addTslintLoader,
+/**
+ * Override the webpack target.
+ *
+ * @param target What to set the webpack target as (can be string or function).
+ *
+ * @see https://webpack.js.org/configuration/target/
+ */
+export const setWebpackTarget = target => config => {
+  config.target = target;
+  return config;
+};
+
+/**
+ * override the webpack publicPath
+ *
+ * @param path What to set the webpack publicPath as.
+ * @see https://webpack.js.org/configuration/output/#outputpublicpath
+ */
+export const setWebpackPublicPath = path => config => {
+  if (path) {
+    if (!(path.startsWith("http") || path.startsWith("https"))) {
+      if (!path.startsWith("/")) {
+        path = "/" + path;
+      }
+    }
+    if (!path.endsWith("/")) {
+      path = path + "/";
+    }
+    config.output.publicPath = path;
+  }
+  return config;
+};
+
+/**
+ * override the webpack optimization.splitChunks
+ *
+ * @param configuration of optimization.splitChunks
+ * @see https://webpack.js.org/plugins/split-chunks-plugin/
+ */
+export const setWebpackOptimizationSplitChunks = splitChunks => config => {
+  if (splitChunks && typeof splitChunks === "object") {
+    config.optimization.splitChunks = splitChunks;
+  }
+  return config;
+};
+
+/**
+ * Sets the `stats` object in Webpack config
+ * This may not work in development mode
+ *
+ * @param stats Stats configuration in Webpack
+ * @see https://webpack.js.org/configuration/stats/
+ */
+export const setWebpackStats = stats => config => {
+  config.stats = stats;
+  return config;
 };

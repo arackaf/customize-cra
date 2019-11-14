@@ -1,0 +1,334 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`addBabelPlugin returns a function that adds a plugin to the plugins list 1`] = `
+Object {
+  "module": Object {
+    "rules": Array [
+      Object {
+        "oneOf": Array [
+          Object {
+            "include": "src",
+            "loader": "babel",
+            "options": Object {
+              "plugins": Array [
+                "@babel/plugin-transform-runtime",
+              ],
+            },
+          },
+          Object {
+            "exclude": "src",
+            "loader": "babel",
+            "options": Object {},
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`addBabelPlugins returns functions that add plugins to the plugins list 1`] = `
+Object {
+  "module": Object {
+    "rules": Array [
+      Object {
+        "oneOf": Array [
+          Object {
+            "include": "src",
+            "loader": "babel",
+            "options": Object {
+              "plugins": Array [
+                Array [
+                  "@babel/plugin-proposal-object-rest-spread",
+                  Object {
+                    "loose": true,
+                  },
+                ],
+                "@babel/plugin-transform-runtime",
+              ],
+            },
+          },
+          Object {
+            "exclude": "src",
+            "loader": "babel",
+            "options": Object {},
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`addBabelPreset returns a function that adds a preset to the presets list 1`] = `
+Object {
+  "module": Object {
+    "rules": Array [
+      Object {
+        "oneOf": Array [
+          Object {
+            "include": "src",
+            "loader": "babel",
+            "options": Object {
+              "plugins": Array [],
+              "presets": Array [
+                "@babel/env",
+              ],
+            },
+          },
+          Object {
+            "exclude": "src",
+            "loader": "babel",
+            "options": Object {},
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`addBabelPresets returns functions that add presets to the presets list 1`] = `
+Object {
+  "module": Object {
+    "rules": Array [
+      Object {
+        "oneOf": Array [
+          Object {
+            "include": "src",
+            "loader": "babel",
+            "options": Object {
+              "plugins": Array [],
+              "presets": Array [
+                Array [
+                  "@babel/env",
+                  Object {
+                    "loose": true,
+                  },
+                ],
+                "@babel/typescript",
+              ],
+            },
+          },
+          Object {
+            "exclude": "src",
+            "loader": "babel",
+            "options": Object {},
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`addDecoratorsLegacy returns a function that adds the decorators plugin to the plugins list 1`] = `
+Object {
+  "module": Object {
+    "rules": Array [
+      Object {
+        "oneOf": Array [
+          Object {
+            "include": "src",
+            "loader": "babel",
+            "options": Object {
+              "plugins": Array [
+                Array [
+                  "@babel/plugin-proposal-decorators",
+                  Object {
+                    "legacy": true,
+                  },
+                ],
+              ],
+            },
+          },
+          Object {
+            "exclude": "src",
+            "loader": "babel",
+            "options": Object {},
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`addExternalBabelPlugin returns a function that adds a plugin to the 'outside of app' babel-loader's plugins list 1`] = `
+Object {
+  "module": Object {
+    "rules": Array [
+      Object {
+        "oneOf": Array [
+          Object {
+            "include": "src",
+            "loader": "babel",
+            "options": Object {
+              "plugins": Array [],
+            },
+          },
+          Object {
+            "exclude": "src",
+            "loader": "babel",
+            "options": Object {
+              "plugins": Array [
+                "@babel/plugin-proposal-class-properties",
+              ],
+            },
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`addExternalBabelPlugins returns functions that add plugins to the 'outside of app' babel-loader's plugins list 1`] = `
+Object {
+  "module": Object {
+    "rules": Array [
+      Object {
+        "oneOf": Array [
+          Object {
+            "include": "src",
+            "loader": "babel",
+            "options": Object {
+              "plugins": Array [],
+            },
+          },
+          Object {
+            "exclude": "src",
+            "loader": "babel",
+            "options": Object {
+              "plugins": Array [
+                Array [
+                  "@babel/plugin-proposal-object-rest-spread",
+                  Object {
+                    "loose": true,
+                  },
+                ],
+                "@babel/plugin-transform-runtime",
+              ],
+            },
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`babelExclude sets the babel loader exclude 1`] = `
+Object {
+  "module": Object {
+    "rules": Array [
+      Object {
+        "oneOf": Array [
+          Object {
+            "exclude": Array [
+              "fake_directory",
+            ],
+            "include": "src",
+            "loader": "babel",
+            "options": Object {
+              "plugins": Array [],
+            },
+          },
+          Object {
+            "exclude": "src",
+            "loader": "babel",
+            "options": Object {},
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`babelInclude sets the babel loader include 1`] = `
+Object {
+  "module": Object {
+    "rules": Array [
+      Object {
+        "oneOf": Array [
+          Object {
+            "include": Array [
+              "src",
+            ],
+            "loader": "babel",
+            "options": Object {
+              "plugins": Array [],
+            },
+          },
+          Object {
+            "exclude": "src",
+            "loader": "babel",
+            "options": Object {},
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`fixBabelImports adds the babel imports plugin for the provided library 1`] = `
+Object {
+  "module": Object {
+    "rules": Array [
+      Object {
+        "oneOf": Array [
+          Object {
+            "include": "src",
+            "loader": "babel",
+            "options": Object {
+              "plugins": Array [
+                Array [
+                  "import",
+                  Object {
+                    "libraryDirectory": "",
+                    "libraryName": "lodash",
+                  },
+                  "fix-lodash-imports",
+                ],
+              ],
+            },
+          },
+          Object {
+            "exclude": "src",
+            "loader": "babel",
+            "options": Object {},
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`useBabelRc enables the babel loader's babelrc flag 1`] = `
+Object {
+  "module": Object {
+    "rules": Array [
+      Object {
+        "oneOf": Array [
+          Object {
+            "include": "src",
+            "loader": "babel",
+            "options": Object {
+              "babelrc": true,
+              "plugins": Array [],
+            },
+          },
+          Object {
+            "exclude": "src",
+            "loader": "babel",
+            "options": Object {},
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
