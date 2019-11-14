@@ -164,6 +164,7 @@ export const addLessLoader = (loaderOptions = {}) => config => {
         },
         {
           loader: require.resolve(preProcessor),
+          // not the same as react-scripts
           options: Object.assign(
             {
               sourceMap: true

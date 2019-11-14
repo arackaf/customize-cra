@@ -378,7 +378,7 @@ module.exports = override(
     strictMath: true,
     noIeCompat: true,
     modifyVars: {
-      "@primary-color": "#1DA57A", // for example, we use Ant Design to change theme color.
+      "@primary-color": "#1DA57A", // for example, you use Ant Design to change theme color.
     },
     cssLoaderOptions: {}, // .less file used css-loader option, not all CSS file.
     cssModules: {
