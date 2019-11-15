@@ -1,6 +1,4 @@
 import { getBabelLoader } from "../utilities";
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import postcssNormalize from "postcss-normalize";
 
 export const addBundleVisualizer = (
   options = {},
@@ -109,6 +107,9 @@ export const enableEslintTypescript = () => config => {
 };
 
 export const addLessLoader = (loaderOptions = {}) => config => {
+  const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+  const postcssNormalize = require("postcss-normalize");
+
   const cssLoaderOptions = loaderOptions.cssLoaderOptions || {};
   const cssModules = loaderOptions.cssModules || {
     localIdentName: "[local]--[hash:base64:5]"
