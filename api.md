@@ -26,7 +26,7 @@ This file documents the functions exported by `customize-cra`.
   - [setWebpackTarget](#setwebpacktargettarget)
   - [setWebpackStats](#setwebpackstats)
   - [addBundleVisualizer](#addbundlevisualizeroptions-behindflag--false)
-  - [setWebpackOptimizationSplitChunks](#setwebpackoptimizationsplitchunks)
+  - [setWebpackOptimizationSplitChunks](#setwebpackoptimizationsplitchunkstarget)
   - [adjustWorkbox](#adjustworkboxfn)
   - [addLessLoader](#addlessloaderloaderoptions)
   - [addPostcssPlugins](#addpostcsspluginsplugins)
