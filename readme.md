@@ -1,6 +1,10 @@
 # `customize-cra`
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-15-orange.svg?style=flat-square)](#contributors-)
+<<<<<<< HEAD
+[![All Contributors](https://img.shields.io/badge/all_contributors-16-orange.svg?style=flat-square)](#contributors-)
+=======
+[![All Contributors](https://img.shields.io/badge/all_contributors-12-orange.svg?style=flat-square)](#contributors-)
+>>>>>>> docs: add @1123612483 as a contributor
 
 This project provides a set of utilities to customize [`create-react-app`](https://github.com/facebook/create-react-app) versions 2 and 3 configurations leveraging [`react-app-rewired`](https://github.com/timarney/react-app-rewired/) core functionalities.
 
@@ -146,6 +150,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/billypon"><img src="https://avatars2.githubusercontent.com/u/1763302?v=4" width="100px;" alt="billypon"/><br /><sub><b>billypon</b></sub></a><br /><a href="https://github.com/arackaf/customize-cra/commits?author=billypon" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/1123612483"><img src="https://avatars1.githubusercontent.com/u/20741541?v=4" width="100px;" alt="Juetta"/><br /><sub><b>Juetta</b></sub></a><br /><a href="https://github.com/arackaf/customize-cra/commits?author=1123612483" title="Code">💻</a></td>
   </tr>
 </table>
 
