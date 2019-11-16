@@ -153,6 +153,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "onlyling",
+      "name": "LING_ZI_QING",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/9999765?v=4",
+      "profile": "https://www.onlyling.com",
+      "contributions": [
+        "code",
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7

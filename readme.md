@@ -141,16 +141,13 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/gfafei"><img src="https://avatars3.githubusercontent.com/u/12234890?v=4" width="100px;" alt="afei"/><br /><sub><b>afei</b></sub></a><br /><a href="https://github.com/arackaf/customize-cra/commits?author=gfafei" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/fireairforce"><img src="https://avatars3.githubusercontent.com/u/32598811?v=4" width="100px;" alt="zoomdong"/><br /><sub><b>zoomdong</b></sub></a><br /><a href="https://github.com/arackaf/customize-cra/commits?author=fireairforce" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/danilofuchs"><img src="https://avatars0.githubusercontent.com/u/17657014?v=4" width="100px;" alt="Danilo Campana Fuchs"/><br /><sub><b>Danilo Campana Fuchs</b></sub></a><br /><a href="https://github.com/arackaf/customize-cra/commits?author=danilofuchs" title="Code">💻</a></td>
-<<<<<<< HEAD
     <td align="center"><a href="https://www.onlyling.com"><img src="https://avatars3.githubusercontent.com/u/9999765?v=4" width="100px;" alt="LING_ZI_QING"/><br /><sub><b>LING_ZI_QING</b></sub></a><br /><a href="https://github.com/arackaf/customize-cra/commits?author=onlyling" title="Code">💻</a> <a href="https://github.com/arackaf/customize-cra/commits?author=onlyling" title="Documentation">📖</a></td>
-=======
     <td align="center"><a href="https://github.com/ronarvaez"><img src="https://avatars0.githubusercontent.com/u/14306638?v=4" width="100px;" alt="Rodrigo Narvaez"/><br /><sub><b>Rodrigo Narvaez</b></sub></a><br /><a href="https://github.com/arackaf/customize-cra/commits?author=ronarvaez" title="Code">💻</a></td>
     <td align="center"><a href="https://blackmatch.github.io"><img src="https://avatars3.githubusercontent.com/u/12443954?v=4" width="100px;" alt="blackmatch"/><br /><sub><b>blackmatch</b></sub></a><br /><a href="https://github.com/arackaf/customize-cra/commits?author=blackmatch" title="Code">💻</a></td>
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/billypon"><img src="https://avatars2.githubusercontent.com/u/1763302?v=4" width="100px;" alt="billypon"/><br /><sub><b>billypon</b></sub></a><br /><a href="https://github.com/arackaf/customize-cra/commits?author=billypon" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/1123612483"><img src="https://avatars1.githubusercontent.com/u/20741541?v=4" width="100px;" alt="Juetta"/><br /><sub><b>Juetta</b></sub></a><br /><a href="https://github.com/arackaf/customize-cra/commits?author=1123612483" title="Code">💻</a></td>
->>>>>>> dac244601b061f4c12ccaeada8c3464168cc38bb
   </tr>
 </table>
 
