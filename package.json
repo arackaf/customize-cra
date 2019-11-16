@@ -1,6 +1,6 @@
 {
   "name": "customize-cra",
-  "version": "0.8.0",
+  "version": "0.9.1",
   "description": "",
   "repository": "arackaf/customize-cra",
   "main": "dist/index.cjs.js",

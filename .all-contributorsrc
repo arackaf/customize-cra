@@ -119,13 +119,39 @@
       ]
     },
     {
-      "login": "onlyling",
-      "name": "LING_ZI_QING",
-      "avatar_url": "https://avatars3.githubusercontent.com/u/9999765?v=4",
-      "profile": "https://www.onlyling.com",
+      "login": "ronarvaez",
+      "name": "Rodrigo Narvaez",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/14306638?v=4",
+      "profile": "https://github.com/ronarvaez",
       "contributions": [
-        "code",
-        "doc"
+        "code"
+      ]
+    },
+    {
+      "login": "blackmatch",
+      "name": "blackmatch",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/12443954?v=4",
+      "profile": "https://blackmatch.github.io",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "billypon",
+      "name": "billypon",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/1763302?v=4",
+      "profile": "https://github.com/billypon",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "1123612483",
+      "name": "Juetta",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/20741541?v=4",
+      "profile": "https://github.com/1123612483",
+      "contributions": [
+        "code"
       ]
     }
   ],

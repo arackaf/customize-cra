@@ -9,6 +9,7 @@ import {
   addTslintLoader,
   addWebpackModuleRule,
   adjustWorkbox,
+  adjustStyleLoaders,
   watchAll,
   disableChunk,
   removeModuleScopePlugin,
@@ -165,6 +166,13 @@ test("adjustWorkbox calls the provided adjustment using the workbox plugin confi
 
   expect(actual).toMatchSnapshot();
   expect(adjustment).toHaveBeenCalledWith(innerConfig);
+});
+
+test("adjustStyleLoaders find all style loaders and callback one by one", () => {
+  const nonStyleLoader = { test: true };
+  const styleLoader = { use: [ 'style-loader' ] };
+  const inputConfig = { module: { rules: [{ oneOf: [ nonStyleLoader, styleLoader ] }]} };
+  adjustStyleLoaders(actual => expect(actual).toMatchSnapshot())(inputConfig);
 });
 
 test("addLessLoader", () => {});

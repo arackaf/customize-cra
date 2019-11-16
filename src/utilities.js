@@ -35,3 +35,19 @@ export const getBabelLoader = (config, isOutsideOfApp) => {
   }
   return babelLoader;
 };
+
+export const tap = (options) => (config) => {
+  const { message, dest } = options || {}
+  const print = []
+  if (message) print.push(message)
+  print.push(JSON.stringify(config, null, 2))
+
+  if (dest) {
+    const fs = require('fs')
+    fs.appendFile(dest, `${print.join('\n')}\n`)
+  }
+
+  print.forEach(sentence => console.log(sentence))
+
+  return config
+}
