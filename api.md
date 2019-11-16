@@ -33,6 +33,7 @@ This file documents the functions exported by `customize-cra`.
   - [disableChunk](#disablechunk)
   - [removeModuleScopePlugin](#removemodulescopeplugin)
   - [watchAll](#watchall)
+  - [adjustStyleLoaders](#adjustStyleLoaders)
 - [`utilities`](#utilities)
   - [getBabelLoader](#getbabelloaderconfig-isoutsideofapp)
   - [tap](#tapoptions)
@@ -431,6 +432,35 @@ To use it, just apply it and run the dev server with `yarn start --watch-all`.
 
 ```js
 watchAll();
+```
+
+### adjustStyleLoaders(callback)
+
+Find all style loaders and callback one by one.
+
+```js
+adjustStyleLoaders((loader) => {});
+```
+
+In default config, CRA only generate sourcemap in production mode,
+if you need sourcemap in development mode, you must adjust style loaders.
+
+Here is the example:
+
+```js
+adjustStyleLoaders(({ use: [ , css, postcss, resolve, processor ] }) => {
+  css.options.sourceMap = true;         // css-loader
+  postcss.options.sourceMap = true;     // postcss-loader
+  // when enable pre-processor,
+  // resolve-url-loader will be enabled too
+  if (resolve) {
+    resolve.options.sourceMap = true;   // resolve-url-loader
+  }
+  // pre-processor
+  if (processor && processor.loader.includes('sass-loader')) {
+    processor.options.sourceMap = true; // sass-loader
+  }
+})
 ```
 
 ## `utilities`
