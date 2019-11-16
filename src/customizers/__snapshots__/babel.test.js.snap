@@ -307,6 +307,12 @@ Object {
 }
 `;
 
+exports[`removeInternalBabelPlugin removes a babel plugin with the matching constructor name 1`] = `
+Object {
+  "plugins": Array [],
+}
+`;
+
 exports[`useBabelRc enables the babel loader's babelrc flag 1`] = `
 Object {
   "module": Object {

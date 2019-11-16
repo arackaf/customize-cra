@@ -117,6 +117,14 @@ Object {
 }
 `;
 
+exports[`adjustStyleLoaders find all style loaders and callback one by one 1`] = `
+Object {
+  "use": Array [
+    "style-loader",
+  ],
+}
+`;
+
 exports[`disableChunk disables chunking config options 1`] = `
 Object {
   "optimization": Object {

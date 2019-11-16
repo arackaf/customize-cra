@@ -12,6 +12,7 @@ This file documents the functions exported by `customize-cra`.
   - [addBabelPresets](#addbabelpresetspresets)
   - [babelInclude](#babelinclude)
   - [babelExclude](#babelexcludeexclude)
+  - [removeInternalBabelPlugin](#removeinternalbabelpluginpluginname)
   - [fixBabelImports](#fixbabelimportslibraryname-options)
   - [addDecoratorsLegacy](#adddecoratorslegacy)
   - [useBabelRc](#usebabelrc)
@@ -26,15 +27,17 @@ This file documents the functions exported by `customize-cra`.
   - [setWebpackTarget](#setwebpacktargettarget)
   - [setWebpackStats](#setwebpackstats)
   - [addBundleVisualizer](#addbundlevisualizeroptions-behindflag--false)
-  - [setWebpackOptimizationSplitChunks](#setwebpackoptimizationsplitchunks)
+  - [setWebpackOptimizationSplitChunks](#setwebpackoptimizationsplitchunkstarget)
   - [adjustWorkbox](#adjustworkboxfn)
   - [addLessLoader](#addlessloaderloaderoptions)
   - [addPostcssPlugins](#addpostcsspluginsplugins)
   - [disableChunk](#disablechunk)
   - [removeModuleScopePlugin](#removemodulescopeplugin)
   - [watchAll](#watchall)
+  - [adjustStyleLoaders](#adjustStyleLoaders)
 - [`utilities`](#utilities)
   - [getBabelLoader](#getbabelloaderconfig-isoutsideofapp)
+  - [tap](#tapoptions)
 
 ## `customizers`
 
@@ -154,6 +157,14 @@ Overwrites the `exclude` option for `babel-loader`. Useful for excluding a speci
 
 ```js
 module.exports = override(babelExclude([path.resolve("src/excluded-folder")]));
+```
+
+### removeInternalBabelPlugin(pluginName)
+
+Removes a specific `babel` plugin with a constructor name matching `pluginName`from the configuration.
+
+```js
+module.exports = override(removeInternalBabelPlugin("plugin-name"));
 ```
 
 ### fixBabelImports(libraryName, options)
@@ -436,6 +447,35 @@ To use it, just apply it and run the dev server with `yarn start --watch-all`.
 watchAll();
 ```
 
+### adjustStyleLoaders(callback)
+
+Find all style loaders and callback one by one.
+
+```js
+adjustStyleLoaders((loader) => {});
+```
+
+In default config, CRA only generate sourcemap in production mode,
+if you need sourcemap in development mode, you must adjust style loaders.
+
+Here is the example:
+
+```js
+adjustStyleLoaders(({ use: [ , css, postcss, resolve, processor ] }) => {
+  css.options.sourceMap = true;         // css-loader
+  postcss.options.sourceMap = true;     // postcss-loader
+  // when enable pre-processor,
+  // resolve-url-loader will be enabled too
+  if (resolve) {
+    resolve.options.sourceMap = true;   // resolve-url-loader
+  }
+  // pre-processor
+  if (processor && processor.loader.includes('sass-loader')) {
+    processor.options.sourceMap = true; // sass-loader
+  }
+})
+```
+
 ## `utilities`
 
 `utilities` are functions consumed by `customizers` in order to navigate their config.
@@ -448,3 +488,24 @@ Returns the `babel` loader from the provided `config`.
 found in `src/` and another for any js files found outside that directory. This function can target either using the `isOutsideOfApp` param.
 
 `getBabelLoader` is used to implement most of the `babel`-related `customizers`. Check out [`src/customizers/babel.js`](src/customizers/babel.js) for examples.
+
+### tap(options)
+
+Use `tap` to help you identify the configuration at certain points by printing the configuration in the console or in a separate file.
+
+`Tap` accepts an optional `options` object with the next properties:
+  - message: String message to be printed before the configuration.
+  - dest: Destination file for writing logs.
+
+```js
+const { override, tap, addLessLoader } = require("customize-cra");
+
+module.exports = override(
+  // Print initial config in the console prepending a message
+  tap({ message: "Pre - Customizers" }) 
+  /* Your customizers: eg. addLessLoader() */
+  addLessLoader()
+  // Print final config in a separate file
+  tap({ dest: 'customize-cra.log'}) 
+)
+```
