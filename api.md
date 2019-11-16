@@ -12,6 +12,7 @@ This file documents the functions exported by `customize-cra`.
   - [addBabelPresets](#addbabelpresetspresets)
   - [babelInclude](#babelinclude)
   - [babelExclude](#babelexcludeexclude)
+  - [removeInternalBabelPlugin](#removeinternalbabelpluginpluginname)
   - [fixBabelImports](#fixbabelimportslibraryname-options)
   - [addDecoratorsLegacy](#adddecoratorslegacy)
   - [useBabelRc](#usebabelrc)
@@ -156,6 +157,14 @@ Overwrites the `exclude` option for `babel-loader`. Useful for excluding a speci
 
 ```js
 module.exports = override(babelExclude([path.resolve("src/excluded-folder")]));
+```
+
+### removeInternalBabelPlugin(pluginName)
+
+Removes a specific `babel` plugin with a constructor name matching `pluginName`from the configuration.
+
+```js
+module.exports = override(removeInternalBabelPlugin("plugin-name"));
 ```
 
 ### fixBabelImports(libraryName, options)

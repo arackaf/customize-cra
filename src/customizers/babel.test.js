@@ -9,7 +9,8 @@ import {
   fixBabelImports,
   useBabelRc,
   babelInclude,
-  babelExclude
+  babelExclude,
+  removeInternalBabelPlugin
 } from "./babel";
 
 /**
@@ -129,6 +130,16 @@ test("addBabelPresets returns functions that add presets to the presets list", (
 
 test("addDecoratorsLegacy returns a function that adds the decorators plugin to the plugins list", () => {
   const actual = addDecoratorsLegacy()(config());
+
+  expect(actual).toMatchSnapshot();
+});
+
+test("removeInternalBabelPlugin removes a babel plugin with the matching constructor name", () => {
+  function Plugin() {}
+  const config = {
+    plugins: [new Plugin()]
+  };
+  const actual = removeInternalBabelPlugin("Plugin")(config);
 
   expect(actual).toMatchSnapshot();
 });
