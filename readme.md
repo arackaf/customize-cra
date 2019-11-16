@@ -141,6 +141,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/gfafei"><img src="https://avatars3.githubusercontent.com/u/12234890?v=4" width="100px;" alt="afei"/><br /><sub><b>afei</b></sub></a><br /><a href="https://github.com/arackaf/customize-cra/commits?author=gfafei" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/fireairforce"><img src="https://avatars3.githubusercontent.com/u/32598811?v=4" width="100px;" alt="zoomdong"/><br /><sub><b>zoomdong</b></sub></a><br /><a href="https://github.com/arackaf/customize-cra/commits?author=fireairforce" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/danilofuchs"><img src="https://avatars0.githubusercontent.com/u/17657014?v=4" width="100px;" alt="Danilo Campana Fuchs"/><br /><sub><b>Danilo Campana Fuchs</b></sub></a><br /><a href="https://github.com/arackaf/customize-cra/commits?author=danilofuchs" title="Code">💻</a></td>
+     <td align="center"><a href="https://github.com/ronarvaez"><img src="https://avatars0.githubusercontent.com/u/14306638?v=4" width="100px;" alt="Rodrigo Narvaez"/><br /><sub><b>Rodrigo Narvaez</b></sub></a><br /><a href="https://github.com/arackaf/customize-cra/commits?author=ronarvaez" title="Code">💻</a></td>
   </tr>
 </table>
 
