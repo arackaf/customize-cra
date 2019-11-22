@@ -119,29 +119,32 @@ export const enableEslintTypescript = () => config => {
 };
 
 export const addLessLoader = (loaderOptions = {}) => config => {
-  const mode = process.env.NODE_ENV === "development" ? "dev" : "prod";
+  const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+  const postcssNormalize = require("postcss-normalize");
 
-  // Need these for production mode, which are copied from react-scripts
-  const publicPath = require("react-scripts/config/paths").servedPath;
-  const shouldUseRelativeAssetPaths = publicPath === "./";
-  const shouldUseSourceMap =
-    mode === "prod" && process.env.GENERATE_SOURCEMAP !== "false";
+  const cssLoaderOptions = loaderOptions.cssLoaderOptions || {};
+  const cssModules = loaderOptions.cssModules || {
+    localIdentName: "[local]--[hash:base64:5]"
+  };
   const lessRegex = /\.less$/;
   const lessModuleRegex = /\.module\.less$/;
-  const localIdentName =
-    loaderOptions.localIdentName || "[path][name]__[local]--[hash:base64:5]";
 
-  const getLessLoader = cssOptions => {
-    return [
-      mode === "dev"
-        ? require.resolve("style-loader")
-        : {
-            loader: require("mini-css-extract-plugin").loader,
-            options: Object.assign(
-              {},
-              shouldUseRelativeAssetPaths ? { publicPath: "../../" } : undefined
-            )
-          },
+  const webpackEnv = process.env.NODE_ENV;
+  const isEnvDevelopment = webpackEnv === "development";
+  const isEnvProduction = webpackEnv === "production";
+  const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== "false";
+  const publicPath = config.output.publicPath;
+  const shouldUseRelativeAssetPaths = publicPath === "./";
+
+  // copy from react-scripts
+  // https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/config/webpack.config.js#L93
+  const getStyleLoaders = (cssOptions, preProcessor) => {
+    const loaders = [
+      isEnvDevelopment && require.resolve("style-loader"),
+      isEnvProduction && {
+        loader: MiniCssExtractPlugin.loader,
+        options: shouldUseRelativeAssetPaths ? { publicPath: "../../" } : {}
+      },
       {
         loader: require.resolve("css-loader"),
         options: cssOptions
@@ -157,18 +160,34 @@ export const addLessLoader = (loaderOptions = {}) => config => {
                 flexbox: "no-2009"
               },
               stage: 3
-            })
+            }),
+            postcssNormalize()
           ],
-          sourceMap: shouldUseSourceMap
+          sourceMap: isEnvProduction && shouldUseSourceMap
         }
-      },
-      {
-        loader: require.resolve("less-loader"),
-        options: Object.assign(loaderOptions, {
-          source: shouldUseSourceMap
-        })
       }
-    ];
+    ].filter(Boolean);
+    if (preProcessor) {
+      loaders.push(
+        {
+          loader: require.resolve("resolve-url-loader"),
+          options: {
+            sourceMap: isEnvProduction && shouldUseSourceMap
+          }
+        },
+        {
+          loader: require.resolve(preProcessor),
+          // not the same as react-scripts
+          options: Object.assign(
+            {
+              sourceMap: true
+            },
+            loaderOptions
+          )
+        }
+      );
+    }
+    return loaders;
   };
 
   const loaders = config.module.rules.find(rule => Array.isArray(rule.oneOf))
@@ -181,18 +200,32 @@ export const addLessLoader = (loaderOptions = {}) => config => {
     {
       test: lessRegex,
       exclude: lessModuleRegex,
-      use: getLessLoader({
-        importLoaders: 2
-      }),
-      sideEffects: mode === "prod"
+      use: getStyleLoaders(
+        Object.assign(
+          {
+            importLoaders: 2,
+            sourceMap: isEnvProduction && shouldUseSourceMap
+          },
+          cssLoaderOptions
+        ),
+        "less-loader"
+      )
     },
     {
       test: lessModuleRegex,
-      use: getLessLoader({
-        importLoaders: 2,
-        modules: true,
-        localIdentName: localIdentName
-      })
+      use: getStyleLoaders(
+        Object.assign(
+          {
+            importLoaders: 2,
+            sourceMap: isEnvProduction && shouldUseSourceMap
+          },
+          cssLoaderOptions,
+          {
+            modules: cssModules
+          }
+        ),
+        "less-loader"
+      )
     }
   );
 
