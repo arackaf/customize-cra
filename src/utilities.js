@@ -44,7 +44,14 @@ export const tap = (options) => (config) => {
 
   if (dest) {
     const fs = require('fs')
-    fs.appendFile(dest, `${print.join('\n')}\n`)
+    fs.appendFile(
+      dest,
+      `${print.join('\n')}\n`,
+      (err) => {
+        if (err) throw new Error(err);
+        console.log(`customize-cra config written to file ${dest}`);
+      }
+    )
   }
 
   print.forEach(sentence => console.log(sentence))
