@@ -310,12 +310,6 @@ Sets your customized optimization.splitChunks configuration to your webpack conf
 }
 ```
 
-You can hide this plugin behind a command line flag (`--analyze`) by passing `true` as second argument.
-
-```js
-addBundleVisualizer({}, true);
-```
-
 ### useBabelRc()
 
 Causes your .babelrc (or .babelrc.js) file to be used, this is especially useful
