@@ -190,8 +190,9 @@ export const addLessLoader = (loaderOptions = {}) => config => {
       test: lessModuleRegex,
       use: getLessLoader({
         importLoaders: 2,
-        modules: true,
-        localIdentName: localIdentName
+        modules: {
+          localIdentName: localIdentName
+        },
       })
     }
   );
