@@ -118,11 +118,10 @@ export const enableEslintTypescript = () => config => {
   return config;
 };
 
-export const addLessLoader = (loaderOptions = {}) => config => {
+export const addLessLoader = (loaderOptions = {}, script_version = 'react-scripts') => config => {
   const mode = process.env.NODE_ENV === "development" ? "dev" : "prod";
-
   // Need these for production mode, which are copied from react-scripts
-  const publicPath = require("react-scripts/config/paths").servedPath;
+  const publicPath = require(scripts_version + "/config/paths").servedPath;
   const shouldUseRelativeAssetPaths = publicPath === "./";
   const shouldUseSourceMap =
     mode === "prod" && process.env.GENERATE_SOURCEMAP !== "false";
