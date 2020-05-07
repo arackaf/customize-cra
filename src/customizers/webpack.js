@@ -165,7 +165,7 @@ export const addLessLoader = (loaderOptions = {}) => config => {
       {
         loader: require.resolve("less-loader"),
         options: Object.assign(loaderOptions, {
-          source: shouldUseSourceMap
+          sourceMap: shouldUseSourceMap
         })
       }
     ];
