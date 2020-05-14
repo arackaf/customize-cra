@@ -361,3 +361,13 @@ export const setWebpackStats = stats => config => {
   config.stats = stats;
   return config;
 };
+
+/**
+ * Set proxy uris in devServer
+ * @param proxy
+ * @see https://webpack.js.org/configuration/dev-server/#devserverproxy
+ */
+export const setDevServerProxy = (proxy) => (config) => {
+  config.proxy = proxy;
+  return config;
+};

@@ -472,6 +472,21 @@ adjustStyleLoaders(({ use: [ , css, postcss, resolve, processor ] }) => {
 })
 ```
 
+### setDevServerProxy()
+
+Proxying some URLs can be useful when you have a separate API backend development server and you want to send API requests on the same domain.
+
+```js
+overrideDevServer(
+  addDevServerProxy({
+    "/api": {
+      target: "http://localhost:4000",
+      secure: false,
+    },
+  })
+);
+```
+
 ## `utilities`
 
 `utilities` are functions consumed by `customizers` in order to navigate their config.
