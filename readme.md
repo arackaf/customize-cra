@@ -2,6 +2,8 @@
 
 [![All Contributors](https://img.shields.io/badge/all_contributors-17-orange.svg?style=flat-square)](#contributors-)
 
+📌📌 **Breaking change:** With the `1.0` release of customize-cra breaking changes have been made to the `addLessLoader` customizer to support the changes to `create-react-app` in [#7876](https://github.com/facebook/create-react-app/pull/7876). Please follow the migration guide in [#253](https://github.com/arackaf/customize-cra/issues/253).
+
 This project provides a set of utilities to customize [`create-react-app`](https://github.com/facebook/create-react-app) versions 2 and 3 configurations leveraging [`react-app-rewired`](https://github.com/timarney/react-app-rewired/) core functionalities.
 
 - [How to install](#how-to-install)
