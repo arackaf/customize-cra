@@ -118,14 +118,21 @@ export const enableEslintTypescript = () => config => {
   return config;
 };
 
-export const addLessLoader = (loaderOptions = {}) => config => {
+export const addLessLoader = (loaderOptions = {}, customCssModules = {}) => config => {
   const MiniCssExtractPlugin = require("mini-css-extract-plugin");
   const postcssNormalize = require("postcss-normalize");
 
   const cssLoaderOptions = loaderOptions.cssLoaderOptions || {};
-  const cssModules = loaderOptions.cssModules || {
-    localIdentName: "[local]--[hash:base64:5]"
-  };
+
+  const { localIdentName } = loaderOptions;
+  let cssModules = loaderOptions.cssModules || { localIdentName };
+
+  if (!cssModules.localIdentName) {
+    cssModules = customCssModules;
+  }
+
+  cssModules.localIdentName = cssModules.localIdentName || "[local]--[hash:base64:5]";
+
   const lessRegex = /\.less$/;
   const lessModuleRegex = /\.module\.less$/;
 
