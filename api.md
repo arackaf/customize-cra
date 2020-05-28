@@ -362,15 +362,13 @@ adjustWorkbox(wb =>
 First, install `less` and `less-loader` packages:
 
 ```bash
-yarn add less
-yarn add --dev less-loader
+yarn add --dev less less-loader
 ```
 
 or:
 
 ```bash
-npm i less
-npm i -D less-loader
+npm i -D less less-loader
 ```
 
 After it's done, call `addLessLoader` in `override` like below:
@@ -390,7 +388,13 @@ module.exports = override(
   addLessLoader({
     strictMath: true,
     noIeCompat: true,
-    localIdentName: "[local]--[hash:base64:5]" // if you use CSS Modules, and custom `localIdentName`, default is '[local]--[hash:base64:5]'.
+    modifyVars: {
+      "@primary-color": "#1DA57A", // for example, you use Ant Design to change theme color.
+    },
+    cssLoaderOptions: {}, // .less file used css-loader option, not all CSS file.
+    cssModules: {
+      localIdentName: "[path][name]__[local]--[hash:base64:5]", // if you use CSS Modules, and custom `localIdentName`, default is '[local]--[hash:base64:5]'.
+    },
   })
 );
 ```
