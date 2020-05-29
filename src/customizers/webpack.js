@@ -334,6 +334,11 @@ export const addWebpackModuleRule = rule => config => {
   return config;
 };
 
+export const addWebpackModulePreRule = preRule => config => {
+  config.module.rules.unshift(preRule);
+  return config;
+};
+
 export const addTslintLoader = options => config => {
   config.module.rules.unshift({
     test: /\.(ts|tsx)$/,
