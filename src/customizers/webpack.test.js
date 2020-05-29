@@ -186,6 +186,18 @@ test("watchAll removes the watchOptions from config if --watch-all passed", () =
   expect(watchAll()(inputConfig)).toEqual({});
 });
 
+test("setDevServerProxy to sets devServer.proxy config", () => {
+  const inputConfig = {};
+  const proxy = {
+    "/api": {
+      target: "http://localhost:4000",
+      secure: false,
+    },
+  };
+  const actual = setDevServerProxy(proxy)(inputConfig);
+  expect(actual).toEqual({ proxy });
+});
+
 test("disableChunk disables chunking config options", () => {
   const inputConfig = {
     optimization: {
