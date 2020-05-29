@@ -34,6 +34,11 @@ export const babelInclude = include => config => {
   return config;
 };
 
+export const useBabelConfigFile = path => config => {
+  getBabelLoader(config).options.configFile = path;
+  return config;
+};
+
 /**
  * Replaces the `exclude` option of `babel-loader`.
  * @param exclude The new `exclude` value.
