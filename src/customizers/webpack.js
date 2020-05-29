@@ -25,6 +25,23 @@ export const addBundleVisualizer = (
   return config;
 };
 
+/**
+ * 
+ * @param {object} options The options provided to svg-sprite-loader
+ */
+export const addSvgSpriteLoader = options => config => {
+  const loaders = config.module.rules.find(rule => Array.isArray(rule.oneOf))
+    .oneOf;
+
+  loaders.unshift({
+    test: /\.svg$/,
+    loader: 'svg-sprite-loader',
+    options
+  })
+
+  return config;
+}
+
 export const disableEsLint = () => config => {
   let eslintRules = config.module.rules.filter(
     r => r.use && r.use.some(u => u.options && u.options.useEslintrc !== void 0)
