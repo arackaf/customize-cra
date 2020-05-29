@@ -401,3 +401,16 @@ export const setWebpackStats = stats => config => {
   config.stats = stats;
   return config;
 };
+
+/**
+ * @param callback
+ * @see: https://webpack.js.org/plugins/progress-plugin/
+ * @returns {function(*): ({plugins}|*)}
+ */
+export const addProgressPlugin = callback => config =>{
+  const webpack = require('webpack');
+  config.plugins = (config.plugins || []).concat([
+    new webpack.ProgressPlugin(callback);
+  ])
+  return config;
+}
