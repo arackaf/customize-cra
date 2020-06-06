@@ -386,14 +386,16 @@ const { addLessLoader } = require("customize-cra");
 
 module.exports = override(
   addLessLoader({
-    strictMath: true,
-    noIeCompat: true,
-    modifyVars: {
-      "@primary-color": "#1DA57A", // for example, you use Ant Design to change theme color.
+    cssLoaderOptions: {
+      onlyLocals: true,
+      modules: {
+        localIdentName: "[hash:base64:8]",
+      },
     },
-    cssLoaderOptions: {}, // .less file used css-loader option, not all CSS file.
-    cssModules: {
-      localIdentName: "[path][name]__[local]--[hash:base64:5]", // if you use CSS Modules, and custom `localIdentName`, default is '[local]--[hash:base64:5]'.
+    lessLoaderOptions: {
+      lessOptions: {
+        strictMath: true,
+      },
     },
   })
 );

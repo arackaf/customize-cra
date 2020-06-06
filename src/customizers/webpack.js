@@ -118,20 +118,12 @@ export const enableEslintTypescript = () => config => {
   return config;
 };
 
-export const addLessLoader = (loaderOptions = {}, customCssModules = {}) => config => {
+export const addLessLoader = (loaderOptions = {}) => (config) => {
   const MiniCssExtractPlugin = require("mini-css-extract-plugin");
   const postcssNormalize = require("postcss-normalize");
 
   const cssLoaderOptions = loaderOptions.cssLoaderOptions || {};
-
-  const { localIdentName } = loaderOptions;
-  let cssModules = loaderOptions.cssModules || { localIdentName };
-
-  if (!cssModules.localIdentName) {
-    cssModules = customCssModules;
-  }
-
-  cssModules.localIdentName = cssModules.localIdentName || "[local]--[hash:base64:5]";
+  const lessLoaderOptions = loaderOptions.lessLoaderOptions || {};
 
   const lessRegex = /\.less$/;
   const lessModuleRegex = /\.module\.less$/;
@@ -139,9 +131,11 @@ export const addLessLoader = (loaderOptions = {}, customCssModules = {}) => conf
   const webpackEnv = process.env.NODE_ENV;
   const isEnvDevelopment = webpackEnv === "development";
   const isEnvProduction = webpackEnv === "production";
-  const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== "false";
+  const shouldUseSourceMap = isEnvProduction
+    ? process.env.GENERATE_SOURCEMAP !== "false"
+    : isEnvDevelopment;
   const publicPath = config.output.publicPath;
-  const shouldUseRelativeAssetPaths = publicPath === "./";
+  const shouldUseRelativeAssetPaths = publicPath.startsWith(".");
 
   // copy from react-scripts
   // https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/config/webpack.config.js#L93
@@ -150,11 +144,13 @@ export const addLessLoader = (loaderOptions = {}, customCssModules = {}) => conf
       isEnvDevelopment && require.resolve("style-loader"),
       isEnvProduction && {
         loader: MiniCssExtractPlugin.loader,
-        options: shouldUseRelativeAssetPaths ? { publicPath: "../../" } : {}
+        // css is located in `static/css`, use '../../' to locate index.html folder
+        // in production `publicPath` can be a relative path
+        options: shouldUseRelativeAssetPaths ? { publicPath: "../../" } : {},
       },
       {
         loader: require.resolve("css-loader"),
-        options: cssOptions
+        options: cssOptions,
       },
       {
         loader: require.resolve("postcss-loader"),
@@ -164,40 +160,48 @@ export const addLessLoader = (loaderOptions = {}, customCssModules = {}) => conf
             require("postcss-flexbugs-fixes"),
             require("postcss-preset-env")({
               autoprefixer: {
-                flexbox: "no-2009"
+                flexbox: "no-2009",
               },
-              stage: 3
+              stage: 3,
             }),
-            postcssNormalize()
+            postcssNormalize(),
           ],
-          sourceMap: isEnvProduction && shouldUseSourceMap
-        }
-      }
+          sourceMap: shouldUseSourceMap,
+        },
+      },
     ].filter(Boolean);
+
     if (preProcessor) {
       loaders.push(
         {
           loader: require.resolve("resolve-url-loader"),
           options: {
-            sourceMap: isEnvProduction && shouldUseSourceMap
-          }
+            sourceMap: shouldUseSourceMap,
+          },
         },
-        {
-          loader: require.resolve(preProcessor),
-          // not the same as react-scripts
-          options: Object.assign(
-            {
-              sourceMap: true
-            },
-            loaderOptions
-          )
-        }
+        preProcessor // pre processor can use more option
       );
     }
     return loaders;
   };
 
-  const loaders = config.module.rules.find(rule => Array.isArray(rule.oneOf))
+  const lessLoader = {
+    loader: require.resolve("less-loader"),
+    // not the same as react-scripts
+    options: Object.assign(
+      {
+        sourceMap: shouldUseSourceMap,
+      },
+      lessLoaderOptions,
+    ),
+  };
+
+  const defaultCSSLoaderOption = {
+    importLoaders: 2,
+    sourceMap: shouldUseSourceMap,
+  };
+
+  const loaders = config.module.rules.find((rule) => Array.isArray(rule.oneOf))
     .oneOf;
 
   // Insert less-loader as the penultimate item of loaders (before file-loader)
@@ -208,31 +212,25 @@ export const addLessLoader = (loaderOptions = {}, customCssModules = {}) => conf
       test: lessRegex,
       exclude: lessModuleRegex,
       use: getStyleLoaders(
-        Object.assign(
-          {
-            importLoaders: 2,
-            sourceMap: isEnvProduction && shouldUseSourceMap
-          },
-          cssLoaderOptions
-        ),
-        "less-loader"
-      )
+        Object.assign({}, defaultCSSLoaderOption, cssLoaderOptions, {
+          modules: false,
+        }),
+        lessLoader,
+      ),
     },
     {
       test: lessModuleRegex,
       use: getStyleLoaders(
-        Object.assign(
-          {
-            importLoaders: 2,
-            sourceMap: isEnvProduction && shouldUseSourceMap
-          },
-          cssLoaderOptions,
-          {
-            modules: cssModules
-          }
-        ),
-        "less-loader"
-      )
+        Object.assign({}, defaultCSSLoaderOption, cssLoaderOptions, {
+          modules: Object.assign(
+            {
+              localIdentName: "[local]--[hash:base64:5]",
+            },
+            cssLoaderOptions.modules,
+          ),
+        }),
+        lessLoader,
+      ),
     }
   );
 
