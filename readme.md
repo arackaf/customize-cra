@@ -1,6 +1,6 @@
 # `customize-cra`
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-17-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-18-orange.svg?style=flat-square)](#contributors-)
 
 This project provides a set of utilities to customize [`create-react-app`](https://github.com/facebook/create-react-app) versions 2 and 3 configurations leveraging [`react-app-rewired`](https://github.com/timarney/react-app-rewired/) core functionalities.
 
@@ -148,6 +148,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/billypon"><img src="https://avatars2.githubusercontent.com/u/1763302?v=4" width="100px;" alt="billypon"/><br /><sub><b>billypon</b></sub></a><br /><a href="https://github.com/arackaf/customize-cra/commits?author=billypon" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/1123612483"><img src="https://avatars1.githubusercontent.com/u/20741541?v=4" width="100px;" alt="Juetta"/><br /><sub><b>Juetta</b></sub></a><br /><a href="https://github.com/arackaf/customize-cra/commits?author=1123612483" title="Code">💻</a></td>
     <td align="center"><a href="https://www.onlyling.com"><img src="https://avatars3.githubusercontent.com/u/9999765?v=4" width="100px;" alt="LING_ZI_QING"/><br /><sub><b>LING_ZI_QING</b></sub></a><br /><a href="https://github.com/arackaf/customize-cra/commits?author=onlyling" title="Code">💻</a> <a href="https://github.com/arackaf/customize-cra/commits?author=onlyling" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/xyy94813"><img src="https://avatars0.githubusercontent.com/u/17971352?v=4" width="100px;" alt="RoXoM"/><br /><sub><b>RoXoM</b></sub></a><br /><a href="https://github.com/arackaf/customize-cra/commits?author=xyy94813" title="Tests">⚠️</a> <a href="https://github.com/arackaf/customize-cra/issues?q=author%3Axyy94813" title="Bug reports">🐛</a> <a href="https://github.com/arackaf/customize-cra/commits?author=xyy94813" title="Code">💻</a> <a href="https://github.com/arackaf/customize-cra/commits?author=xyy94813" title="Documentation">📖</a></td>
   </tr>
 </table>
 
