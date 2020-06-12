@@ -235,11 +235,9 @@ Adds the provided rule to the webpack config's `module.rules` array.
 See https://webpack.js.org/configuration/module/#modulerules for more information
 
 ```js
-module.exports = {
-  override(
-    addWebpackModuleRule({test: /\.txt$/, use: 'raw-loader'})
-  )
-}
+module.exports = override(
+  addWebpackModuleRule({test: /\.txt$/, use: 'raw-loader'})
+);
 ```
 
 ### setWebpackTarget(target)
@@ -247,11 +245,9 @@ module.exports = {
 Sets the `target` config variable for webpack. This can be, [as described in the webpack docs](https://webpack.js.org/configuration/target/), a string or a function.
 
 ```js
-module.exports = {
-  override(
-    setWebpackTarget('electron-renderer')
-  )
-}
+module.exports = override(
+  setWebpackTarget('electron-renderer')
+);
 ```
 
 ### setWebpackStats(stats)
@@ -259,27 +255,23 @@ module.exports = {
 Sets the `stats` attribute for webpack. This is an attribute that can allow you to customize Webpack's error message behaviour, in production builds. This can be, [as described in the webpack docs](https://webpack.js.org/configuration/stats/), a string or an object.
 
 ```js
-module.exports = {
-  override(
-    setWebpackStats('errors-only')
-  )
-}
+module.exports = override(
+  setWebpackStats('errors-only')
+);
 ```
 
 You can configure it to ignore certain expected warning patterns, as create-react-app treats warnings as errors when `CI` env is true:
 
 ```js
-module.exports = {
-  override(
-    setWebpackStats({
-      warningsFilter: [
-        'filter',
-        /filter/,
-        (warning) => true
-      ]
-    })
-  )
-}
+module.exports = override(
+  setWebpackStats({
+    warningsFilter: [
+      'filter',
+      /filter/,
+      (warning) => true
+    ]
+  })
+);
 ```
 
 ### addBundleVisualizer(options, behindFlag = false)
@@ -473,7 +465,7 @@ adjustStyleLoaders(({ use: [ , css, postcss, resolve, processor ] }) => {
   if (processor && processor.loader.includes('sass-loader')) {
     processor.options.sourceMap = true; // sass-loader
   }
-})
+});
 ```
 
 ## `utilities`
@@ -502,10 +494,10 @@ const { override, tap, addLessLoader } = require("customize-cra");
 
 module.exports = override(
   // Print initial config in the console prepending a message
-  tap({ message: "Pre - Customizers" }) 
+  tap({ message: "Pre - Customizers" }),
   /* Your customizers: eg. addLessLoader() */
-  addLessLoader()
+  addLessLoader(),
   // Print final config in a separate file
   tap({ dest: 'customize-cra.log'}) 
-)
+);
 ```
