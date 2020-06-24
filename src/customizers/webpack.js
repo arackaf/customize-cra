@@ -141,7 +141,7 @@ export const addLessLoader = (loaderOptions = {}, customCssModules = {}) => conf
   const isEnvProduction = webpackEnv === "production";
   const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== "false";
   const publicPath = config.output.publicPath;
-  const shouldUseRelativeAssetPaths = publicPath === "./";
+  const shouldUseRelativeAssetPaths = publicPath.startsWith('.');
 
   // copy from react-scripts
   // https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/config/webpack.config.js#L93
