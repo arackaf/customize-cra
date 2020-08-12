@@ -216,7 +216,8 @@ export const addLessLoader = (loaderOptions = {}, customCssModules = {}) => conf
           cssLoaderOptions
         ),
         "less-loader"
-      )
+      ),
+      sideEffects: true,
     },
     {
       test: lessModuleRegex,
