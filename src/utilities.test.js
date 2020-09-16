@@ -79,16 +79,16 @@ describe(`tap`, () => {
 
   describe(`with destination file option`, () => {
     const fs = require('fs')
-    const mockAppendFile = jest.fn()
+    const mockAppendFileSync = jest.fn()
     jest.mock('fs')
-    fs.appendFile = mockAppendFile
+    fs.appendFileSync = mockAppendFileSync
 
-    afterEach(() => mockAppendFile.mockClear())
+    afterEach(() => mockAppendFileSync.mockClear())
 
     test(`tap with no message`, () => {
       const result = tap({ dest: 'mypath' })(config)
       const expectedPrint = [expectedConfigPrint]
-      expect(mockAppendFile).toHaveBeenCalledWith('mypath', `${expectedPrint.join('\n')}\n`)
+      expect(mockAppendFileSync).toHaveBeenCalledWith('mypath', `${expectedPrint.join('\n')}\n`)
       expect(mockConsole.log).toHaveBeenNthCalledWith(1, expectedConfigPrint)
       expect(result).toEqual(config)
     })
@@ -96,7 +96,7 @@ describe(`tap`, () => {
     test(`tap with message but falsy value`, () => {
       const result = tap({ dest: 'mypath', message: '' })(config)
       const expectedPrint = [expectedConfigPrint]
-      expect(mockAppendFile).toHaveBeenCalledWith('mypath', `${expectedPrint.join('\n')}\n`)
+      expect(mockAppendFileSync).toHaveBeenCalledWith('mypath', `${expectedPrint.join('\n')}\n`)
       expect(mockConsole.log).toHaveBeenNthCalledWith(1, expectedConfigPrint)
       expect(result).toEqual(config)
     })
@@ -104,7 +104,7 @@ describe(`tap`, () => {
     test(`tap with message`, () => {
       const result = tap({ dest: 'mypath', message: 'A message I want to print before the configuration' })(config)
       const expectedPrint = ['A message I want to print before the configuration', expectedConfigPrint]
-      expect(mockAppendFile).toHaveBeenCalledWith('mypath', `${expectedPrint.join('\n')}\n`)
+      expect(mockAppendFileSync).toHaveBeenCalledWith('mypath', `${expectedPrint.join('\n')}\n`)
       expect(mockConsole.log).toHaveBeenNthCalledWith(1, 'A message I want to print before the configuration')
       expect(mockConsole.log).toHaveBeenNthCalledWith(2, expectedConfigPrint)
       expect(result).toEqual(config)

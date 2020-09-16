@@ -1,6 +1,6 @@
 # `customize-cra`
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-17-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-18-orange.svg?style=flat-square)](#contributors-)
 
 📌📌 **Breaking change:** With the `1.0` release of customize-cra breaking changes have been made to the `addLessLoader` customizer to support the changes to `create-react-app` in [#7876](https://github.com/facebook/create-react-app/pull/7876). Please follow the migration guide in [#253](https://github.com/arackaf/customize-cra/issues/253).
 
@@ -150,6 +150,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/billypon"><img src="https://avatars2.githubusercontent.com/u/1763302?v=4" width="100px;" alt="billypon"/><br /><sub><b>billypon</b></sub></a><br /><a href="https://github.com/arackaf/customize-cra/commits?author=billypon" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/1123612483"><img src="https://avatars1.githubusercontent.com/u/20741541?v=4" width="100px;" alt="Juetta"/><br /><sub><b>Juetta</b></sub></a><br /><a href="https://github.com/arackaf/customize-cra/commits?author=1123612483" title="Code">💻</a></td>
     <td align="center"><a href="https://www.onlyling.com"><img src="https://avatars3.githubusercontent.com/u/9999765?v=4" width="100px;" alt="LING_ZI_QING"/><br /><sub><b>LING_ZI_QING</b></sub></a><br /><a href="https://github.com/arackaf/customize-cra/commits?author=onlyling" title="Code">💻</a> <a href="https://github.com/arackaf/customize-cra/commits?author=onlyling" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/davidsheldon"><img src="https://avatars0.githubusercontent.com/u/37772?v=4" width="100px;" alt="David Sheldon"/><br /><sub><b>David Sheldon</b></sub></a><br /><a href="https://github.com/arackaf/customize-cra/commits?author=davidsheldon" title="Code">💻</a></td>
   </tr>
 </table>
 
