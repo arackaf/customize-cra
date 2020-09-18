@@ -401,3 +401,38 @@ export const setWebpackStats = stats => config => {
   config.stats = stats;
   return config;
 };
+
+/**
+ * Enables the SVGO portion of the SVGR transformer
+ * 
+ *
+ * @see https://github.com/svg/svgo#what-it-can-do
+ */
+export const enableSVGO = () => config => {
+    let loaderCheckRegex = /\.(js|mjs|jsx|ts|tsx)$/.toString();
+    // let loaders = config.module.rules[1] .oneOf;
+    config.module.rules.forEach((rule) => {
+      if (!rule.oneOf) return;
+      rule.oneOf.forEach((loader) => {
+        if (!loader.test) return;
+        if (loader.test.toString() != loaderCheckRegex) return;
+        loader.options.plugins.forEach((loaderPlugins) => {
+          if (!Array.isArray(loaderPlugins)) return;
+          loaderPlugins.forEach((item) => {
+            if (typeof item !== 'object') return;
+            if (
+              !item.loaderMap ||
+              !item.loaderMap.svg ||
+              !item.loaderMap.svg.ReactComponent
+            )
+              return;
+            item.loaderMap.svg.ReactComponent = item.loaderMap.svg.ReactComponent.replace(
+              '-svgo',
+              ''
+            );
+          });
+        });
+      });
+    });
+    return config;
+  };
