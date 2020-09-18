@@ -238,13 +238,74 @@ want to manipulate SVG's with SVGO. here are just three:
 
 You can see all the ways that SVGO can transform an SVG in the build process here: `https://github.com/svg/svgo#what-it-can-do`
 
-to use this function include `enableSVGO` as a parameter to `override()`
+Here is an example of how you might configure an aggressive SVG optimizer:
+
+First, to use this function include `enableSVGO` as a parameter to `override()`
 
 ```
 module.exports = override(
   enableSVGO()
 );
 ```
+
+Now a common use case is to reduce the size of the SVG by removing unused properties, namespaces, titles and so on. Make a file in the
+root of th eproject called `svgrrc.js` you can also use a yaml, or json variant. [Read more here](https://react-svgr.com/docs/custom-transformations/#applying-custom-transformations)
+
+in this file put something like:
+
+```
+const svgoPlugins = [
+  { removeComments: true },
+  { removeDesc: true },
+  { removeDimensions: true },
+  { removeDoctype: true },
+  { removeEditorsNSData: true },
+  { removeEmptyAttrs: true },
+  { removeEmptyContainers: true },
+  { removeEmptyText: true },
+  { removeHiddenElems: true },
+  { removeMetadata: true },
+  { removeNonInheritableGroupAttrs: true },
+  { removeRasterImages: false },
+  { removeTitle: true },
+  { removeUnknownsAndDefaults: true },
+  { removeUnusedNS: true },
+  { removeUselessDefs: true },
+  { removeUselessStrokeAndFill: true },
+  { removeViewBox: false },
+  { removeXMLProcInst: true },
+
+  { cleanUpEnableBackground: true },
+  { cleanupAttrs: true },
+  { cleanupIDs: true },
+  { cleanupNumericValues: true },
+  { collapseGroups: true },
+  { convertPathData: true },
+  { convertShapeToPath: true },
+  { convertStyleToAttrs: true },
+  { convertTransform: true },
+  { mergePaths: true },
+  { moveElemsAttrsToGroup: true },
+  { moveGroupAttrsToElems: true },
+
+  { transformsWithOnePath: false },
+  { convertColors: { currentColor: true } },
+  { sortAttrs: true },
+];
+
+module.exports = {
+  typescript: true,
+  memo: true,
+  icon: false,
+  svgoConfig: {
+    multipass: true,
+    plugins: svgoPlugins,
+  },
+};
+```
+
+Theres a lot happening here, but this will greately reduce the SVG size. Multipass is also an undocumented optimization, [read more
+about it here](https://github.com/svg/svgo/pull/258). It attempts to simplify shapes into paths to reduce file complexity.
 
 ### addWebpackAlias(alias)
 
