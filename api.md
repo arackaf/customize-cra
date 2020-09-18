@@ -2,42 +2,44 @@
 
 This file documents the functions exported by `customize-cra`.
 
-- [`customizers`](#customizers)
-  - [addTslintLoader](#addtslintloaderloaderoptions)
-  - [addExternalBabelPlugin](#addexternalbabelpluginplugin)
-  - [addExternalBabelPlugins](#addexternalbabelpluginsplugins)
-  - [addBabelPlugin](#addbabelpluginplugin)
-  - [addBabelPlugins](#addbabelpluginsplugins)
-  - [addBabelPreset](#addbabelpresetpreset)
-  - [addBabelPresets](#addbabelpresetspresets)
-  - [babelInclude](#babelinclude)
-  - [babelExclude](#babelexcludeexclude)
-  - [removeInternalBabelPlugin](#removeinternalbabelpluginpluginname)
-  - [fixBabelImports](#fixbabelimportslibraryname-options)
-  - [addDecoratorsLegacy](#adddecoratorslegacy)
-  - [useBabelRc](#usebabelrc)
-  - [disableEsLint](#disableeslint)
-  - [useEslintRc](#useeslintrcconfigfile)
-  - [enableEslintTypescript](#enableeslinttypescript)
-  - [addWebpackAlias](#addwebpackaliasalias)
-  - [addWebpackResolve](#addwebpackresolveresolve)
-  - [addWebpackPlugin](#addwebpackpluginplugin)
-  - [addWebpackExternals](#addwebpackexternalsdeps)
-  - [addWebpackModuleRule](#addwebpackmodulerulerule)
-  - [setWebpackTarget](#setwebpacktargettarget)
-  - [setWebpackStats](#setwebpackstats)
-  - [addBundleVisualizer](#addbundlevisualizeroptions-behindflag--false)
-  - [setWebpackOptimizationSplitChunks](#setwebpackoptimizationsplitchunkstarget)
-  - [adjustWorkbox](#adjustworkboxfn)
-  - [addLessLoader](#addlessloaderloaderoptions)
-  - [addPostcssPlugins](#addpostcsspluginsplugins)
-  - [disableChunk](#disablechunk)
-  - [removeModuleScopePlugin](#removemodulescopeplugin)
-  - [watchAll](#watchall)
-  - [adjustStyleLoaders](#adjustStyleLoaders)
-- [`utilities`](#utilities)
-  - [getBabelLoader](#getbabelloaderconfig-isoutsideofapp)
-  - [tap](#tapoptions)
+- [api docs](#api-docs)
+  - [`customizers`](#customizers)
+    - [addTslintLoader(loaderOptions)](#addtslintloaderloaderoptions)
+    - [addExternalBabelPlugin(plugin)](#addexternalbabelpluginplugin)
+    - [addExternalBabelPlugins(plugins)](#addexternalbabelpluginsplugins)
+    - [addBabelPlugin(plugin)](#addbabelpluginplugin)
+    - [addBabelPlugins(plugins)](#addbabelpluginsplugins)
+    - [addBabelPreset(preset)](#addbabelpresetpreset)
+    - [addBabelPresets(...presets)](#addbabelpresetspresets)
+    - [babelInclude](#babelinclude)
+    - [babelExclude(exclude)](#babelexcludeexclude)
+    - [removeInternalBabelPlugin(pluginName)](#removeinternalbabelpluginpluginname)
+    - [fixBabelImports(libraryName, options)](#fixbabelimportslibraryname-options)
+    - [addDecoratorsLegacy()](#adddecoratorslegacy)
+    - [disableEsLint()](#disableeslint)
+    - [useEslintRc(configFile)](#useeslintrcconfigfile)
+    - [enableEslintTypescript()](#enableeslinttypescript)
+    - [enableSVGO()](#enablesvgo)
+    - [addWebpackAlias(alias)](#addwebpackaliasalias)
+    - [addWebpackResolve(resolve)](#addwebpackresolveresolve)
+    - [addWebpackPlugin(plugin)](#addwebpackpluginplugin)
+    - [addWebpackExternals(deps)](#addwebpackexternalsdeps)
+    - [addWebpackModuleRule(rule)](#addwebpackmodulerulerule)
+    - [setWebpackTarget(target)](#setwebpacktargettarget)
+    - [setWebpackStats(stats)](#setwebpackstatsstats)
+    - [addBundleVisualizer(options, behindFlag = false)](#addbundlevisualizeroptions-behindflag--false)
+    - [setWebpackOptimizationSplitChunks(target)](#setwebpackoptimizationsplitchunkstarget)
+    - [useBabelRc()](#usebabelrc)
+    - [adjustWorkbox(fn)](#adjustworkboxfn)
+    - [addLessLoader(loaderOptions)](#addlessloaderloaderoptions)
+    - [addPostcssPlugins([plugins])](#addpostcsspluginsplugins)
+    - [disableChunk](#disablechunk)
+    - [removeModuleScopePlugin()](#removemodulescopeplugin)
+    - [watchAll()](#watchall)
+    - [adjustStyleLoaders(callback)](#adjuststyleloaderscallback)
+  - [`utilities`](#utilities)
+    - [getBabelLoader(config, isOutsideOfApp)](#getbabelloaderconfig-isoutsideofapp)
+    - [tap(options)](#tapoptions)
 
 ## `customizers`
 
@@ -72,11 +74,11 @@ module.exports = override(
   ),
   fixBabelImports("lodash", {
     libraryDirectory: "",
-    camel2DashComponentName: false
+    camel2DashComponentName: false,
   }),
   fixBabelImports("react-feather", {
     libraryName: "react-feather",
-    libraryDirectory: "dist/icons"
+    libraryDirectory: "dist/icons",
   })
 );
 ```
@@ -100,11 +102,11 @@ module.exports = override(
   ),
   fixBabelImports("lodash", {
     libraryDirectory: "",
-    camel2DashComponentName: false
+    camel2DashComponentName: false,
   }),
   fixBabelImports("react-feather", {
     libraryName: "react-feather",
-    libraryDirectory: "dist/icons"
+    libraryDirectory: "dist/icons",
   })
 );
 ```
@@ -125,10 +127,10 @@ module.exports = override(
       "@babel/env",
       {
         targets: {
-          browsers: ["> 1%", "last 2 versions"]
+          browsers: ["> 1%", "last 2 versions"],
         },
-        modules: "commonjs"
-      }
+        modules: "commonjs",
+      },
     ],
     "@babel/preset-flow",
     "@babel/preset-react"
@@ -146,7 +148,7 @@ module.exports = override(
     path.resolve("src"), // make sure you link your own source
     path.resolve("node_modules/native-base-shoutem-theme"),
     path.resolve("node_modules/react-navigation"),
-    path.resolve("node_modules/react-native-easy-grid")
+    path.resolve("node_modules/react-native-easy-grid"),
   ])
 );
 ```
@@ -201,6 +203,110 @@ Causes your .eslintrc file to be used, rather than the config CRA ships with.
 
 Updates Webpack eslint-loader to lint both .js(x) and .ts(x) files and show linting errors/warnings in console.
 
+### enableSVGO()
+
+Currently, Create React App enables a user to import svgsas src urls or alternately as a ReactComponent, in order to use the component inline in the project.
+Using the SVG inline means it uses SVGR to do this. SVGR can be configured using an `.svgrc` file in the root of the project. Unfortunately, out of the box, the `svgo` portion of
+the svgrc, which are arguments that can be passes to the underlying transformer is disabled as default.
+
+For example the following code in your `.svgrc.js` file would produce unexpected results:
+
+```
+module.exports = {
+  memo: true,
+  icon: false,
+  // things above this line will run
+  // but nothing below this line will run.
+  svgoConfig: {
+    pretty: false,
+    multipass: true,
+    plugins: [
+      { convertColors: { currentColor: true } },
+      { cleanupIDs: true },
+    ],
+  },
+};
+```
+
+In this above example, the id's in the svg would remain in place, and the fill colors would stay as they were. This is non-canonical to SVGR, and [was done by the team as a way to avoid confusing
+endusers.](https://github.com/facebook/create-react-app/pull/5062.) In other words, the goal of CRA is, with no modification, to import an SVG completely unaltered from the original and not actually allow the full use of an SVG transformation pipeline. However, there are a lot of reasons why a developer who is using an SVG import pipeline might intentionally
+want to manipulate SVG's with SVGO. here are just three:
+
+- removing Id's, unused attrs, collapsing g's and a number of other optimizations that can reduce the size of the SVG significantly, without modifying it cosmetically
+- replacing `fill` and `stroke` colors with `currentColor` to enable the application to programatically manipulate the SVG via css without changing the designer's worflow (which likely has a hardcoded value) this is also critical if you want to override svg colors with popular css frameworks, like tailwind
+- properly integrate SVGs with an existing stylesytem by prefixing id's, or adding classes.
+
+You can see all the ways that SVGO can transform an SVG in the build process here: `https://github.com/svg/svgo#what-it-can-do`
+
+Here is an example of how you might configure an aggressive SVG optimizer:
+
+First, to use this function include `enableSVGO` as a parameter to `override()`
+
+```
+module.exports = override(
+  enableSVGO()
+);
+```
+
+Now a common use case is to reduce the size of the SVG by removing unused properties, namespaces, titles and so on. Make a file in the
+root of th eproject called `svgrrc.js` you can also use a yaml, or json variant. [Read more here](https://react-svgr.com/docs/custom-transformations/#applying-custom-transformations)
+
+in this file put something like:
+
+```
+const svgoPlugins = [
+  { removeComments: true },
+  { removeDesc: true },
+  { removeDimensions: true },
+  { removeDoctype: true },
+  { removeEditorsNSData: true },
+  { removeEmptyAttrs: true },
+  { removeEmptyContainers: true },
+  { removeEmptyText: true },
+  { removeHiddenElems: true },
+  { removeMetadata: true },
+  { removeNonInheritableGroupAttrs: true },
+  { removeRasterImages: false },
+  { removeTitle: true },
+  { removeUnknownsAndDefaults: true },
+  { removeUnusedNS: true },
+  { removeUselessDefs: true },
+  { removeUselessStrokeAndFill: true },
+  { removeViewBox: false },
+  { removeXMLProcInst: true },
+
+  { cleanUpEnableBackground: true },
+  { cleanupAttrs: true },
+  { cleanupIDs: true },
+  { cleanupNumericValues: true },
+  { collapseGroups: true },
+  { convertPathData: true },
+  { convertShapeToPath: true },
+  { convertStyleToAttrs: true },
+  { convertTransform: true },
+  { mergePaths: true },
+  { moveElemsAttrsToGroup: true },
+  { moveGroupAttrsToElems: true },
+
+  { transformsWithOnePath: false },
+  { convertColors: { currentColor: true } },
+  { sortAttrs: true },
+];
+
+module.exports = {
+  typescript: true,
+  memo: true,
+  icon: false,
+  svgoConfig: {
+    multipass: true,
+    plugins: svgoPlugins,
+  },
+};
+```
+
+Theres a lot happening here, but this will greately reduce the SVG size. Multipass is also an undocumented optimization, [read more
+about it here](https://github.com/svg/svgo/pull/258). It attempts to simplify shapes into paths to reduce file complexity.
+
 ### addWebpackAlias(alias)
 
 Adds the provided alias info into webpack's alias section. Pass an object literal with as many entries as you'd like, and the whole object will be merged in.
@@ -222,7 +328,7 @@ For example you can [offload](https://github.com/facebook/create-react-app/issue
 ```js
 addWebpackExternals({
   react: "React",
-  "react-dom": "ReactDom"
+  "react-dom": "ReactDom",
 });
 ```
 
@@ -349,10 +455,10 @@ which can be overridden with the (optional) options argument.
 Adjusts Workbox configuration. Pass a function which will be called with the current Workbox configuration, in which you can mutate the config object as needed. See below for an example.
 
 ```js
-adjustWorkbox(wb =>
+adjustWorkbox((wb) =>
   Object.assign(wb, {
     skipWaiting: true,
-    exclude: (wb.exclude || []).concat("index.html")
+    exclude: (wb.exclude || []).concat("index.html"),
   })
 );
 ```
@@ -461,19 +567,19 @@ if you need sourcemap in development mode, you must adjust style loaders.
 Here is the example:
 
 ```js
-adjustStyleLoaders(({ use: [ , css, postcss, resolve, processor ] }) => {
-  css.options.sourceMap = true;         // css-loader
-  postcss.options.sourceMap = true;     // postcss-loader
+adjustStyleLoaders(({ use: [, css, postcss, resolve, processor] }) => {
+  css.options.sourceMap = true; // css-loader
+  postcss.options.sourceMap = true; // postcss-loader
   // when enable pre-processor,
   // resolve-url-loader will be enabled too
   if (resolve) {
-    resolve.options.sourceMap = true;   // resolve-url-loader
+    resolve.options.sourceMap = true; // resolve-url-loader
   }
   // pre-processor
-  if (processor && processor.loader.includes('sass-loader')) {
+  if (processor && processor.loader.includes("sass-loader")) {
     processor.options.sourceMap = true; // sass-loader
   }
-})
+});
 ```
 
 ## `utilities`
@@ -494,18 +600,19 @@ found in `src/` and another for any js files found outside that directory. This 
 Use `tap` to help you identify the configuration at certain points by printing the configuration in the console or in a separate file.
 
 `Tap` accepts an optional `options` object with the next properties:
-  - message: String message to be printed before the configuration.
-  - dest: Destination file for writing logs.
+
+- message: String message to be printed before the configuration.
+- dest: Destination file for writing logs.
 
 ```js
 const { override, tap, addLessLoader } = require("customize-cra");
 
 module.exports = override(
   // Print initial config in the console prepending a message
-  tap({ message: "Pre - Customizers" }) 
+  tap({ message: "Pre - Customizers" })
   /* Your customizers: eg. addLessLoader() */
   addLessLoader()
   // Print final config in a separate file
-  tap({ dest: 'customize-cra.log'}) 
+  tap({ dest: 'customize-cra.log'})
 )
 ```
