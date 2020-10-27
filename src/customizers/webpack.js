@@ -1,5 +1,3 @@
-import { getBabelLoader } from "../utilities";
-
 export const addBundleVisualizer = (
   options = {},
   behindFlag = false
@@ -401,3 +399,43 @@ export const setWebpackStats = stats => config => {
   config.stats = stats;
   return config;
 };
+
+/**
+ * Find plugin item
+ * 
+ * @param {*} plugins 
+ * @param {*} pluginName 
+ */
+function findWebpackPlugin(plugins, pluginName) {
+  return plugins.find(plugin => plugin.constructor.name === pluginName);
+}
+
+/**
+ * Add DefinePlugin Params
+ * @param {*} params 
+ * 
+ * @see https://webpack.js.org/plugins/define-plugin/
+ */
+export const addWebpackDefine = params => config => {
+  const plugin = findWebpackPlugin("DefinePlugin");
+  plugin.definitions = {
+    ...(plugin.definitions || {}),
+    ...params,
+  };
+  return config;
+}
+
+/**
+ * Add InterpolateHtmlPlugin params
+ * 
+ * @param {*} params 
+ * @see https://github.com/egoist/interpolate-html-plugin
+ */
+export const addInterpolateHtml = params => config => {
+  const plugin = findWebpackPlugin(config.plugins, 'InterpolateHtmlPlugin');
+  plugin.replacements = {
+    ...(plugin.replacements || {}),
+    ...value,
+  };
+  return config;
+}
