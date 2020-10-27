@@ -2,42 +2,45 @@
 
 This file documents the functions exported by `customize-cra`.
 
-- [`customizers`](#customizers)
-  - [addTslintLoader](#addtslintloaderloaderoptions)
-  - [addExternalBabelPlugin](#addexternalbabelpluginplugin)
-  - [addExternalBabelPlugins](#addexternalbabelpluginsplugins)
-  - [addBabelPlugin](#addbabelpluginplugin)
-  - [addBabelPlugins](#addbabelpluginsplugins)
-  - [addBabelPreset](#addbabelpresetpreset)
-  - [addBabelPresets](#addbabelpresetspresets)
-  - [babelInclude](#babelinclude)
-  - [babelExclude](#babelexcludeexclude)
-  - [removeInternalBabelPlugin](#removeinternalbabelpluginpluginname)
-  - [fixBabelImports](#fixbabelimportslibraryname-options)
-  - [addDecoratorsLegacy](#adddecoratorslegacy)
-  - [useBabelRc](#usebabelrc)
-  - [disableEsLint](#disableeslint)
-  - [useEslintRc](#useeslintrcconfigfile)
-  - [enableEslintTypescript](#enableeslinttypescript)
-  - [addWebpackAlias](#addwebpackaliasalias)
-  - [addWebpackResolve](#addwebpackresolveresolve)
-  - [addWebpackPlugin](#addwebpackpluginplugin)
-  - [addWebpackExternals](#addwebpackexternalsdeps)
-  - [addWebpackModuleRule](#addwebpackmodulerulerule)
-  - [setWebpackTarget](#setwebpacktargettarget)
-  - [setWebpackStats](#setwebpackstats)
-  - [addBundleVisualizer](#addbundlevisualizeroptions-behindflag--false)
-  - [setWebpackOptimizationSplitChunks](#setwebpackoptimizationsplitchunkstarget)
-  - [adjustWorkbox](#adjustworkboxfn)
-  - [addLessLoader](#addlessloaderloaderoptions)
-  - [addPostcssPlugins](#addpostcsspluginsplugins)
-  - [disableChunk](#disablechunk)
-  - [removeModuleScopePlugin](#removemodulescopeplugin)
-  - [watchAll](#watchall)
-  - [adjustStyleLoaders](#adjustStyleLoaders)
-- [`utilities`](#utilities)
-  - [getBabelLoader](#getbabelloaderconfig-isoutsideofapp)
-  - [tap](#tapoptions)
+- [api docs](#api-docs)
+  - [`customizers`](#customizers)
+    - [addTslintLoader(loaderOptions)](#addtslintloaderloaderoptions)
+    - [addExternalBabelPlugin(plugin)](#addexternalbabelpluginplugin)
+    - [addExternalBabelPlugins(plugins)](#addexternalbabelpluginsplugins)
+    - [addBabelPlugin(plugin)](#addbabelpluginplugin)
+    - [addBabelPlugins(plugins)](#addbabelpluginsplugins)
+    - [addBabelPreset(preset)](#addbabelpresetpreset)
+    - [addBabelPresets(...presets)](#addbabelpresetspresets)
+    - [babelInclude](#babelinclude)
+    - [babelExclude(exclude)](#babelexcludeexclude)
+    - [removeInternalBabelPlugin(pluginName)](#removeinternalbabelpluginpluginname)
+    - [fixBabelImports(libraryName, options)](#fixbabelimportslibraryname-options)
+    - [addDecoratorsLegacy()](#adddecoratorslegacy)
+    - [disableEsLint()](#disableeslint)
+    - [useEslintRc(configFile)](#useeslintrcconfigfile)
+    - [enableEslintTypescript()](#enableeslinttypescript)
+    - [addWebpackAlias(alias)](#addwebpackaliasalias)
+    - [addWebpackDefine(raw)](#addwebpackdefineraw)
+    - [addInterpolateHtml(raw)](#addinterpolatehtmlraw)
+    - [addWebpackResolve(resolve)](#addwebpackresolveresolve)
+    - [addWebpackPlugin(plugin)](#addwebpackpluginplugin)
+    - [addWebpackExternals(deps)](#addwebpackexternalsdeps)
+    - [addWebpackModuleRule(rule)](#addwebpackmodulerulerule)
+    - [setWebpackTarget(target)](#setwebpacktargettarget)
+    - [setWebpackStats(stats)](#setwebpackstatsstats)
+    - [addBundleVisualizer(options, behindFlag = false)](#addbundlevisualizeroptions-behindflag--false)
+    - [setWebpackOptimizationSplitChunks(target)](#setwebpackoptimizationsplitchunkstarget)
+    - [useBabelRc()](#usebabelrc)
+    - [adjustWorkbox(fn)](#adjustworkboxfn)
+    - [addLessLoader(loaderOptions)](#addlessloaderloaderoptions)
+    - [addPostcssPlugins([plugins])](#addpostcsspluginsplugins)
+    - [disableChunk](#disablechunk)
+    - [removeModuleScopePlugin()](#removemodulescopeplugin)
+    - [watchAll()](#watchall)
+    - [adjustStyleLoaders(callback)](#adjuststyleloaderscallback)
+  - [`utilities`](#utilities)
+    - [getBabelLoader(config, isOutsideOfApp)](#getbabelloaderconfig-isoutsideofapp)
+    - [tap(options)](#tapoptions)
 
 ## `customizers`
 
@@ -204,6 +207,27 @@ Updates Webpack eslint-loader to lint both .js(x) and .ts(x) files and show lint
 ### addWebpackAlias(alias)
 
 Adds the provided alias info into webpack's alias section. Pass an object literal with as many entries as you'd like, and the whole object will be merged in.
+
+### addWebpackDefine(raw)
+
+Adds [webpack.DefinePlugin](https://webpack.js.org/plugins/define-plugin/) variable.
+
+```js
+addWebpackDefine({
+  "mode": "'development'"
+});
+addWebpackDefine(def => ({
+  ...def,
+  ['process.env']: {
+    ...def['process.env'],
+    mode: "'development'"
+  }
+}));
+```
+
+### addInterpolateHtml(raw)
+
+Adds [InterpolateHtmlPlugin](https://github.com/egoist/interpolate-html-plugin) variable.
 
 ### addWebpackResolve(resolve)
 
