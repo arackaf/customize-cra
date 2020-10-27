@@ -412,15 +412,23 @@ function findWebpackPlugin(plugins, pluginName) {
 
 /**
  * Add DefinePlugin Params
- * @param {*} raw 
+ * @param {Object|Function} raw 
+ *  When the object is merged with the original parameter object
+ *  if the first parameter of the function is the original parameter, the new parameter is returned as definitions
  * 
  * @see https://webpack.js.org/plugins/define-plugin/
  */
 export const addWebpackDefine = raw => config => {
   const plugin = findWebpackPlugin("DefinePlugin");
+  const orgDefinitions = plugin.definitions || {};
+  let definitions = raw;
+  if (raw && typeof raw === 'function') {
+    plugin.definitions = raw(orgDefinitions) || {};
+    return config;
+  }
   plugin.definitions = {
-    ...(plugin.definitions || {}),
-    ...raw,
+    ...(orgDefinitions || {}),
+    ...(definitions || {}),
   };
   return config;
 }
@@ -428,8 +436,8 @@ export const addWebpackDefine = raw => config => {
 /**
  * Add InterpolateHtmlPlugin params
  * 
- * @param {*} raw 
- * @see https://github.com/egoist/interpolate-html-plugin
+ * @param {Object} raw 
+ * @see https://github.com/facebook/create-react-app/blob/d1250743adc2abc41d80d566c5f817e1a16da279/packages/react-dev-utils/InterpolateHtmlPlugin.js
  */
 export const addInterpolateHtml = raw => config => {
   const plugin = findWebpackPlugin(config.plugins, 'InterpolateHtmlPlugin');
