@@ -412,15 +412,15 @@ function findWebpackPlugin(plugins, pluginName) {
 
 /**
  * Add DefinePlugin Params
- * @param {*} params 
+ * @param {*} raw 
  * 
  * @see https://webpack.js.org/plugins/define-plugin/
  */
-export const addWebpackDefine = params => config => {
+export const addWebpackDefine = raw => config => {
   const plugin = findWebpackPlugin("DefinePlugin");
   plugin.definitions = {
     ...(plugin.definitions || {}),
-    ...params,
+    ...raw,
   };
   return config;
 }
@@ -428,14 +428,14 @@ export const addWebpackDefine = params => config => {
 /**
  * Add InterpolateHtmlPlugin params
  * 
- * @param {*} params 
+ * @param {*} raw 
  * @see https://github.com/egoist/interpolate-html-plugin
  */
-export const addInterpolateHtml = params => config => {
+export const addInterpolateHtml = raw => config => {
   const plugin = findWebpackPlugin(config.plugins, 'InterpolateHtmlPlugin');
   plugin.replacements = {
     ...(plugin.replacements || {}),
-    ...value,
+    ...raw,
   };
   return config;
 }

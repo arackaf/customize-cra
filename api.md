@@ -24,6 +24,8 @@ This file documents the functions exported by `customize-cra`.
   - [addWebpackPlugin](#addwebpackpluginplugin)
   - [addWebpackExternals](#addwebpackexternalsdeps)
   - [addWebpackModuleRule](#addwebpackmodulerulerule)
+  - [addWebpackDefine](#addWebpackDefine)
+  - [addInterpolateHtml](#addInterpolateHtml)
   - [setWebpackTarget](#setwebpacktargettarget)
   - [setWebpackStats](#setwebpackstats)
   - [addBundleVisualizer](#addbundlevisualizeroptions-behindflag--false)
@@ -204,6 +206,14 @@ Updates Webpack eslint-loader to lint both .js(x) and .ts(x) files and show lint
 ### addWebpackAlias(alias)
 
 Adds the provided alias info into webpack's alias section. Pass an object literal with as many entries as you'd like, and the whole object will be merged in.
+
+### addWebpackDefine(raw)
+
+Adds [webpack.DefinePlugin](https://webpack.js.org/plugins/define-plugin/) variable.
+
+### addInterpolateHtml(raw)
+
+Adds [InterpolateHtmlPlugin](https://github.com/egoist/interpolate-html-plugin) variable.
 
 ### addWebpackResolve(resolve)
 
