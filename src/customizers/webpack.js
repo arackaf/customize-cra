@@ -32,6 +32,7 @@ export const disableEsLint = () => config => {
   eslintRules.forEach(rule => {
     config.module.rules = config.module.rules.filter(r => r !== rule);
   });
+  config.plugins = config.plugins.filter(plugin => plugin.constructor.name !== "ESLintWebpackPlugin");
   return config;
 };
 
