@@ -34,7 +34,7 @@ This file documents the functions exported by `customize-cra`.
   - [disableChunk](#disablechunk)
   - [removeModuleScopePlugin](#removemodulescopeplugin)
   - [watchAll](#watchall)
-  - [adjustStyleLoaders](#adjustStyleLoaders)
+  - [adjustStyleLoaders](#adjuststyleloaderscallback)
 - [`utilities`](#utilities)
   - [getBabelLoader](#getbabelloaderconfig-isoutsideofapp)
   - [tap](#tapoptions)
