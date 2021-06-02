@@ -198,6 +198,14 @@ Object {
 }
 `;
 
+exports[`removeWebpackPlugin removes plugin with provided name from plugins list 1`] = `
+Object {
+  "plugins": Array [
+    PluginToStay {},
+  ],
+}
+`;
+
 exports[`setWebpackOptimizationSplitChunks sets the customized optimization.splitChunks for webpack 1`] = `
 Object {
   "optimization": Object {

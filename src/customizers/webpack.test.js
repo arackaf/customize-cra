@@ -3,6 +3,7 @@ import {
   addWebpackAlias,
   addWebpackResolve,
   addWebpackPlugin,
+  removeWebpackPlugin,
   disableEsLint,
   useEslintRc,
   enableEslintTypescript,
@@ -77,6 +78,21 @@ test("addWebpackPlugin adds the provided plugin to the config plugins list", () 
   const config = { plugins: ["A"] };
   const plugin = "B";
   const actual = addWebpackPlugin(plugin)(config);
+
+  expect(actual).toMatchSnapshot();
+});
+
+test("removeWebpackPlugin removes plugin with provided name from plugins list", () => {
+  class TestPlugin {
+    constructor(){}
+  }
+  class PluginToStay {
+    constructor(){}
+  }
+  const pluginToRemove = new TestPlugin();
+  const pluginToStay = new PluginToStay();
+  const config = { plugins: [pluginToStay, pluginToRemove] };
+  const actual = removeWebpackPlugin("TestPlugin")(config);
 
   expect(actual).toMatchSnapshot();
 });
