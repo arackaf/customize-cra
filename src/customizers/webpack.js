@@ -59,6 +59,13 @@ export const addWebpackPlugin = plugin => config => {
   return config;
 };
 
+export const removeWebpackPlugin = pluginName => config => {
+  config.plugins = config.plugins.filter(
+      p => p.constructor.name !== pluginName
+  );
+  return config;
+};
+
 export const adjustWorkbox = adjust => config => {
   config.plugins.forEach(p => {
     if (p.constructor.name === "GenerateSW") {
