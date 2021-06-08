@@ -102,6 +102,8 @@ Object {
 }
 `;
 
+exports[`adjustWebpackPlugin find plugin and callback 1`] = `FooPlugin {}`;
+
 exports[`adjustWorkbox calls the provided adjustment using the workbox plugin config 1`] = `
 Object {
   "plugins": Array [
