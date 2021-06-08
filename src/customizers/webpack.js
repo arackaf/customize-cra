@@ -80,6 +80,16 @@ export const adjustStyleLoaders = callback => config => {
   return config;
 };
 
+export const adjustWebpackPlugin = (name, callback) => config => {
+  for (let plugin of config.plugins) {
+    if (plugin.constructor.name === name) {
+      callback(plugin);
+      break;
+    }
+  }
+  return config;
+};
+
 export const useEslintRc = configFile => config => {
   const eslintRule = config.module.rules.filter(
     r => r.use && r.use.some(u => u.options && u.options.useEslintrc !== void 0)

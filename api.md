@@ -35,6 +35,7 @@ This file documents the functions exported by `customize-cra`.
   - [removeModuleScopePlugin](#removemodulescopeplugin)
   - [watchAll](#watchall)
   - [adjustStyleLoaders](#adjustStyleLoaders)
+  - [adjustWebpackPlugin](#adjustWebpackPlugin)
 - [`utilities`](#utilities)
   - [getBabelLoader](#getbabelloaderconfig-isoutsideofapp)
   - [tap](#tapoptions)
@@ -475,6 +476,16 @@ adjustStyleLoaders(({ use: [ , css, postcss, resolve, processor ] }) => {
   }
 })
 ```
+
+### adjustWebpackPlugin(name, callback)
+
+Find plugin and callback.
+
+```js
+adjustWebpackPlugin('HtmlWebpackPlugin', (plugin) => {});
+```
+
+You can find plugin and change options or anything else.
 
 ## `utilities`
 

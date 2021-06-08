@@ -10,6 +10,7 @@ import {
   addWebpackModuleRule,
   adjustWorkbox,
   adjustStyleLoaders,
+  adjustWebpackPlugin,
   watchAll,
   disableChunk,
   removeModuleScopePlugin,
@@ -173,6 +174,13 @@ test("adjustStyleLoaders find all style loaders and callback one by one", () => 
   const styleLoader = { use: [ 'style-loader' ] };
   const inputConfig = { module: { rules: [{ oneOf: [ nonStyleLoader, styleLoader ] }]} };
   adjustStyleLoaders(actual => expect(actual).toMatchSnapshot())(inputConfig);
+});
+
+test("adjustWebpackPlugin find plugin and callback", () => {
+  const FooPlugin = function () { };
+  const BarPlugin = function () { };
+  const inputConfig = { plugins: [ new FooPlugin(), new BarPlugin() ] };
+  adjustWebpackPlugin('FooPlugin', actual => expect(actual).toMatchSnapshot())(inputConfig);
 });
 
 test("addLessLoader", () => {});
