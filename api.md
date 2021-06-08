@@ -30,6 +30,7 @@ This file documents the functions exported by `customize-cra`.
   - [setWebpackOptimizationSplitChunks](#setwebpackoptimizationsplitchunkstarget)
   - [adjustWorkbox](#adjustworkboxfn)
   - [addLessLoader](#addlessloaderloaderoptions)
+  - [addStylusLoader](#addstylusloaderloaderoptions)
   - [addPostcssPlugins](#addpostcsspluginsplugins)
   - [disableChunk](#disablechunk)
   - [removeModuleScopePlugin](#removemodulescopeplugin)
@@ -409,6 +410,59 @@ Once `less-loader` is enabled, you can import `.less` file in your project.
 
 ```typescript
 declare module "*.module.less" {
+  const classes: { [key: string]: string };
+  export default classes;
+}
+```
+
+### addStylusLoader(loaderOptions)
+
+First, install `stylus` and `stylus-loader` packages:
+
+```bash
+yarn add --dev stylus stylus-loader
+```
+
+or:
+
+```bash
+npm i -D stylus stylus-loader
+```
+
+After it's done, call `addStylusLoader` in `override` like below:
+
+```js
+const { addStylusLoader } = require("customize-cra");
+
+module.exports = override(addStylusLoader(loaderOptions));
+```
+
+`loaderOptions` is optional. If you have Stylus specific options, you can pass to it. For example:
+
+```js
+const { addStylusLoader } = require("customize-cra");
+
+module.exports = override(
+  addStylusLoader({
+    stylusOptions: {}, // pass any options to stylus.
+    cssLoaderOptions: {}, // .styl file used css-loader option, not all CSS file.
+    cssModules: {
+      localIdentName: "[path][name]__[local]--[hash:base64:5]", // if you use CSS Modules, and custom `localIdentName`, default is '[local]--[hash:base64:5]'.
+    },
+  })
+);
+```
+
+Check [stylus-loader document](https://github.com/webpack-contrib/stylus-loader#options) and [stylus document](https://stylus-lang.com/docs/js.html) for all available specific options you can use.
+
+Once `stylus-loader` is enabled, you can import `.styl` file in your project.
+
+`.module.styl` will use CSS Modules.
+
+> if you use TypeScript (npm init react-app my-app --typescript) with CSS Modules, you should edit `react-app-env.d.ts`.
+
+```typescript
+declare module "*.module.styl" {
   const classes: { [key: string]: string };
   export default classes;
 }
