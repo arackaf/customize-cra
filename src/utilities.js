@@ -45,7 +45,7 @@ export const tap = (options) => (config) => {
 
   if (dest) {
     const fs = require("fs");
-    fs.appendFile(dest, `${print.join("\n")}\n`, () => {});
+    fs.appendFileSync(dest, `${print.join("\n")}\n`);
   }
 
   print.forEach((sentence) => console.log(sentence));
