@@ -81,7 +81,7 @@ describe(`tap`, () => {
     const fs = require('fs')
     const mockAppendFile = jest.fn()
     jest.mock('fs')
-    fs.appendFile = mockAppendFile
+    fs.appendFileSync = mockAppendFile
 
     afterEach(() => mockAppendFile.mockClear())
 

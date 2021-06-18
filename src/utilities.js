@@ -13,17 +13,18 @@
 export const getBabelLoader = (config, isOutsideOfApp) => {
   let babelLoaderFilter;
   if (isOutsideOfApp) {
-    babelLoaderFilter = rule =>
+    babelLoaderFilter = (rule) =>
       rule.loader && rule.loader.includes("babel") && rule.exclude;
   } else {
-    babelLoaderFilter = rule =>
+    babelLoaderFilter = (rule) =>
       rule.loader && rule.loader.includes("babel") && rule.include;
   }
 
   // First, try to find the babel loader inside the oneOf array.
   // This is where we can find it when working with react-scripts@2.0.3.
-  let loaders = config.module.rules.find(rule => Array.isArray(rule.oneOf))
-    .oneOf;
+  let loaders = config.module.rules.find((rule) =>
+    Array.isArray(rule.oneOf)
+  ).oneOf;
 
   let babelLoader = loaders.find(babelLoaderFilter);
 
@@ -37,17 +38,17 @@ export const getBabelLoader = (config, isOutsideOfApp) => {
 };
 
 export const tap = (options) => (config) => {
-  const { message, dest } = options || {}
-  const print = []
-  if (message) print.push(message)
-  print.push(JSON.stringify(config, null, 2))
+  const { message, dest } = options || {};
+  const print = [];
+  if (message) print.push(message);
+  print.push(JSON.stringify(config, null, 2));
 
   if (dest) {
-    const fs = require('fs')
-    fs.appendFile(dest, `${print.join('\n')}\n`)
+    const fs = require("fs");
+    fs.appendFileSync(dest, `${print.join("\n")}\n`);
   }
 
-  print.forEach(sentence => console.log(sentence))
+  print.forEach((sentence) => console.log(sentence));
 
-  return config
-}
+  return config;
+};
