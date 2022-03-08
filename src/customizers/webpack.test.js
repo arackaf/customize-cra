@@ -17,12 +17,12 @@ import {
   setWebpackTarget,
   setWebpackPublicPath,
   setWebpackOptimizationSplitChunks,
-  setWebpackStats
+  setWebpackStats,
 } from "./webpack";
 
 test("addWebpackExternals returns function that spreads provided args last in externals list", () => {
   const config = {
-    externals: { lodash: "Lodash", "react-dom": "NotReactDom" }
+    externals: { lodash: "Lodash", "react-dom": "NotReactDom" },
   };
   const externals = { react: "React", "react-dom": "ReactDom" };
   const extReg = /^(jquery|\$)$/i;
@@ -84,7 +84,7 @@ test("addWebpackPlugin adds the provided plugin to the config plugins list", () 
 describe("eslint", () => {
   test("disableEsLint filters out the eslint rules from the config rules list", () => {
     const inputConfig = {
-      module: { rules: [{ use: [{ options: { useEslintrc: true } }] }] }
+      module: { rules: [{ use: [{ options: { useEslintrc: true } }] }] },
     };
     const actual = disableEsLint()(inputConfig);
 
@@ -98,11 +98,11 @@ describe("eslint", () => {
         rules: [
           {
             use: [
-              { options: { useEslintrc: false, baseConfig: { test: true } } }
-            ]
-          }
-        ]
-      }
+              { options: { useEslintrc: false, baseConfig: { test: true } } },
+            ],
+          },
+        ],
+      },
     };
     const actual = useEslintRc(configFile)(inputConfig);
 
@@ -111,13 +111,13 @@ describe("eslint", () => {
 
   describe("enableEslintTypescript adds /tsx?/ to eslint file pattern test config ", () => {
     const inputConfig = {
-      module: { rules: [{ use: [{ options: { useEslintrc: false } }] }] }
+      module: { rules: [{ use: [{ options: { useEslintrc: false } }] }] },
     };
     const actual = enableEslintTypescript()(inputConfig);
     const regex = actual.module.rules[0].test;
     const validExtensions = ["js", "jsx", "ts", "tsx", "mjs"];
 
-    validExtensions.forEach(extension => {
+    validExtensions.forEach((extension) => {
       test(extension, () => {
         expect(regex.test(`.${extension}`)).toBe(true);
       });
@@ -138,11 +138,11 @@ describe("eslint", () => {
               test: expect.any(RegExp),
               loader: "tslint-loader",
               options,
-              enforce: "pre"
+              enforce: "pre",
             },
-            { test: true }
-          ]
-        }
+            { test: true },
+          ],
+        },
       })
     );
   });
@@ -157,10 +157,10 @@ test("addWebpackModuleRule adds the provided rule to module.rules", () => {
 });
 
 test("adjustWorkbox calls the provided adjustment using the workbox plugin config", () => {
-  const adjustment = jest.fn(x => x);
+  const adjustment = jest.fn((x) => x);
   const innerConfig = { test: true };
   const inputConfig = {
-    plugins: [{ constructor: { name: "GenerateSW" }, config: innerConfig }]
+    plugins: [{ constructor: { name: "GenerateSW" }, config: innerConfig }],
   };
   const actual = adjustWorkbox(adjustment)(inputConfig);
 
@@ -170,9 +170,11 @@ test("adjustWorkbox calls the provided adjustment using the workbox plugin confi
 
 test("adjustStyleLoaders find all style loaders and callback one by one", () => {
   const nonStyleLoader = { test: true };
-  const styleLoader = { use: [ 'style-loader' ] };
-  const inputConfig = { module: { rules: [{ oneOf: [ nonStyleLoader, styleLoader ] }]} };
-  adjustStyleLoaders(actual => expect(actual).toMatchSnapshot())(inputConfig);
+  const styleLoader = { use: ["style-loader"] };
+  const inputConfig = {
+    module: { rules: [{ oneOf: [nonStyleLoader, styleLoader] }] },
+  };
+  adjustStyleLoaders((actual) => expect(actual).toMatchSnapshot())(inputConfig);
 });
 
 test("addLessLoader", () => {});
@@ -190,8 +192,8 @@ test("disableChunk disables chunking config options", () => {
   const inputConfig = {
     optimization: {
       splitChunks: { cacheGroups: { default: true } },
-      runtimeChunk: true
-    }
+      runtimeChunk: true,
+    },
   };
   const actual = disableChunk()(inputConfig);
 
@@ -208,19 +210,28 @@ test("addPostcssPlugins adds postcss plugins to the postcss rule", () => {
         {
           oneOf: [
             {
-              use: [{ options: { plugins: () => [plugin1], ident: "postcss" } }]
-            }
-          ]
-        }
-      ]
-    }
+              use: [
+                {
+                  options: {
+                    postcssOptions: {
+                      plugins: () => [plugin1],
+                      ident: "postcss",
+                    },
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
   };
   const actual = addPostcssPlugins(plugins)(inputConfig);
 
   expect(actual).toMatchSnapshot();
-  const result = actual.module.rules[0].oneOf[0].use[0].options
+  const result = actual.module.rules[0].oneOf[0].use[0].options.postcssOptions
     .plugins()
-    .forEach(p => p());
+    .forEach((p) => p());
   expect(plugin1).toHaveBeenCalled();
   expect(plugin2).toHaveBeenCalled();
 });
@@ -228,8 +239,8 @@ test("addPostcssPlugins adds postcss plugins to the postcss rule", () => {
 test("removeModuleScopePlugin removes the 'ModuleScopePlugin' resolve plugin", () => {
   const inputConfig = {
     resolve: {
-      plugins: [{ constructor: { name: "ModuleScopePlugin" } }, { test: true }]
-    }
+      plugins: [{ constructor: { name: "ModuleScopePlugin" } }, { test: true }],
+    },
   };
   const actual = removeModuleScopePlugin()(inputConfig);
 
@@ -238,7 +249,7 @@ test("removeModuleScopePlugin removes the 'ModuleScopePlugin' resolve plugin", (
 
 test("setWebpackTarget sets the target as the config target", () => {
   const inputConfig = {
-    target: "mocked-initial-target"
+    target: "mocked-initial-target",
   };
 
   const actual = setWebpackTarget("mocked-new-target")(inputConfig);
@@ -250,8 +261,8 @@ describe("setWebpackPublicPath", () => {
   test("sets the path and prepends and appends slashes", () => {
     const inputConfig = {
       output: {
-        publicPath: "mocked-public-path"
-      }
+        publicPath: "mocked-public-path",
+      },
     };
 
     const actual = setWebpackPublicPath("mocked-public-path")(inputConfig);
@@ -261,7 +272,7 @@ describe("setWebpackPublicPath", () => {
 
   test("sets the path as an http address", () => {
     const inputConfig = {
-      output: {}
+      output: {},
     };
 
     const actual = setWebpackPublicPath("http://github.com")(inputConfig);
@@ -271,7 +282,7 @@ describe("setWebpackPublicPath", () => {
 
   test("sets the path as an https address", () => {
     const inputConfig = {
-      output: {}
+      output: {},
     };
 
     const actual = setWebpackPublicPath("https://github.com")(inputConfig);
@@ -284,14 +295,14 @@ test("setWebpackOptimizationSplitChunks sets the customized optimization.splitCh
   const inputConfig = {
     optimization: {
       splitChunks: {
-        chunks: "all"
-      }
-    }
+        chunks: "all",
+      },
+    },
   };
 
   const actual = setWebpackOptimizationSplitChunks({
     chunks: "all",
-    maxSize: 1000000
+    maxSize: 1000000,
   })(inputConfig);
 
   expect(actual).toMatchSnapshot();

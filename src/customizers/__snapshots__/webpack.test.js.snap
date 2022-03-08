@@ -10,8 +10,10 @@ Object {
             "use": Array [
               Object {
                 "options": Object {
-                  "ident": "postcss",
-                  "plugins": [Function],
+                  "postcssOptions": Object {
+                    "ident": "postcss",
+                    "plugins": [Function],
+                  },
                 },
               },
             ],
@@ -102,6 +104,14 @@ Object {
 }
 `;
 
+exports[`adjustStyleLoaders find all style loaders and callback one by one 1`] = `
+Object {
+  "use": Array [
+    "style-loader",
+  ],
+}
+`;
+
 exports[`adjustWorkbox calls the provided adjustment using the workbox plugin config 1`] = `
 Object {
   "plugins": Array [
@@ -113,14 +123,6 @@ Object {
         "name": "GenerateSW",
       },
     },
-  ],
-}
-`;
-
-exports[`adjustStyleLoaders find all style loaders and callback one by one 1`] = `
-Object {
-  "use": Array [
-    "style-loader",
   ],
 }
 `;

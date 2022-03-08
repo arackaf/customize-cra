@@ -20,7 +20,7 @@ export default [
 
       // ES modules-compatible output, automatically used by ESM-aware tools
       // like Rollup or webpack 2+
-      { file: pkg.module, format: "es", sourcemap: true }
+      { file: pkg.module, format: "es", sourcemap: true },
     ],
 
     /** The plugins which transform the code that is output */
@@ -34,14 +34,14 @@ export default [
 
       // enables babel syntax
       babel({
-        exclude: "node_modules/**"
+        exclude: "node_modules/**",
       }),
 
       // minifies the codebase
       terser(),
 
       // produces sourcemaps for the produced code
-      sourcemaps()
-    ]
-  }
+      sourcemaps(),
+    ],
+  },
 ];

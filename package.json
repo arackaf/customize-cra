@@ -1,6 +1,6 @@
 {
   "name": "customize-cra",
-  "version": "1.0.0",
+  "version": "5.0.0",
   "description": "",
   "repository": "arackaf/customize-cra",
   "main": "dist/index.cjs.js",
@@ -16,7 +16,7 @@
     "contributors:add": "all-contributors add",
     "contributors:generate": "all-contributors generate"
   },
-  "author": "Adam Rackis",
+  "author": "lvyuely",
   "license": "MIT",
   "dependencies": {
     "lodash.flow": "^3.5.0"
