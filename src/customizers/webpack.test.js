@@ -177,6 +177,8 @@ test("adjustStyleLoaders find all style loaders and callback one by one", () => 
 
 test("addLessLoader", () => {});
 
+test("addStylusLoader", () => {});
+
 test("watchAll removes the watchOptions from config if --watch-all passed", () => {
   const watchOptions = { watch: true };
   const inputConfig = { watchOptions };
