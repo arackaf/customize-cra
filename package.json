@@ -13,6 +13,7 @@
     "clean": "rimraf dist",
     "test": "jest",
     "prepack": "npm run build",
+    "prepare": "npm run build",
     "contributors:add": "all-contributors add",
     "contributors:generate": "all-contributors generate"
   },
