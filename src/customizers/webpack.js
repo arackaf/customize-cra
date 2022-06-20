@@ -132,6 +132,8 @@ export const addLessLoader = (loaderOptions = {}) => config => {
   const shouldUseSourceMap = isEnvProduction
     ? process.env.GENERATE_SOURCEMAP !== 'false'
     : isEnvDevelopment;
+  const publicPath = config.output.publicPath;
+  const shouldUseRelativeAssetPaths = publicPath === "./";
 
   // reference from react-scripts
   // https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/config/webpack.config.js#L118
@@ -155,9 +157,7 @@ export const addLessLoader = (loaderOptions = {}) => config => {
       isEnvDevelopment && require.resolve('style-loader'),
       isEnvProduction && {
         loader: MiniCssExtractPlugin.loader,
-        // css is located in `static/css`, use '../../' to locate index.html folder
-        // in production `paths.publicUrlOrPath` can be a relative path
-        options: paths.publicUrlOrPath.startsWith('.')
+        options: shouldUseRelativeAssetPaths
           ? { publicPath: '../../' }
           : {},
       },
