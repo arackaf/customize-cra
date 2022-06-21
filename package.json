@@ -12,8 +12,8 @@
     "build": "npm run clean && rollup -c",
     "clean": "rimraf dist",
     "test": "jest",
-    "prepack": "npm run build",
-    "prepare": "npm run build",
+    "prepack": "npm config set unsafe-perm true && npm run build",
+    "prepare": "npm config set unsafe-perm true && npm run build",
     "contributors:add": "all-contributors add",
     "contributors:generate": "all-contributors generate"
   },
