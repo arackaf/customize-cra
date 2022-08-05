@@ -143,6 +143,43 @@ export const addLessLoader = (loaderOptions = {}, customCssModules = {}) => conf
   const publicPath = config.output.publicPath;
   const shouldUseRelativeAssetPaths = publicPath === "./";
 
+  const { version } = require('webpack');
+  const webpackVersion = version.split(".")[0] * 1
+
+  const lessOptions = webpackVersion < 5 ? {
+    ident: "postcss",
+    plugins: () => [
+      require("postcss-flexbugs-fixes"),
+      require("postcss-preset-env")({
+        autoprefixer: {
+          flexbox: "no-2009"
+        },
+        stage: 3
+      }),
+      postcssNormalize()
+    ],
+    sourceMap: isEnvProduction && shouldUseSourceMap
+  } : {
+    postcssOptions: {
+      ident: 'postcss',
+      config: false,
+      plugins: [
+        'postcss-flexbugs-fixes',
+        [
+          'postcss-preset-env',
+          {
+            autoprefixer: {
+              flexbox: 'no-2009',
+            },
+            stage: 3,
+          },
+        ],
+        'postcss-normalize',
+      ]
+    },
+    sourceMap: isEnvProduction && shouldUseSourceMap
+  }
+
   // copy from react-scripts
   // https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/config/webpack.config.js#L93
   const getStyleLoaders = (cssOptions, preProcessor) => {
@@ -158,21 +195,8 @@ export const addLessLoader = (loaderOptions = {}, customCssModules = {}) => conf
       },
       {
         loader: require.resolve("postcss-loader"),
-        options: {
-          ident: "postcss",
-          plugins: () => [
-            require("postcss-flexbugs-fixes"),
-            require("postcss-preset-env")({
-              autoprefixer: {
-                flexbox: "no-2009"
-              },
-              stage: 3
-            }),
-            postcssNormalize()
-          ],
-          sourceMap: isEnvProduction && shouldUseSourceMap
-        }
-      }
+        options: lessOptions
+      },
     ].filter(Boolean);
     if (preProcessor) {
       loaders.push(
