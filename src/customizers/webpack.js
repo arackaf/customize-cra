@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 import { getBabelLoader } from "../utilities";
 
 export const addBundleVisualizer = (
@@ -120,7 +122,6 @@ export const enableEslintTypescript = () => config => {
 
 export const addLessLoader = (loaderOptions = {}, customCssModules = {}) => config => {
   const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-  const postcssNormalize = require("postcss-normalize");
 
   const cssLoaderOptions = loaderOptions.cssLoaderOptions || {};
 
@@ -142,6 +143,10 @@ export const addLessLoader = (loaderOptions = {}, customCssModules = {}) => conf
   const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== "false";
   const publicPath = config.output.publicPath;
   const shouldUseRelativeAssetPaths = publicPath === "./";
+  const appPath = path.resolve(fs.realpathSync(process.cwd()), '.')
+  const useTailwind = fs.existsSync(
+    path.join(appPath, 'tailwind.config.js')
+  )
 
   // copy from react-scripts
   // https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/config/webpack.config.js#L93
@@ -159,17 +164,37 @@ export const addLessLoader = (loaderOptions = {}, customCssModules = {}) => conf
       {
         loader: require.resolve("postcss-loader"),
         options: {
-          ident: "postcss",
-          plugins: () => [
-            require("postcss-flexbugs-fixes"),
-            require("postcss-preset-env")({
-              autoprefixer: {
-                flexbox: "no-2009"
-              },
-              stage: 3
-            }),
-            postcssNormalize()
-          ],
+          postcssOptions: {
+            ident: 'postcss',
+            config: false,
+            plugins: !useTailwind
+              ? [
+                  'postcss-flexbugs-fixes',
+                  [
+                    'postcss-preset-env',
+                    {
+                      autoprefixer: {
+                        flexbox: 'no-2009',
+                      },
+                      stage: 3,
+                    },
+                  ],
+                  'postcss-normalize',
+                ]
+              : [
+                  'tailwindcss',
+                  'postcss-flexbugs-fixes',
+                  [
+                    'postcss-preset-env',
+                    {
+                      autoprefixer: {
+                        flexbox: 'no-2009',
+                      },
+                      stage: 3,
+                    },
+                  ],
+                ],
+          },
           sourceMap: isEnvProduction && shouldUseSourceMap
         }
       }
