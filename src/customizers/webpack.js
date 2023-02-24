@@ -304,6 +304,15 @@ export const addPostcssPlugins = plugins => config => {
             u.options.plugins = () => [...originalPlugins(), ...plugins];
           }
         }
+        if (u.options && u.options.postcssOptions && u.options.postcssOptions.ident === "postcss") {
+          if (!u.options.postcssOptions.plugins) {
+            u.options.postcssOptions.plugins = () => [...plugins];
+          }
+          if (u.options.postcssOptions.plugins) {
+            const originalPlugins = u.options.postcssOptions.plugins;
+            u.options.postcssOptions.plugins = () => [...originalPlugins(), ...plugins];
+          }
+        }
       })
   );
   return config;
